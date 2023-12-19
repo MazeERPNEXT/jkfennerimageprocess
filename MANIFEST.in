@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include jkfenner_image_process *.css
+recursive-include jkfenner_image_process *.csv
+recursive-include jkfenner_image_process *.html
+recursive-include jkfenner_image_process *.ico
+recursive-include jkfenner_image_process *.js
+recursive-include jkfenner_image_process *.json
+recursive-include jkfenner_image_process *.md
+recursive-include jkfenner_image_process *.png
+recursive-include jkfenner_image_process *.py
+recursive-include jkfenner_image_process *.svg
+recursive-include jkfenner_image_process *.txt
+recursive-exclude jkfenner_image_process *.pyc
