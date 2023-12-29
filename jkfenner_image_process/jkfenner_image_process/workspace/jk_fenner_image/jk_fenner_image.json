@@ -1,0 +1,36 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"72X2PKHUmj\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">JK Fenner Image</span>\",\"col\":12}},{\"id\":\"VDzsFfmcf-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"JK Fenner Image Process\",\"col\":3}}]",
+ "creation": "2023-12-23 12:50:04.573754",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "sell",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "JK Fenner Image",
+ "links": [],
+ "modified": "2023-12-29 20:15:03.184053",
+ "modified_by": "Administrator",
+ "module": "JKfenner Image Process",
+ "name": "JK Fenner Image",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 7.0,
+ "shortcuts": [
+  {
+   "color": "Green",
+   "doc_view": "List",
+   "label": "JK Fenner Image Process",
+   "link_to": "JKFenner Image AI",
+   "type": "DocType"
+  }
+ ],
+ "title": "JK Fenner Image"
+}
