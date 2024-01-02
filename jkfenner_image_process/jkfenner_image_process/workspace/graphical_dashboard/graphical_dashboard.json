@@ -1,0 +1,47 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"kdRU7J3cbZ\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">JK Fenner Dashboard</span>\",\"col\":12}},{\"id\":\"MRiimbgLvl\",\"type\":\"card\",\"data\":{\"card_name\":\"No. Of SK Use Imported\",\"col\":4}}]",
+ "creation": "2023-12-30 13:01:57.701070",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "dashboard",
+ "idx": 0,
+ "is_hidden": 1,
+ "label": "Graphical Dashboard",
+ "links": [
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "No. Of SK Use Imported",
+   "link_count": 1,
+   "onboard": 0,
+   "type": "Card Break"
+  },
+  {
+   "hidden": 0,
+   "is_query_report": 0,
+   "label": "Imported Count",
+   "link_count": 0,
+   "link_to": "JKFenner Image AI",
+   "link_type": "DocType",
+   "onboard": 0,
+   "type": "Link"
+  }
+ ],
+ "modified": "2024-01-02 21:20:36.232883",
+ "modified_by": "Administrator",
+ "module": "JKfenner Image Process",
+ "name": "Graphical Dashboard",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [],
+ "sequence_id": 5.0,
+ "shortcuts": [],
+ "title": "Graphical Dashboard"
+}

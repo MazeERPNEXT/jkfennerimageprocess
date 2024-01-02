@@ -1,0 +1,23 @@
+{
+ "content": null,
+ "creation": "2024-01-02 12:36:04.753090",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2024-01-02 20:55:24.258031",
+ "modified_by": "Administrator",
+ "module": "JKfenner Image Process",
+ "name": "ai-image-search",
+ "owner": "Administrator",
+ "page_name": "ai-image-search",
+ "roles": [
+  {
+   "role": "Image Searcher"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "New Image Search"
+}

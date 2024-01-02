@@ -20,15 +20,6 @@
   "customer_1_cross_ref",
   "customer_2_cross_ref",
   "customer_345_cross_ref",
-  "column_break_j05dq",
-  "dimensions",
-  "inner_diameter_a_mm",
-  "inner_diameter_b_mm",
-  "thickness",
-  "outer_diameter_a_mm",
-  "outer_diameter_b_mm",
-  "central_axis_length_mm",
-  "product_weight_grams",
   "section_break_3xctf",
   "properties",
   "standard",
@@ -46,6 +37,15 @@
   "vehicle_manufacturer",
   "vehicle_makeyear",
   "sub_application",
+  "column_break_j05dq",
+  "dimensions",
+  "inner_diameter_a_mm",
+  "inner_diameter_b_mm",
+  "thickness",
+  "outer_diameter_a_mm",
+  "outer_diameter_b_mm",
+  "central_axis_length_mm",
+  "product_weight_grams",
   "image_details_page_multiple_size_tab",
   "dimensions_1",
   "inner_diameter_1_mm",
@@ -62,8 +62,8 @@
   "product_weight__3_grams",
   "section_break_8tfwx",
   "dimensions_3",
-  "inner_diameter_3_mm",
   "thickness_3",
+  "inner_diameter_3_mm",
   "outer_diameter_3_mm",
   "central_axis_length_3_mm",
   "product_weight_3_grams",
@@ -74,89 +74,16 @@
   "outer_diameter_4_mm",
   "central_axis_length_4_mm",
   "product_weight_4_grams",
-  "image_upload_page_tab",
-  "select__images",
+  "section_break_ryypm",
   "image__1",
+  "column_break_wdykv",
   "image__2",
-  "image__3",
-  "image__4",
-  "image__5",
-  "save",
-  "view_image_page_tab",
-  "view__image",
   "column_break_laxds",
-  "view_dimensions",
-  "view_inner_diameter_a_mm_1",
-  "view_inner_diameter_b_mm_1",
-  "view_thickness_1",
-  "view_outer_diameter_a_mm_1",
-  "view_outer_diameter_b_mm_1",
-  "view_central_axis_length_mm_1",
-  "view_product_weight_grams_1",
-  "section_break_vl4d2",
-  "generic___details",
-  "domestic___export_1",
-  "part__no_1",
-  "part__description_1",
-  "sap_asset__code_1",
-  "type_of__hose_1",
-  "toolings_created__on_1",
-  "ean_1",
-  "upc_1",
-  "customer_1_cross_ref_1",
-  "customer_2_cross_ref_1",
-  "customer_345_cross_ref_1",
-  "column_break_zdiyg",
-  "applicationperformance__1",
-  "vehicle_model_1",
-  "application_radiator__heater_1",
-  "vehicle_manufacturer_1",
-  "vehicle_makeyear_1",
-  "sub_application_1",
-  "customer_image_upload_page_tab",
-  "select_images",
-  "image_1",
-  "image_2",
-  "image_3",
-  "image_4",
-  "image_5",
-  "pick_the_matching_image",
-  "column_break_ojqqx",
-  "matching_mould",
-  "matching_image",
-  "click_to_view_details",
-  "section_break_a8uwt",
-  "view_image_page",
-  "view_image",
-  "column_break_qrktl",
-  "dimensions__2",
-  "inner_diameter_a_mm__2",
-  "inner_diameter_b_mm__2",
-  "thickness__2",
-  "outer_diameter_a_mm__2",
-  "outer_diameter_b_mm__2",
-  "central_axis_length_mm__2",
-  "product_weight_grams__2",
-  "section_break_bssfd",
-  "generic__details",
-  "domestic___export_2",
-  "part__no_2",
-  "part__description_2",
-  "sap_asset__code_2",
-  "type_of__hose_2",
-  "toolings_created__on_2",
-  "ean_2",
-  "upc__2",
-  "customer_1__cross_ref_2",
-  "customer_2__cross_ref_2",
-  "customer_345__cross_ref_2",
-  "column_break_lprhe",
-  "applicationperformance__2",
-  "vehicle_model__2",
-  "application_radiator__heater___2",
-  "vehicle_manufacturer__2",
-  "vehicle_makeyear_2",
-  "sub_application__2"
+  "image__3",
+  "column_break_idojd",
+  "image__4",
+  "column_break_hxx7w",
+  "image__5"
  ],
  "fields": [
   {
@@ -167,7 +94,7 @@
   {
    "fieldname": "generic_details",
    "fieldtype": "Heading",
-   "label": "Generic Details"
+   "label": "Generic Detailsss"
   },
   {
    "fieldname": "domestic__export",
@@ -270,7 +197,7 @@
   },
   {
    "fieldname": "section_break_3xctf",
-   "fieldtype": "Section Break"
+   "fieldtype": "Column Break"
   },
   {
    "fieldname": "properties",
@@ -353,7 +280,7 @@
   },
   {
    "fieldname": "image_details_page_multiple_size_tab",
-   "fieldtype": "Tab Break",
+   "fieldtype": "Section Break",
    "label": "Image Details page (Multiple size)"
   },
   {
@@ -422,7 +349,7 @@
   },
   {
    "fieldname": "section_break_8tfwx",
-   "fieldtype": "Section Break"
+   "fieldtype": "Column Break"
   },
   {
    "fieldname": "dimensions_3",
@@ -489,418 +416,59 @@
    "label": "Product weight 4 (grams)"
   },
   {
-   "fieldname": "image_upload_page_tab",
-   "fieldtype": "Tab Break",
-   "label": "Image Upload Page"
-  },
-  {
-   "fieldname": "select__images",
-   "fieldtype": "Heading",
-   "label": "Select  Images"
-  },
-  {
    "fieldname": "image__1",
-   "fieldtype": "Attach Image",
-   "label": "Image  1"
+   "fieldtype": "HTML",
+   "label": "Image  1",
+   "options": " <div class=\"Neon Neon-theme-dragdropbox\">\n        <input id=\"filer_input2\" multiple=\"multiple\" name=\"files[]\" style=\"z-index: 999; opacity: 0; width: 320px; height: 200px; position: absolute; right: 0px; left: 0px; margin-right: auto; margin-left: auto;\" type=\"file\">\n        <div class=\"Neon-input-dragDrop\"><div class=\"Neon-input-inner\"><div class=\"Neon-input-icon\"><i class=\"fa fa-file-image-o\"></i></div><div class=\"Neon-input-text\"><h3>Upload files here</h3></div></div></div>\n        </div>"
   },
   {
    "fieldname": "image__2",
-   "fieldtype": "Attach Image",
-   "label": "Image  2"
+   "fieldtype": "HTML",
+   "label": "Image  2",
+   "options": " <div class=\"Neon Neon-theme-dragdropbox\">\n        <input id=\"filer_input2\" multiple=\"multiple\" name=\"files[]\" style=\"z-index: 999; opacity: 0; width: 320px; height: 200px; position: absolute; right: 0px; left: 0px; margin-right: auto; margin-left: auto;\" type=\"file\">\n        <div class=\"Neon-input-dragDrop\"><div class=\"Neon-input-inner\"><div class=\"Neon-input-icon\"><i class=\"fa fa-file-image-o\"></i></div><div class=\"Neon-input-text\"><h3>Upload files here</h3></div></div></div>\n        </div>"
   },
   {
    "fieldname": "image__3",
-   "fieldtype": "Attach Image",
-   "label": "Image  3"
+   "fieldtype": "HTML",
+   "label": "Image  3",
+   "options": " <div class=\"Neon Neon-theme-dragdropbox\">\n        <input id=\"filer_input2\" multiple=\"multiple\" name=\"files[]\" style=\"z-index: 999; opacity: 0; width: 320px; height: 200px; position: absolute; right: 0px; left: 0px; margin-right: auto; margin-left: auto;\" type=\"file\">\n        <div class=\"Neon-input-dragDrop\"><div class=\"Neon-input-inner\"><div class=\"Neon-input-icon\"><i class=\"fa fa-file-image-o\"></i></div><div class=\"Neon-input-text\"><h3>Upload files here</h3></div></div></div>\n        </div>"
   },
   {
    "fieldname": "image__4",
-   "fieldtype": "Attach Image",
-   "label": "Image  4"
+   "fieldtype": "HTML",
+   "label": "Image  4",
+   "options": " <div class=\"Neon Neon-theme-dragdropbox\">\n        <input id=\"filer_input2\" multiple=\"multiple\" name=\"files[]\" style=\"z-index: 999; opacity: 0; width: 320px; height: 200px; position: absolute; right: 0px; left: 0px; margin-right: auto; margin-left: auto;\" type=\"file\">\n        <div class=\"Neon-input-dragDrop\"><div class=\"Neon-input-inner\"><div class=\"Neon-input-icon\"><i class=\"fa fa-file-image-o\"></i></div><div class=\"Neon-input-text\"><h3>Upload files here</h3></div></div></div>\n        </div>"
   },
   {
    "fieldname": "image__5",
-   "fieldtype": "Attach Image",
-   "label": "Image  5"
-  },
-  {
-   "bold": 1,
-   "fieldname": "save",
-   "fieldtype": "Button",
-   "label": "Save"
-  },
-  {
-   "fieldname": "view_image_page_tab",
-   "fieldtype": "Tab Break",
-   "label": "View Image Page"
-  },
-  {
-   "fieldname": "view__image",
    "fieldtype": "HTML",
-   "label": "View  Image",
-   "options": "<div id=\"wrapper\">\n   \t  <div id=\"slider-wrap\">\n      \t  <ul id=\"slider\">\n          \t <li data-color=\"#1abc9c\">              \n               <img class=\"fa fa-image\" src=\"/assets/jkfenner_image_process/images/E70657-1.jpg\">\n             </li>\n             \n             <li data-color=\"#3498db\">\n                <img class=\"fa fa-image\" src=\"/assets/jkfenner_image_process/images/E70657-1.jpg\">\n             </li>\n             \n             <li data-color=\"#9b59b6\">\n                <i class=\"fa fa-sliders\"></i>\n             </li>\n             \n             <li data-color=\"#34495e\">\n                <img class=\"fa fa-image\" src=\"/assets/jkfenner_image_process/images/E70657-1.jpg\">\n             </li>\n             \n             <li data-color=\"#e74c3c\">\n                <img class=\"fa fa-image\" src=\"/assets/jkfenner_image_process/images/E70657-1.jpg\">\n             </li>\n          </ul>\n          <div class=\"btns\" id=\"next\"><i class=\"fa fa-arrow-right\"></i></div>\n          <div class=\"btns\" id=\"previous\"><i class=\"fa fa-arrow-left\"></i></div>\n          <div id=\"counter\"></div>\n          \n          <div id=\"pagination-wrap\">\n            <ul>\n            </ul>\n          </div>\n                 \n      </div>\n  \n   </div>"
+   "label": "Image  5",
+   "options": " <div class=\"Neon Neon-theme-dragdropbox\">\n        <input id=\"filer_input2\" multiple=\"multiple\" name=\"files[]\" style=\"z-index: 999; opacity: 0; width: 320px; height: 200px; position: absolute; right: 0px; left: 0px; margin-right: auto; margin-left: auto;\" type=\"file\">\n        <div class=\"Neon-input-dragDrop\"><div class=\"Neon-input-inner\"><div class=\"Neon-input-icon\"><i class=\"fa fa-file-image-o\"></i></div><div class=\"Neon-input-text\"><h3>Upload files here</h3></div></div></div>\n        </div>"
   },
   {
    "fieldname": "column_break_laxds",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "view_dimensions",
-   "fieldtype": "Heading",
-   "label": "View Dimensions"
+   "fieldname": "column_break_wdykv",
+   "fieldtype": "Column Break"
   },
   {
-   "fieldname": "view_inner_diameter_a_mm_1",
-   "fieldtype": "Data",
-   "label": "View Inner Diameter A (MM) 1"
+   "fieldname": "column_break_idojd",
+   "fieldtype": "Column Break"
   },
   {
-   "fieldname": "view_inner_diameter_b_mm_1",
-   "fieldtype": "Data",
-   "label": "View Inner Diameter B (MM) 1"
+   "fieldname": "column_break_hxx7w",
+   "fieldtype": "Column Break"
   },
   {
-   "fieldname": "view_thickness_1",
-   "fieldtype": "Data",
-   "label": "View Thickness 1"
-  },
-  {
-   "fieldname": "view_outer_diameter_a_mm_1",
-   "fieldtype": "Data",
-   "label": "View Outer Diameter A (mm) 1"
-  },
-  {
-   "fieldname": "view_outer_diameter_b_mm_1",
-   "fieldtype": "Data",
-   "label": "View Outer Diameter B (mm) 1"
-  },
-  {
-   "fieldname": "view_central_axis_length_mm_1",
-   "fieldtype": "Data",
-   "label": "View Central axis length (mm) 1"
-  },
-  {
-   "fieldname": "view_product_weight_grams_1",
-   "fieldtype": "Data",
-   "label": "View Product weight (grams) 1"
-  },
-  {
-   "fieldname": "section_break_vl4d2",
+   "fieldname": "section_break_ryypm",
    "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "generic___details",
-   "fieldtype": "Heading",
-   "label": "Generic   Details"
-  },
-  {
-   "fieldname": "domestic___export_1",
-   "fieldtype": "Data",
-   "label": "Domestic /  Export 1"
-  },
-  {
-   "fieldname": "part__no_1",
-   "fieldtype": "Data",
-   "label": "Part  No. 1"
-  },
-  {
-   "fieldname": "part__description_1",
-   "fieldtype": "Data",
-   "label": "Part  Description 1"
-  },
-  {
-   "fieldname": "sap_asset__code_1",
-   "fieldtype": "Data",
-   "label": "SAP Asset  Code 1"
-  },
-  {
-   "fieldname": "type_of__hose_1",
-   "fieldtype": "Data",
-   "label": "Type of  Hose 1"
-  },
-  {
-   "fieldname": "toolings_created__on_1",
-   "fieldtype": "Data",
-   "label": "Tooling's Created  on 1"
-  },
-  {
-   "fieldname": "ean_1",
-   "fieldtype": "Data",
-   "label": " EAN 1"
-  },
-  {
-   "fieldname": "upc_1",
-   "fieldtype": "Data",
-   "label": "UPC 1"
-  },
-  {
-   "fieldname": "customer_1_cross_ref_1",
-   "fieldtype": "Data",
-   "label": "Customer 1 (Cross Ref) 1"
-  },
-  {
-   "fieldname": "customer_2_cross_ref_1",
-   "fieldtype": "Data",
-   "label": "Customer 2 (Cross Ref) 1"
-  },
-  {
-   "fieldname": "customer_345_cross_ref_1",
-   "fieldtype": "Data",
-   "label": "Customer 3,4,5 (Cross Ref) 1"
-  },
-  {
-   "fieldname": "column_break_zdiyg",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "applicationperformance__1",
-   "fieldtype": "Heading",
-   "label": "Application/Performance  1"
-  },
-  {
-   "fieldname": "vehicle_model_1",
-   "fieldtype": "Data",
-   "label": "Vehicle Model 1"
-  },
-  {
-   "fieldname": "application_radiator__heater_1",
-   "fieldtype": "Data",
-   "label": "Application (Radiator / Heater) 1"
-  },
-  {
-   "fieldname": "vehicle_manufacturer_1",
-   "fieldtype": "Data",
-   "label": "Vehicle manufacturer 1"
-  },
-  {
-   "fieldname": "vehicle_makeyear_1",
-   "fieldtype": "Data",
-   "label": "Vehicle Make/Year 1"
-  },
-  {
-   "fieldname": "sub_application_1",
-   "fieldtype": "Data",
-   "label": "Sub Application 1"
-  },
-  {
-   "fieldname": "customer_image_upload_page_tab",
-   "fieldtype": "Tab Break",
-   "label": "Customer Image Upload Page"
-  },
-  {
-   "fieldname": "select_images",
-   "fieldtype": "Heading",
-   "label": "Select Images"
-  },
-  {
-   "fieldname": "image_1",
-   "fieldtype": "Attach Image",
-   "label": "Image 1"
-  },
-  {
-   "fieldname": "image_2",
-   "fieldtype": "Attach Image",
-   "label": "Image 2"
-  },
-  {
-   "fieldname": "image_3",
-   "fieldtype": "Attach Image",
-   "label": "Image 3"
-  },
-  {
-   "fieldname": "image_4",
-   "fieldtype": "Attach Image",
-   "label": "Image 4"
-  },
-  {
-   "fieldname": "image_5",
-   "fieldtype": "Attach Image",
-   "label": "Image 5"
-  },
-  {
-   "fieldname": "pick_the_matching_image",
-   "fieldtype": "Button",
-   "label": "Pick the matching image"
-  },
-  {
-   "fieldname": "column_break_ojqqx",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "matching_mould",
-   "fieldtype": "Heading",
-   "label": "Matching Mould"
-  },
-  {
-   "fieldname": "matching_image",
-   "fieldtype": "Image",
-   "label": "Matching Image"
-  },
-  {
-   "fieldname": "click_to_view_details",
-   "fieldtype": "Button",
-   "label": "Click to view Details"
-  },
-  {
-   "fieldname": "section_break_a8uwt",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "view_image_page",
-   "fieldtype": "Heading",
-   "label": "View Image Page"
-  },
-  {
-   "fieldname": "view_image",
-   "fieldtype": "Image",
-   "label": "View Image "
-  },
-  {
-   "fieldname": "column_break_qrktl",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "dimensions__2",
-   "fieldtype": "Heading",
-   "label": "Dimensions  2"
-  },
-  {
-   "fieldname": "inner_diameter_a_mm__2",
-   "fieldtype": "Data",
-   "label": "Inner Diameter A (MM)  2"
-  },
-  {
-   "fieldname": "inner_diameter_b_mm__2",
-   "fieldtype": "Data",
-   "label": "Inner Diameter B (MM)  2"
-  },
-  {
-   "fieldname": "thickness__2",
-   "fieldtype": "Data",
-   "label": "Thickness  2"
-  },
-  {
-   "fieldname": "outer_diameter_a_mm__2",
-   "fieldtype": "Data",
-   "label": "Outer Diameter A (mm)  2"
-  },
-  {
-   "fieldname": "outer_diameter_b_mm__2",
-   "fieldtype": "Data",
-   "label": "Outer Diameter B (mm)  2"
-  },
-  {
-   "fieldname": "central_axis_length_mm__2",
-   "fieldtype": "Data",
-   "label": "Central axis length (mm)  2"
-  },
-  {
-   "fieldname": "product_weight_grams__2",
-   "fieldtype": "Data",
-   "label": "Product weight (grams)  2"
-  },
-  {
-   "fieldname": "section_break_bssfd",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "generic__details",
-   "fieldtype": "Heading",
-   "label": "Generic  Details "
-  },
-  {
-   "fieldname": "domestic___export_2",
-   "fieldtype": "Data",
-   "label": "Domestic  / Export 2 "
-  },
-  {
-   "fieldname": "part__no_2",
-   "fieldtype": "Data",
-   "label": "Part  No. 2"
-  },
-  {
-   "fieldname": "part__description_2",
-   "fieldtype": "Data",
-   "label": "Part  Description 2"
-  },
-  {
-   "fieldname": "sap_asset__code_2",
-   "fieldtype": "Data",
-   "label": "SAP Asset  Code 2"
-  },
-  {
-   "fieldname": "type_of__hose_2",
-   "fieldtype": "Data",
-   "label": "Type of  Hose 2"
-  },
-  {
-   "fieldname": "toolings_created__on_2",
-   "fieldtype": "Data",
-   "label": "Tooling's Created  on 2"
-  },
-  {
-   "fieldname": "ean_2",
-   "fieldtype": "Data",
-   "label": " EAN 2"
-  },
-  {
-   "fieldname": "upc__2",
-   "fieldtype": "Data",
-   "label": " UPC  2"
-  },
-  {
-   "fieldname": "customer_1__cross_ref_2",
-   "fieldtype": "Data",
-   "label": "Customer 1  (Cross Ref) 2"
-  },
-  {
-   "fieldname": "customer_2__cross_ref_2",
-   "fieldtype": "Data",
-   "label": "Customer 2  (Cross Ref) 2"
-  },
-  {
-   "fieldname": "customer_345__cross_ref_2",
-   "fieldtype": "Data",
-   "label": "Customer 3,4,5  (Cross Ref) 2"
-  },
-  {
-   "fieldname": "column_break_lprhe",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "applicationperformance__2",
-   "fieldtype": "Heading",
-   "label": "Application/Performance  2"
-  },
-  {
-   "fieldname": "vehicle_model__2",
-   "fieldtype": "Data",
-   "label": "Vehicle Model  2"
-  },
-  {
-   "fieldname": "application_radiator__heater___2",
-   "fieldtype": "Data",
-   "label": "Application (Radiator / Heater )  2"
-  },
-  {
-   "fieldname": "vehicle_manufacturer__2",
-   "fieldtype": "Data",
-   "label": "Vehicle manufacturer  2"
-  },
-  {
-   "fieldname": "vehicle_makeyear_2",
-   "fieldtype": "Data",
-   "label": "Vehicle Make/Year 2"
-  },
-  {
-   "fieldname": "sub_application__2",
-   "fieldtype": "Data",
-   "label": "Sub Application  2"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2023-12-29 18:55:37.547800",
+ "modified": "2024-01-02 12:06:49.177092",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "JKFenner Image AI",

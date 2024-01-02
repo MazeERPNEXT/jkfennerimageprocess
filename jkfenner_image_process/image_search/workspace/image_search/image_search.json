@@ -1,0 +1,40 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"SwKhDJqeR3\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Image Upload</span>\",\"col\":12}},{\"id\":\"X2Zqo7XGXf\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Image Search\",\"col\":3}}]",
+ "creation": "2023-12-30 12:30:13.651751",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "image",
+ "idx": 0,
+ "is_hidden": 0,
+ "label": "Image Search",
+ "links": [],
+ "modified": "2024-01-02 21:20:59.492237",
+ "modified_by": "Administrator",
+ "module": "Image Search",
+ "name": "Image Search",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "roles": [
+  {
+   "role": "Image Searcher"
+  }
+ ],
+ "sequence_id": 9.0,
+ "shortcuts": [
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Image Search",
+   "link_to": "ai-image-search",
+   "type": "Page"
+  }
+ ],
+ "title": "Image Search"
+}

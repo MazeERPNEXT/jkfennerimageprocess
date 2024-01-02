@@ -10,19 +10,19 @@
  "icon": "sell",
  "idx": 0,
  "is_hidden": 0,
- "label": "JK Fenner Image",
+ "label": "Image Upload",
  "links": [],
- "modified": "2023-12-29 20:15:03.184053",
+ "modified": "2024-01-02 21:22:12.757885",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
- "name": "JK Fenner Image",
+ "name": "Image Upload",
  "number_cards": [],
  "owner": "Administrator",
  "parent_page": "",
  "public": 1,
  "quick_lists": [],
  "roles": [],
- "sequence_id": 7.0,
+ "sequence_id": 6.0,
  "shortcuts": [
   {
    "color": "Green",
@@ -32,5 +32,5 @@
    "type": "DocType"
   }
  ],
- "title": "JK Fenner Image"
+ "title": "Image Upload"
 }
