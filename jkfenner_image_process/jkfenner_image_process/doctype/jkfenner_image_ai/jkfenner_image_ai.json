@@ -46,35 +46,9 @@
   "outer_diameter_b_mm",
   "central_axis_length_mm",
   "product_weight_grams",
-  "image_details_page_multiple_size_tab",
-  "dimensions_1",
-  "inner_diameter_1_mm",
-  "thickness_1",
-  "outer_diameter_1_mm",
-  "central_axis_length_1_mm",
-  "product_weight_1_grams",
-  "column_break_cegc7",
-  "dimensions_2",
-  "inner_diameter_2_mm",
-  "thickness_2",
-  "outer_diameter_2_mm",
-  "central_axis_length_2_mm",
-  "product_weight__3_grams",
-  "section_break_8tfwx",
-  "dimensions_3",
-  "thickness_3",
-  "inner_diameter_3_mm",
-  "outer_diameter_3_mm",
-  "central_axis_length_3_mm",
-  "product_weight_3_grams",
-  "column_break_y6p3r",
-  "dimensions_4",
-  "inner_diameter_4_mm",
-  "thickness_4",
-  "outer_diameter_4_mm",
-  "central_axis_length_4_mm",
-  "product_weight_4_grams",
   "section_break_ryypm",
+  "image_upload",
+  "section_break_1afpv",
   "image__1",
   "column_break_wdykv",
   "image__2",
@@ -83,7 +57,10 @@
   "column_break_idojd",
   "image__4",
   "column_break_hxx7w",
-  "image__5"
+  "image__5",
+  "column_break_ylmei",
+  "image_6",
+  "section_break_mkm6k"
  ],
  "fields": [
   {
@@ -279,143 +256,6 @@
    "label": "Sub Application"
   },
   {
-   "fieldname": "image_details_page_multiple_size_tab",
-   "fieldtype": "Section Break",
-   "label": "Image Details page (Multiple size)"
-  },
-  {
-   "fieldname": "dimensions_1",
-   "fieldtype": "Heading",
-   "label": "Dimensions 1"
-  },
-  {
-   "fieldname": "inner_diameter_1_mm",
-   "fieldtype": "Data",
-   "label": "Inner Diameter 1 (MM)"
-  },
-  {
-   "fieldname": "thickness_1",
-   "fieldtype": "Data",
-   "label": "Thickness 1"
-  },
-  {
-   "fieldname": "outer_diameter_1_mm",
-   "fieldtype": "Data",
-   "label": "Outer Diameter 1 (mm)"
-  },
-  {
-   "fieldname": "central_axis_length_1_mm",
-   "fieldtype": "Data",
-   "label": "Central axis length 1 (mm)"
-  },
-  {
-   "fieldname": "product_weight_1_grams",
-   "fieldtype": "Data",
-   "label": "Product weight 1 (grams)"
-  },
-  {
-   "fieldname": "column_break_cegc7",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "dimensions_2",
-   "fieldtype": "Heading",
-   "label": "Dimensions 2"
-  },
-  {
-   "fieldname": "inner_diameter_2_mm",
-   "fieldtype": "Data",
-   "label": "Inner Diameter 2 (MM)"
-  },
-  {
-   "fieldname": "thickness_2",
-   "fieldtype": "Data",
-   "label": "Thickness 2"
-  },
-  {
-   "fieldname": "outer_diameter_2_mm",
-   "fieldtype": "Data",
-   "label": "Outer Diameter 2 (mm)"
-  },
-  {
-   "fieldname": "central_axis_length_2_mm",
-   "fieldtype": "Data",
-   "label": "Central axis length 2 (mm)"
-  },
-  {
-   "fieldname": "product_weight__3_grams",
-   "fieldtype": "Data",
-   "label": "Product weight  3 (grams)"
-  },
-  {
-   "fieldname": "section_break_8tfwx",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "dimensions_3",
-   "fieldtype": "Heading",
-   "label": "Dimensions 3"
-  },
-  {
-   "fieldname": "inner_diameter_3_mm",
-   "fieldtype": "Data",
-   "label": "Inner Diameter 3 (MM)"
-  },
-  {
-   "fieldname": "thickness_3",
-   "fieldtype": "Data",
-   "label": "Thickness 3"
-  },
-  {
-   "fieldname": "outer_diameter_3_mm",
-   "fieldtype": "Data",
-   "label": "Outer Diameter 3 (mm)"
-  },
-  {
-   "fieldname": "central_axis_length_3_mm",
-   "fieldtype": "Data",
-   "label": "Central axis length 3 (mm)"
-  },
-  {
-   "fieldname": "product_weight_3_grams",
-   "fieldtype": "Data",
-   "label": "Product weight 3 (grams)"
-  },
-  {
-   "fieldname": "column_break_y6p3r",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "dimensions_4",
-   "fieldtype": "Heading",
-   "label": "Dimensions 4"
-  },
-  {
-   "fieldname": "inner_diameter_4_mm",
-   "fieldtype": "Data",
-   "label": "Inner Diameter 4 (MM)"
-  },
-  {
-   "fieldname": "thickness_4",
-   "fieldtype": "Data",
-   "label": "Thickness 4"
-  },
-  {
-   "fieldname": "outer_diameter_4_mm",
-   "fieldtype": "Data",
-   "label": "Outer Diameter 4 (mm)"
-  },
-  {
-   "fieldname": "central_axis_length_4_mm",
-   "fieldtype": "Data",
-   "label": "Central axis length 4 (mm)"
-  },
-  {
-   "fieldname": "product_weight_4_grams",
-   "fieldtype": "Data",
-   "label": "Product weight 4 (grams)"
-  },
-  {
    "fieldname": "image__1",
    "fieldtype": "HTML",
    "label": "Image  1",
@@ -463,12 +303,37 @@
   },
   {
    "fieldname": "section_break_ryypm",
+   "fieldtype": "Section Break",
+   "label": "Image Multiple Sizes"
+  },
+  {
+   "fieldname": "image_upload",
+   "fieldtype": "Table",
+   "label": "image upload",
+   "options": "Image Details page Multiple size"
+  },
+  {
+   "fieldname": "section_break_mkm6k",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "column_break_ylmei",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "image_6",
+   "fieldtype": "HTML",
+   "label": "Image 6",
+   "options": " <div class=\"Neon Neon-theme-dragdropbox\">\n        <input id=\"filer_input2\" multiple=\"multiple\" name=\"files[]\" style=\"z-index: 999; opacity: 0; width: 320px; height: 200px; position: absolute; right: 0px; left: 0px; margin-right: auto; margin-left: auto;\" type=\"file\">\n        <div class=\"Neon-input-dragDrop\"><div class=\"Neon-input-inner\"><div class=\"Neon-input-icon\"><i class=\"fa fa-file-image-o\"></i></div><div class=\"Neon-input-text\"><h3>Upload files here</h3></div></div></div>\n        </div>"
+  },
+  {
+   "fieldname": "section_break_1afpv",
    "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-01-02 12:06:49.177092",
+ "modified": "2024-01-08 18:09:45.702438",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "JKFenner Image AI",

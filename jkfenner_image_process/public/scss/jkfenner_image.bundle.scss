@@ -2,7 +2,7 @@ body{
     background: #e7e8e9!important;
 }
 .navbar{
-    background: linear-gradient(to bottom, #87CEFA 0%, #78BFEB 100%);
+    background: linear-gradient(to bottom, #641eff 0, #a307dd 100%);
 }
 .navbar .navbar-nav .nav-link {
     color: white;
@@ -17,11 +17,13 @@ body{
     margin-bottom: 5px;
 }
 .page-head{
-    background: linear-gradient(rgb(120, 191, 235) 0%, rgb(135, 206, 250) 100%);
+    // background: linear-gradient(rgb(120, 191, 235) 0%, rgb(135, 206, 250) 100%);
+    background: transparent;
     top: var(--navbar-height);
 }
 .btn.btn-default{
-    background-color: #009081b3;
+    border-color: #8014f1;
+    background-color: #8014f1;
     color: #fff;
     font-size: 10px;
     font-weight: 500;
@@ -44,6 +46,7 @@ body{
         opacity: 1.8;
         border-radius: 10px;
         z-index: 11111111;
+        display: none;
     }
 }
 @media(min-width: 992px){
@@ -86,33 +89,40 @@ body{
     color: #fff;
     opacity: 0.8;
 }
-.widget.shortcut-widget-box{
-    background-image: radial-gradient(circle 248px at center, #008f90bd 5%, #008b8b 46%, #008b8b 122%);
-    padding: 20px;
-    border-radius: 10px;
-    position: relative;
-    display: grid;
-    justify-content: center;
-    // width: 80%;
+// .widget.shortcut-widget-box{
+//     background-image: radial-gradient(circle 248px at center, #008f90bd 5%, #008b8b 46%, #008b8b 122%);
+//     padding: 20px;
+//     border-radius: 10px;
+//     position: relative;
+//     display: grid;
+//     justify-content: center;
+//     // width: 80%;
+// }
+@media (min-width: 992px){
+    .col-lg-3 {
+        max-width: 15%;
+    }
 }
+
 .divider{
     visibility: hidden;
 }
 .link-content{
     color: black !important;
 }
-.ellipsis{
-    color: #2e2d2de3;
-    font-weight: 400;
-    // font-size: 12px;
-    z-index: 1;
-}
+// .ellipsis{
+//     color: #2e2d2de3;
+//     font-weight: 400;
+//     // font-size: 12px;
+//     z-index: 1;
+// }
 .static-area{
     color: #000000c7 !important;
 }
 .form-control{
     color: black;
 }
+
 @media (min-width: 1200px){
     .container{
         max-width: 1824px;
@@ -133,11 +143,12 @@ body{
     background-color: #009081b3 !important;
 }
 
-.ce-block__content > div{
-    padding: 20px;
-    border-radius: 10px;
-    width: 80%;
-}
+// .ce-block__content > div{
+//     padding: 20px;
+//     border-radius: 10px;
+//     width: 80%;
+// }
+
 .widget.links-widget-box{
   background-image: radial-gradient(circle 248px at center, #008f90bd 5%, #008b8b 46%, #008b8b 122%);
     padding: 15px;
@@ -214,3 +225,19 @@ body{
   -moz-transition: all 0.2s;
   transition: all 0.2s;
 }
+#navbar-breadcrumbs a{
+    color: white;
+    font-weight: 600;
+}
+#navbar-breadcrumbs li.disabled a {
+    color: white;
+}
+// .search-bar{
+//     visibility: hidden;
+// }
+.notifications-icon{
+    display: none;
+}
+// .dropdown-help{
+//     visibility: hidden;
+// }

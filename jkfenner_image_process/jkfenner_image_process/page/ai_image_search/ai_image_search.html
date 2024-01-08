@@ -1,225 +1,48 @@
+<!-- {% extends 'templates/form.html' %} -->
+
+<!-- {% block script %}
+    {{ frappe.form_script('ai_image_search.js') }}
+{% endblock %} -->
+
+<!-- {% block page_content %} -->
+
 <div class="row layout-main">
-    <div class="col-md-5 layout-main-section-wrapper">
+    <div class="col-md-12 layout-main-section-wrapper">
         <div class="layout-main-section">
             <div class="page-form row hide"></div>
             <h3 class="ellipsis title-text">Search Image:</h3>
-            <div>
-                <div class="Neon Neon-theme-dragdropbox"> <input id="filer_input2" multiple="multiple" name="files[]"
-                        style="z-index: 999; opacity: 0; width: 320px; height: 200px; position: absolute; right: 0px; left: 0px; margin-right: auto; margin-left: auto;"
-                        type="file">
+            <div class="search-image-section">
+                <label for="finput" class="image_upload"  id="inputLabel">Click Here to upload image</label>
+                    <input type="file" multiple="false" class="previewImage" accept="image/*" id="finput">
+                    <div id="preview-image">
+                        <img src="https://avatars.mds.yandex.net/i?id=ac9425f0536b1cc38165d187ca0db7fcfce1f2f6-9181395-images-thumbs&n=13" />
+                    </div>
+                <!-- <div class="Neon Neon-theme-dragdropbox"> 
+                    <input type="file"  accept="image/*" 
+                        style="z-index: 999; opacity: 0; width: 320px; height: 200px; position: absolute; right: 0px; left: 0px; margin-right: auto; margin-left: auto;">
                     <div class="Neon-input-dragDrop">
                         <div class="Neon-input-inner">
                             <div class="Neon-input-icon"><i class="fa fa-file-image-o"></i></div>
-                            <div class="Neon-input-text">
+                            <div class="Neon-input-text" >
+                                <img id="output" width="200" />
                                 <h3>Upload files here</h3>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
+                <!-- <div class="image-upload-container"></div> -->
             </div>
             <div class="btn-image-search">
-                <button class="btn btn-primary btn-sm-image primary-action" data-label="Pick the matching image" onclick="showMatchingImage()">Pick the matching image</button>    
+                <!-- <a href="http://jkfennerimageprocess.localhost.com:8000/app/ai-image-details" style="color: white;"> -->
+                    <button id="matchingImageButton" class="btn btn-primary btn-sm-image primary-action navigate-button" data-label="Pick the matching image" onclick="pickMatchingImage()">
+                        Pick the matching image
+                    </button>
+                <!-- </a> -->
             </div>
-        </div>
-        <br><br>
-        <div class="row">
-            <div class="col">
-                <div id="matchingImageSection" class="matching-image" >
-                    <img class="matchingimage w-100" id="matchingImage" src="/assets/jkfenner_image_process/images/E70657-1.jpg" alt="Matching Image">
-                    <p id="matchingPercentage" class="matching-percentage">Matching Percentage: 90%</p>
-                    <button class="btn btn-primary btn-sm primary-action-" >View Details</button>
-                </div>
-            </div>
-            <div class="col">
-                <div id="matchingImageSection" class="matching-image" >
-                    <img class="matchingimage w-100" id="matchingImage" src="/assets/jkfenner_image_process/images/E70657-1.jpg" alt="Matching Image">
-                    <p id="matchingPercentage" class="matching-percentage">Matching Percentage: 80%</p>
-                    <button class="btn btn-primary btn-sm primary-action-" >View Details</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <div id="matchingImageSection" class="matching-image" >
-                    <img class="matchingimage w-100" id="matchingImage" src="/assets/jkfenner_image_process/images/E70657-3.jpg" alt="Matching Image">
-                    <p id="matchingPercentage" class="matching-percentage">Matching Percentage: 70%</p>
-                    <button class="btn btn-primary btn-sm primary-action-" >View Details</button>
-                </div>
-            </div>
-            <div class="col">
-                <div id="matchingImageSection" class="matching-image" >
-                    <img class="matchingimage w-100" id="matchingImage" src="/assets/jkfenner_image_process/images/E70657-3.jpg" alt="Matching Image">
-                    <p id="matchingPercentage" class="matching-percentage">Matching Percentage: 60%</p>
-                    <button class="btn btn-primary btn-sm primary-action-" >View Details</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <div id="matchingImageSection" class="matching-image" >
-                    <img class="matchingimage w-100" id="matchingImage" src="/assets/jkfenner_image_process/images/E70657-5.jpg" alt="Matching Image">
-                    <p id="matchingPercentage" class="matching-percentage">Matching Percentage: 50%</p>
-                    <button class="btn btn-primary btn-sm primary-action-" >View Details</button>
-                </div>
-            </div>
-            <div class="col">
-                <div id="matchingImageSection" class="matching-image" >
-                    <img class="matchingimage w-100" id="matchingImage" src="/assets/jkfenner_image_process/images/E70657-6.jpg" alt="Matching Image">
-                    <p id="matchingPercentage" class="matching-percentage">Matching Percentage: 40%</p>
-                    <button class="btn btn-primary btn-sm primary-action-" >View Details</button>
-                </div>
-            </div>
-        </div>
-        
-        
-        <div class="layout-footer hide"></div>
+        </div>    
     </div>
+<!-- {% endblock %} -->
 
-    <div class="col-md-7 layout-main-section-wrapper">
-        <div class="layout-main-section">
-            <div class="page-form row hide"></div>
-            <h3 class="ellipsis title-text">Result Details:</h3>
-            <div class="image-search-div">
-                <img class="resultImage" src="/assets/jkfenner_image_process/images/E70657-1.jpg">
-            </div>
-
-            <!-- <h4 class="image-search-title">Generic Details</h4> -->
-            <table class="table table-bordered">
-                <caption class="captions-image">Generic Details</caption>
-                <tbody>
-                    <tr>
-                        <td scope="row">Domestic / Export</td>
-                        <td><!-- Add Domestic / Export here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">Part No.</td>
-                        <td><!-- Add Part No. here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">Part Description</td>
-                        <td><!-- Add Part Description here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">SAP Asset Code</td>
-                        <td><!-- Add SAP Asset Code here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">Type of Hose</td>
-                        <td><!-- Add Type of Hose here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">Toolings Created on</td>
-                        <td><!-- Add Tooling's Created on here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">EAN</td>
-                        <td><!-- Add EAN here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">UPC</td>
-                        <td><!-- Add UPC here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">Customer 1 (Cross Ref)</td>
-                        <td><!-- Add Customer 1 Cross Ref here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">Customer 2 (Cross Ref)</td>
-                        <td><!-- Add Customer 2 Cross Ref here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">Customer 3,4,5 (Cross Ref)</td>
-                        <td><!-- Add Customer 3,4,5 Cross Ref here --></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <table class="table table-bordered">
-                <caption class="captions-image">Application/Performance</caption>
-                <tbody>
-                    <tr>
-                        <td scope="row">Vehicle Model</td>
-                        <td><!-- Add Domestic / Export here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">Application (Radiator / Heater ) </td>
-                        <td><!-- Add Part No. here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">Vehicle manufacturer </td>
-                        <td><!-- Add Part Description here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">Vehicle Make/Year</td>
-                        <td><!-- Add SAP Asset Code here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">Sub Application </td>
-                        <td><!-- Add Type of Hose here --></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <table class="table table-bordered">
-                <caption class="captions-image">Dimensions</caption>
-                <tbody>
-                    <tr>
-                        <td scope="row">Inner Diameter A (MM)</td>
-                        <td><!-- Add Domestic / Export here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">Inner Diameter B (MM)</td>
-                        <td><!-- Add Part No. here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">Thickness  </td>
-                        <td><!-- Add Part Description here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">Outer Diameter A (mm)</td>
-                        <td><!-- Add SAP Asset Code here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">Outer Diameter B (mm) </td>
-                        <td><!-- Add Type of Hose here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">Central axis length (mm)</td>
-                        <td><!-- Add Type of Hose here --></td>
-                    </tr>
-                    <tr>
-                        <td scope="row">Product weight (grams) </td>
-                        <td><!-- Add Type of Hose here --></td>
-                    </tr> 
-                </tbody>
-            </table>
-            
-            <!-- <form class="image-search-form">
-            <div class="row">
-                <div class="col">
-                    <h4 class="image-search-title">Generic Details</h4>
-                    <div class="form-group-image">
-                        <label for="formGroupExampleInput">Domestic / Export</label>
-                        <input type="text" class="form-control" id="formGroupExampleInput">
-                    </div>
-                    
-                </div>
-                <div class="col form-group">
-                    <h4 class="image-search-title">Application/Performance</h4>
-                    <label for="formGroupExampleInput">Vehicle Model</label>
-                    <input type="text" class="form-control" id="formGroupExampleInput">
-                </div>
-            </div>
-        </form> -->
-        </div>
-    </div>
-    
-</div>
-
-<!-- <script>
-    new Splide( '#image-slider' ).mount();
-  </script> -->
+  
 
  

@@ -108,7 +108,7 @@
       text-transform: uppercase;
       margin-top: 10px;
       cursor: pointer;
-      background: linear-gradient(#44bcb1, #009081fa) padding-box, linear-gradient( var(--angle), #07ebff, #44a424d4 ) border-box;
+      background: linear-gradient(#641effab, #a307dd) padding-box, linear-gradient( var(--angle), #c9b3d1b8, #641effd1 ) border-box;
         animation: 1s rotate linear infinite;
     }
     @keyframes rotate {
@@ -273,7 +273,8 @@
     .toggle {
       background-color: #512da8;
       height: 100%;
-      background: linear-gradient(to right, #82fff2, #009081b5);
+      /* background: linear-gradient(to right, #82fff2, #009081b5);*/
+      background:linear-gradient(to bottom,#641effab 0,#a307dd 100%);
       color: #fff;
       position: relative;
       left: -100%;
@@ -486,8 +487,12 @@
         .btn.btn-primary {
           background-color: #009081;
         }
-       
-    
+       @media(max-width:768){
+        .forgot-password-message{
+          margin-left: 25px;
+        } 
+       }
+  
     </style>
   </head>
   
@@ -617,7 +622,7 @@
                   <button class="hidden" id="login">Sign In</button>
                 </div>
                 <div class="toggle-panel toggle-right">
-                  <img class="app-logo" src="/files/JK-finner.png" style="bottom: 45px;">
+                  <img class="app-logo" src="/files/Login_JK-finner.png" style="bottom: 45px;">
                   <h1>Welcome, User!</h1>
                   <p>A Pioneer Industrial house driven by Efficiency, Quality and reliability</p>
                   <!-- <button class="hidden" id="register">Sign Up</button> -->

@@ -1,0 +1,24 @@
+{
+ "content": null,
+ "creation": "2024-01-05 14:53:48.815726",
+ "docstatus": 0,
+ "doctype": "Page",
+ "icon": "",
+ "idx": 0,
+ "modified": "2024-01-05 14:55:24.724974",
+ "modified_by": "Administrator",
+ "module": "JKfenner Image Process",
+ "name": "ai-image-details",
+ "owner": "Administrator",
+ "page_name": "ai-image-details",
+ "roles": [
+  {
+   "role": "Image Searcher"
+  }
+ ],
+ "script": null,
+ "standard": "Yes",
+ "style": null,
+ "system_page": 0,
+ "title": "View Image Details"
+}
