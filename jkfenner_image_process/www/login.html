@@ -108,8 +108,9 @@
       text-transform: uppercase;
       margin-top: 10px;
       cursor: pointer;
-      background: linear-gradient(#641effab, #a307dd) padding-box, linear-gradient( var(--angle), #c9b3d1b8, #641effd1 ) border-box;
-        animation: 1s rotate linear infinite;
+      /* background: linear-gradient(#641effab, #a307dd) padding-box, linear-gradient( var(--angle), #c9b3d1b8, #641effd1 ) border-box; */
+      background-image: linear-gradient(to bottom, #651eff, #691dfd, #6d1bfb, #711af9, #7418f7);;  
+      animation: 1s rotate linear infinite;
     }
     @keyframes rotate {
       to {
@@ -262,7 +263,7 @@
       transition: all 0.6s ease-in-out;
       border-radius: 0px 0 200px 200px;
       z-index: 1000;
-      box-shadow: inset 0 -3em 3em rgb(0 200 0 / 33%), 0 0 0 5px white, 0.2em 0.9em 2.4em #029989;
+      box-shadow: inset 0 -0em 0em rgba(132, 132, 132, 0.33), 0 0 0 5px white, 0.2em 0.9em 2.4em #7e807f;
     }
     
     .container.active .toggle-container {
@@ -271,10 +272,10 @@
     }
     
     .toggle {
-      background-color: #512da8;
+       background-image: linear-gradient(to bottom, #651eff, #691dfd, #6d1bfb, #711af9, #7418f7);
       height: 100%;
       /* background: linear-gradient(to right, #82fff2, #009081b5);*/
-      background:linear-gradient(to bottom,#641effab 0,#a307dd 100%);
+      /* background:linear-gradient(to bottom,#641effab 0,#a307dd 100%); */
       color: #fff;
       position: relative;
       left: -100%;

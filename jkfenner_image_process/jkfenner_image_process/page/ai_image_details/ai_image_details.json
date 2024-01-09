@@ -5,7 +5,7 @@
  "doctype": "Page",
  "icon": "",
  "idx": 0,
- "modified": "2024-01-05 14:55:24.724974",
+ "modified": "2024-01-08 21:07:43.268838",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "ai-image-details",
@@ -14,6 +14,9 @@
  "roles": [
   {
    "role": "Image Searcher"
+  },
+  {
+   "role": "All"
   }
  ],
  "script": null,
