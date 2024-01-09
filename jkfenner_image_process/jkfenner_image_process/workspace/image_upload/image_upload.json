@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"72X2PKHUmj\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">JK Fenner Image Process</span>\",\"col\":12}},{\"id\":\"VDzsFfmcf-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New SKU Upload\",\"col\":3}},{\"id\":\"iXC0WCLsJh\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Image Search\",\"col\":3}},{\"id\":\"VF_a2uOYfQ\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Settings\",\"col\":3}},{\"id\":\"3CqpxydSxt\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Logs\",\"col\":3}}]",
+ "content": "[{\"id\":\"72X2PKHUmj\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">JK Fenner Image Process</span>\",\"col\":12}},{\"id\":\"VDzsFfmcf-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New SKU Upload\",\"col\":3}},{\"id\":\"iXC0WCLsJh\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Image Search\",\"col\":3}},{\"id\":\"nL_nyksxhT\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Settings\",\"col\":3}},{\"id\":\"ARpkcDozS-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Logs\",\"col\":3}}]",
  "creation": "2023-12-23 12:50:04.573754",
  "custom_blocks": [],
  "docstatus": 0,
@@ -12,7 +12,7 @@
  "is_hidden": 0,
  "label": "Image Upload",
  "links": [],
- "modified": "2024-01-09 15:27:55.050312",
+ "modified": "2024-01-09 18:33:50.508257",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "Image Upload",
@@ -35,21 +35,21 @@
    "color": "Grey",
    "doc_view": "List",
    "label": "Logs",
-   "link_to": "Activity Log",
-   "type": "DocType"
+   "type": "URL",
+   "url": "http://jkfennerimageprocess.localhost.com:8000/app/logs"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Settings",
+   "type": "URL",
+   "url": "http://jkfennerimageprocess.localhost.com:8000/app/users"
   },
   {
    "color": "Green",
    "doc_view": "List",
    "label": "New SKU Upload",
    "link_to": "JKFenner Image AI",
-   "type": "DocType"
-  },
-  {
-   "color": "Grey",
-   "doc_view": "List",
-   "label": "Settings",
-   "link_to": "User",
    "type": "DocType"
   }
  ],

@@ -26,9 +26,8 @@ body{
 }
 .btn.btn-default{
     border-color: #8014f1;
-    background-color:#8014f1 ;
+    background-image: linear-gradient(to bottom, #651eff, #691dfd, #6d1bfb, #711af9, #7418f7);
     color: #fff;
-    // font-size: 10px;
     height: var(--btn-height);
     margin-left: var(--margin-sm, 8px);
     border-radius: var(--border-radius);
@@ -38,12 +37,20 @@ body{
     font-size: var(--text-md);
     // font-weight: 500;
 }
+.btn-sm{
+    background-image: linear-gradient(to bottom, #651eff, #691dfd, #6d1bfb, #711af9, #7418f7);
+}
 .page-container{
     // background-image: (linear-gradient(to top,#0ba360 0%,#3cba92 100%));
 //  background-image: linear-gradient(to right,#141e30,#243b55)!important;
     background: #f9fafa;
 }
-
+.layout-side-section{
+    display: none;
+}
+.dropdown-help{
+    display: none !important;
+}
 @media (min-width: 992px){
     [data-page-route=Workspaces] 
     .layout-main .layout-side-section {
@@ -159,15 +166,7 @@ body{
 //     width: 80%;
 // }
 
-.widget.links-widget-box{
-  
-    padding: 15px;
-    border-radius: 10px;
-    /* position: relative; */
-     display: grid; 
-     justify-content: center; 
-    width: 80%;
-}
+
 
 
 .Neon {

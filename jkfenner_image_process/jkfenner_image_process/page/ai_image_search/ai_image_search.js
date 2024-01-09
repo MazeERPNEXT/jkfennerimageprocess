@@ -25,7 +25,7 @@ class AiImageSearchPage {
         frappe.set_route('Form', 'ai-image-details');
     }
 
-	previewImage(imagePath) {
+	previewImage() {
 		console.log("previewImage");
 					// var canvas = document.getElementById('canv1');
 					// var context = canvas.getContext('2d');
@@ -43,12 +43,9 @@ class AiImageSearchPage {
 		var myImg = new Image();
 		myImg.onload = function() {
 		context.drawImage(myImg, 0,0);
-		myImg.style.maxWidth = '50px';
-		document.getElementById('preview-image').appendChild(myImg);
 		};
-		// myImg.src = '/assets/jkfenner_image_process/images/E70657-1.jpg';
-		// myImg.maxWidth = '50px';
-		myImg.src = imagePath;
+		myImg.src = '/assets/jkfenner_image_process/images/E70657-1.jpg';
+		myImg.maxWidth = '50px';
 		$("#preview-image").html(myImg)
 	}
 }

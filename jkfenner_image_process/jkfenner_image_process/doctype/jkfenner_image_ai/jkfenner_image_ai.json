@@ -48,6 +48,8 @@
   "product_weight_grams",
   "section_break_ryypm",
   "image_upload",
+  "multiple_image_upload_section",
+  "multiple_image_upload",
   "section_break_1afpv",
   "image__1",
   "column_break_wdykv",
@@ -304,12 +306,11 @@
   {
    "fieldname": "section_break_ryypm",
    "fieldtype": "Section Break",
-   "label": "Image Multiple Sizes"
+   "label": "Multiple Image Sizes"
   },
   {
    "fieldname": "image_upload",
    "fieldtype": "Table",
-   "label": "image upload",
    "options": "Image Details page Multiple size"
   },
   {
@@ -329,11 +330,21 @@
   {
    "fieldname": "section_break_1afpv",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "multiple_image_upload_section",
+   "fieldtype": "Section Break",
+   "label": "Multiple Image Upload"
+  },
+  {
+   "fieldname": "multiple_image_upload",
+   "fieldtype": "Table",
+   "options": "Multiple Image Upload"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-01-08 18:09:45.702438",
+ "modified": "2024-01-09 19:26:50.467983",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "JKFenner Image AI",

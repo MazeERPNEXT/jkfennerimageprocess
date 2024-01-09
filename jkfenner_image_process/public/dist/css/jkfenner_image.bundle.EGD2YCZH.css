@@ -27,7 +27,7 @@ body {
 }
 .btn.btn-default {
   border-color: #8014f1;
-  background-color: #8014f1;
+  background-image: linear-gradient(to bottom, #651eff, #691dfd, #6d1bfb, #711af9, #7418f7);
   color: #fff;
   height: var(--btn-height);
   margin-left: var(--margin-sm, 8px);
@@ -37,8 +37,17 @@ body {
   box-shadow: var(--btn-shadow);
   font-size: var(--text-md);
 }
+.btn-sm {
+  background-image: linear-gradient(to bottom, #651eff, #691dfd, #6d1bfb, #711af9, #7418f7);
+}
 .page-container {
   background: #f9fafa;
+}
+.layout-side-section {
+  display: none;
+}
+.dropdown-help {
+  display: none !important;
 }
 @media (min-width: 992px) {
   [data-page-route=Workspaces] .layout-main .layout-side-section {
@@ -117,13 +126,6 @@ body {
 .data-pill {
   background-color: #009081b3 !important;
 }
-.widget.links-widget-box {
-  padding: 15px;
-  border-radius: 10px;
-  display: grid;
-  justify-content: center;
-  width: 80%;
-}
 .Neon {
   font-family: sans-serif;
   font-size: 14px;
@@ -189,4 +191,4 @@ body {
 .notifications-icon {
   display: none;
 }
-/*# sourceMappingURL=jkfenner_image.bundle.3YJZSJE5.css.map */
+/*# sourceMappingURL=jkfenner_image.bundle.EGD2YCZH.css.map */
