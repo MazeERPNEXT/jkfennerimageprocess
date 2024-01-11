@@ -1,34 +1,59 @@
-// Copyright (c) 2023, muthukumarmazeworks and contributors
-// For license information, please see license.txt
-
 frappe.ui.form.on('JKFenner Image AI', {
-	refresh: function (frm, cdt, cdn) {
-		// frappe.call({
-		// 	method: 'jkfenner_image_process.jkfenner_image_process.jkfenner_image_process.jkfenner_image_ai.get_timeline_html',
-		// 	callback: function (res) {
-		// 		var template = res.message;
-		// 		frm.set_df_property('html_fieldname', 'options', frappe.render(template, { rows: [] }));
-		// 		frm.refresh_field('html_fieldname');
-		// 	}
-		// });
-	},
 	onload: function (frm) {
 		// Your onload logic here
+		if(frm.preview_image_area == null)
+		{ 
+			frm.preview_image_area = $('<div class="preview-image row">').appendTo(
+				frm.fields_dict.preview_image_html.wrapper
+			);
+		}	
+	},
+	get_image: function (frm) {
+
+		if(!!frm.preview_image_area){
+			let new_image_div = frm.doc.multiple_image_upload.map((file)=> {
+				return `<div class="card col-2 ml-3 mr-3" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s; width: 100%;border: 2px solid darkgray;border-top-left-radius: 10px;border-top-right-radius: 10px;height: 284px;" >   
+				<img src="${!!file.images ? file.images : "/assets/jkfenner_image_process/images/sku_no_img.png"}"  alt="no-image" style="width:100%;border-top-left-radius: 10px;border-top-right-radius: 10px; position:relative; top:15px;height: 193px;object-fit: scale-down;">
+				<div class="container" style="padding: 15px 16px;">
+					<p>${!!file.images ? file.images.split('/').slice(-1).pop() : "No Image"}</p>    
+				</div>
+			</div>`
+			});
+			$(frm.preview_image_area).html(new_image_div);
+		}
+
+		// if (frm.doc.multiple_image_upload.length >= 1) {
+		// 	frm.doc.multiple_image_upload.forEach(function (item) {
+				
+		// 		 `<img src="/assets/jkfenner_image_process/images/E70657-2.jpg " style="width: 95%; position: relative; left: 10px; top: 10px;"/>`
+				
+		// 		 frm.set_value(`<img src="/assets/jkfenner_image_process/images/E70657-2.jpg " style="width: 95%; position: relative; left: 10px; top: 10px;" />`)
+		// 	});
+
+		// 	frm.set_value(`<img src="/assets/jkfenner_image_process/images/E70657-2.jpg " style="width: 95%; position: relative; left: 10px; top: 10px;" />`);
+		// } else {
+		// 	frm.set_value(`<img src="/assets/jkfenner_image_process/images/sku_no_img.png " style="width: 95%; position: relative; left: 10px; top: 10px;" />`);
+		// }
+
+
+	},
+	after_save: function (frm) {
+		// Your custom logic when a row is removed from the payment_entry_child table
+		console.log('removed');
+		// Example: Update the image preview when a row is removed
+		frm.trigger('get_image');
+	},
+	refresh: function (frm) {
+		frm.trigger('get_image');
 	}
 });
 
-// frappe.ui.form.on('Target Doctype', 'refresh', function(frm, cdt, cdn){
-// 	frappe.call({
-// 	  'method': 'frappe.client.get_list',
-// 	  'args': {
-// 		'doctype': 'Source DocType',
-// 		'columns': ['*']
-// 		'filters': [['Source DocType', 'link_reference', '=', frm.doc.name]]
-// 	  },
-// 	  'callback': function(res){
-// 		  var template = "<table><tbody>{% for (var row in rows) { %}<tr>{% for (var col in rows[row]) { %}<td>rows[row][col]</td>{% } %}</tr>{% } %}</tbody></table>",
-// 		 frm.set_df_property('html_fieldname', 'options', frappe.render(template, {rows: res.message});
-// 		 frm.refresh_field('html_fieldname');
-// 	  }
-// 	})
-//  });
+
+frappe.ui.form.on('Multiple Image Upload', {
+	multiple_image_upload_remove : function(frm){
+		frm.trigger('get_image');		
+	},
+	multiple_image_upload_add : function(frm){
+		frm.trigger('get_image');
+	}
+});

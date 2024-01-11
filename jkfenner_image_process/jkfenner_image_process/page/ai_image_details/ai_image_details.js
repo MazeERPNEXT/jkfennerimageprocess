@@ -65,4 +65,41 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 			});
 		}
 	});	
+
+	$(document).ready(function() {
+		var $sliderValue = $('#slider-value');
+		var $imageElement = $('#slider-image');
+		var $prevButton = $('.prev');
+		var $nextButton = $('.next');
+  
+		var images = [
+		  { url: "/assets/jkfenner_image_process/images/E70657-1.jpg", percentage: 90 },
+		  { url: "/assets/jkfenner_image_process/images/E70657-4.jpg", percentage: 60 },
+		  { url: "/assets/jkfenner_image_process/images/E70657-2.jpg", percentage: 70 },
+		  { url: "/assets/jkfenner_image_process/images/E70657-3.jpg", percentage: 80 },
+		  
+		  // Add more image URLs and percentages as needed
+		];
+  
+		var currentIndex = 0;
+  
+		function updateSliderValue() {
+		  var currentImage = images[currentIndex];
+		  $sliderValue.text('Matching Percentage: ' + currentImage.percentage + '%');
+		  $imageElement.attr('src', currentImage.url);
+		}
+  
+		// Set initial value
+		updateSliderValue();
+  
+		$prevButton.on('click', function() {
+		  currentIndex = (currentIndex - 1 + images.length) % images.length;
+		  updateSliderValue();
+		});
+  
+		$nextButton.on('click', function() {
+		  currentIndex = (currentIndex + 1) % images.length;
+		  updateSliderValue();
+		});
+	  });
 }

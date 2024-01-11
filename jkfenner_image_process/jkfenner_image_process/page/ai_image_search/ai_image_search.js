@@ -16,8 +16,12 @@ class AiImageSearchPage {
         $(frappe.render_template("ai_image_search", {})).appendTo(this.page.body);
 
         // Attach the function to the button click event using the class
-        $('.navigate-button').on('click', () => this.navigateToAiImageDetails());
-		$('.previewImage').on('click', () => this.previewImage());
+        $('.navigate-details').on('click', () => this.navigateToAiImageDetails());
+        $('.previewImage').on('click', () => this.previewImage());
+        $('.navigate-button').on('click', () => {
+            // Toggle the visibility of the target div
+            $('.preview-section').toggleClass('hide');
+        });
     }
 
     navigateToAiImageDetails() {
@@ -25,28 +29,32 @@ class AiImageSearchPage {
         frappe.set_route('Form', 'ai-image-details');
     }
 
-	previewImage() {
-		console.log("previewImage");
-					// var canvas = document.getElementById('canv1');
-					// var context = canvas.getContext('2d');
-					
-					// Clear the canvas and set the text
-					// context.clearRect(0, 0, canvas.width, canvas.height);
-					// context.fillText('Hello, World!', 10, 50);
-				
-					// // Convert the canvas content to an image data URL
-					// var imageDataURL = canvas.toDataURL('/assets/jkfenner_image_process/images/jk_fenner_background.png');
-				
-					// // Replace the content of the image tag with the data URL
-					// $('#canv1').attr('src', imageDataURL);
+    previewImage() {
+        console.log("previewImage");
+        // var canvas = document.getElementById('canv1');
+        // var context = canvas.getContext('2d');
+        
+        // Clear the canvas and set the text
+        // context.clearRect(0, 0, canvas.width, canvas.height);
+        // context.fillText('Hello, World!', 10, 50);
+    
+        // // Convert the canvas content to an image data URL
+        // var imageDataURL = canvas.toDataURL('/assets/jkfenner_image_process/images/jk_fenner_background.png');
+    
+        // // Replace the content of the image tag with the data URL
+        // $('#canv1').attr('src', imageDataURL);
 
-		var myImg = new Image();
-		myImg.onload = function() {
-		context.drawImage(myImg, 0,0);
-		};
-		myImg.src = '/assets/jkfenner_image_process/images/E70657-1.jpg';
-		myImg.maxWidth = '50px';
-		$("#preview-image").html(myImg)
-	}
+        var myImg = new Image();
+        myImg.onload = function() {
+            context.drawImage(myImg, 0,0);
+        };
+        myImg.src = '/assets/jkfenner_image_process/images/E70657-1.jpg';
+        myImg.maxWidth = '50px';
+        $("#preview-image").html(myImg);
+    }
 }
 
+$(document).ready(function () {
+    // Initialize your page
+    frappe.pages['ai-image-search'].on_page_load();
+});

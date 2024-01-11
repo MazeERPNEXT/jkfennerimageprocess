@@ -1,5 +1,5 @@
 body{
-    background: #e7e8e9!important;
+    background:#f9fafa !important;
 }
 .page-body{
     background-color: #f9fafa;
@@ -49,7 +49,7 @@ body{
     display: none;
 }
 .dropdown-help{
-    display: none !important;
+    // display: none !important;
 }
 @media (min-width: 992px){
     [data-page-route=Workspaces] 

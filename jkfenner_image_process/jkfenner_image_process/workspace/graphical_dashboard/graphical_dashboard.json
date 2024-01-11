@@ -31,7 +31,7 @@
    "type": "Link"
   }
  ],
- "modified": "2024-01-02 21:20:36.232883",
+ "modified": "2024-01-10 11:55:37.856433",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "Graphical Dashboard",
@@ -41,7 +41,7 @@
  "public": 1,
  "quick_lists": [],
  "roles": [],
- "sequence_id": 5.0,
+ "sequence_id": 7.0,
  "shortcuts": [],
  "title": "Graphical Dashboard"
 }
