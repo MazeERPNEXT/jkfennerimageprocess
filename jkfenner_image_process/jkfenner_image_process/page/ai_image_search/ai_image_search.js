@@ -17,7 +17,7 @@ class AiImageSearchPage {
 
         // Attach the function to the button click event using the class
         $('.navigate-details').on('click', () => this.navigateToAiImageDetails());
-        $('.previewImage').on('click', () => this.previewImage());
+        $('.previewImage').on('change', (e) => this.previewImage(e)); // Use arrow function to retain 'this' context
         $('.navigate-button').on('click', () => {
             // Toggle the visibility of the target div
             $('.preview-section').toggleClass('hide');
@@ -29,28 +29,36 @@ class AiImageSearchPage {
         frappe.set_route('Form', 'ai-image-details');
     }
 
-    previewImage() {
-        console.log("previewImage");
-        // var canvas = document.getElementById('canv1');
-        // var context = canvas.getContext('2d');
-        
-        // Clear the canvas and set the text
-        // context.clearRect(0, 0, canvas.width, canvas.height);
-        // context.fillText('Hello, World!', 10, 50);
-    
-        // // Convert the canvas content to an image data URL
-        // var imageDataURL = canvas.toDataURL('/assets/jkfenner_image_process/images/jk_fenner_background.png');
-    
-        // // Replace the content of the image tag with the data URL
-        // $('#canv1').attr('src', imageDataURL);
+    previewImage(event) {
+        var input = event.target;
+        var reader = new FileReader();
+        var canvas = document.getElementById('canv1');
+        var context = canvas.getContext('2d');
 
-        var myImg = new Image();
-        myImg.onload = function() {
-            context.drawImage(myImg, 0,0);
+        reader.onload = function () {
+            var img = new Image();
+            img.onload = function () {
+                // Clear the canvas
+                context.clearRect(0, 0, canvas.width, canvas.height);
+
+                // Set canvas dimensions to match the image
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                // Draw the image on the canvas
+                context.drawImage(img, 0, 0);
+
+                // Convert the canvas content to an image data URL
+                var imageDataURL = canvas.toDataURL();
+
+                // Replace the content of the image tag with the data URL
+                $('#uploaded-image').attr('src', imageDataURL);
+            };
+            img.src = reader.result;
         };
-        myImg.src = '/assets/jkfenner_image_process/images/E70657-1.jpg';
-        myImg.maxWidth = '50px';
-        $("#preview-image").html(myImg);
+
+        // Read the selected file as a data URL
+        reader.readAsDataURL(input.files[0]);
     }
 }
 

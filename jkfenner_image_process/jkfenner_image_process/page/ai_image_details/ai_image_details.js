@@ -74,6 +74,10 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
   
 		var images = [
 		  { url: "/assets/jkfenner_image_process/images/E70657-1.jpg", percentage: 90 },
+		  { url: "/assets/jkfenner_image_process/images/R7404808 W.jpg", percentage: 20 },
+		  { url: "/assets/jkfenner_image_process/images/R7404809 W.jpg", percentage: 30 },
+		  { url: "/assets/jkfenner_image_process/images/E70657-6.jpg", percentage: 40 },
+		  { url: "/assets/jkfenner_image_process/images/E70657-5.jpg", percentage: 50 },
 		  { url: "/assets/jkfenner_image_process/images/E70657-4.jpg", percentage: 60 },
 		  { url: "/assets/jkfenner_image_process/images/E70657-2.jpg", percentage: 70 },
 		  { url: "/assets/jkfenner_image_process/images/E70657-3.jpg", percentage: 80 },

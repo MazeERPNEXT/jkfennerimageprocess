@@ -430,7 +430,11 @@ canvas {
     top: 11px;
   }
 }
-
+.preview_search_image{
+  max-height: 384px;
+  object-fit: scale-down;
+  width: 100%;
+}
 
 
 

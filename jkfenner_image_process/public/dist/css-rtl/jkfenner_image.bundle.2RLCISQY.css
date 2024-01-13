@@ -1,4 +1,4 @@
-/* ../../../../../tmp/tmp-44662-GTLL8gB5Ln7w/jkfenner_image_process/jkfenner_image_process/public/scss/jkfenner_image.bundle.css */
+/* ../../../../../tmp/tmp-5246-4w0taO2prr1i/jkfenner_image_process/jkfenner_image_process/public/scss/jkfenner_image.bundle.css */
 body {
   background: #f9fafa !important;
 }
@@ -28,7 +28,7 @@ body {
   background-image: linear-gradient(to bottom, #651eff, #691dfd, #6d1bfb, #711af9, #7418f7);
   color: #fff;
   height: var(--btn-height);
-  margin-left: var(--margin-sm, 8px);
+  margin-right: var(--margin-sm, 8px);
   border-radius: var(--border-radius);
   padding: 4px 10px;
   border: none;
@@ -46,7 +46,7 @@ body {
 }
 @media (min-width: 992px) {
   [data-page-route=Workspaces] .layout-main .layout-side-section {
-    padding-right: 15px;
+    padding-left: 15px;
     background-image: url(/assets/jkfenner_image_process/images/jk_fenner_background.png);
     display: block;
     overflow: hidden;
@@ -80,9 +80,9 @@ body {
   position: absolute;
   z-index: 0;
   top: -23px;
-  right: -7px;
+  left: -7px;
   font-size: 4rem;
-  transform: rotate(14deg) !important;
+  transform: rotate(-14deg) !important;
   color: #fff;
   opacity: 0.8;
 }
@@ -186,4 +186,4 @@ body {
 .notifications-icon {
   display: none;
 }
-/*# sourceMappingURL=jkfenner_image.bundle.2QHKWRYP.css.map */
+/*# sourceMappingURL=jkfenner_image.bundle.2RLCISQY.css.map */
