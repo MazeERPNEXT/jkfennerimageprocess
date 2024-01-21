@@ -1,6 +1,6 @@
 import frappe
 import os
-from jkfennerai.inference import predict
+# from jkfennerai.inference import predict
 
 
 @frappe.whitelist(allow_guest=True)
