@@ -5,3 +5,5 @@
 tags
 jkfenner_image_process/docs/current
 node_modules/
+*.feather
+*.pth

@@ -36,7 +36,7 @@
             </div>
             <div class="btn-image-search">
                 <!-- <a href="http://jkfennerimageprocess.localhost.com:8000/app/ai-image-details" style="color: white;"> -->
-                    <button id="matchingImageButton" class="btn btn-primary btn-sm-image primary-action navigate-button" data-label="Pick the matching image" onclick="pickMatchingImage()">
+                    <button id="matchingImageButton" class="btn btn-primary btn-sm-image primary-action navigate-button" data-label="Pick the matching image">
                         Pick the matching image
                     </button>
                 <!-- </a> -->
@@ -53,142 +53,8 @@
             <div class="page-form row hide"></div>
             <!-- <h3 class="ellipsis title-text">Search Image:</h3> -->
         <div class="preview-section hide">
-            <div class="row row-cols-1 row-cols-md-4 g-4">
-                <!-- <div class="col">
-                  <div class="card-image">
-                    <img src="/assets/jkfenner_image_process/images/E70657-1.jpg" class="card-img-top" alt="...">
-                    <div class="card-body-image">
-                      <h5 class="card-title-image">Matching Percentage : 90%</h5>
-                      <button class="btn btn-primary btn-sm primary-action-image" >View Details</button>
-                    </div>
-                  </div>
-                </div> -->
-                <div class="col">
-                    <div class="card-image">
-                        <div class="card-body-image" style="height: 440px;">
-                            <h5 class="card-title-image">Matching Percentage: 90%</h5>
-                            <div class="card-image-search">
-                                <img style="height: 221px;object-fit: scale-down;" class="matchingimage w-100" id="matchingImage" src="/assets/jkfenner_image_process/images/E70657-1.jpg" alt="Matching Image">
-                            </div>
-                            <p>Struct dim Similarty Score: 100.00</p>
-                            <p>Image Similarty Score:67.09</p>
-                            <p>ID A:20.0,ID B:30.0,ID C:235.0</p>
-                            <button class="btn btn-primary btn-sm primary-action-image navigate-details" >View Details</button>
-                        </div> 
-                    </div>
-                    
-                </div>
-                <div class="col">
-                    <div class="card-image">
-                        <div class="card-body-image" style="height: 440px;">
-                            <h5 class="card-title-image">Matching Percentage: 80%</h5>
-                            <div class="card-image-search">
-                                <img style="height: 221px;object-fit: scale-down;" class="matchingimage w-100" id="matchingImage" src="/assets/jkfenner_image_process/images/E70657-3.jpg" alt="Matching Image">
-                            </div>
-                            <p>Struct dim Similarty Score: 60.00</p>
-                            <p>Image Similarty Score:50.09</p>
-                            <p>ID A:30.0,ID B:10.0,ID C:105.0</p>
-                            <button class="btn btn-primary btn-sm primary-action-image navigate-details" >View Details</button>
-                        </div> 
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card-image">
-                        <div class="card-body-image" style="height: 440px;">
-                            <h5 class="card-title-image">Matching Percentage: 70%</h5>
-                            <div class="card-image-search">
-                                <img style="height: 221px;object-fit: scale-down;" class="matchingimage w-100" id="matchingImage" src="/assets/jkfenner_image_process/images/E70657-2.jpg" alt="Matching Image">
-                            </div>
-                            <p>Struct dim Similarty Score: 70.25</p>
-                            <p>Image Similarty Score:46.09</p>
-                            <p>ID A:12.9,ID B:20.6,ID C:125.0</p>
-                            <button class="btn btn-primary btn-sm primary-action-image navigate-details" >View Details</button>
-                        </div> 
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card-image">
-                        <div class="card-body-image" style="height: 440px;">
-                            <h5 class="card-title-image">Matching Percentage: 60%</h5>
-                            <div class="card-image-search">
-                                <img style="height: 221px;object-fit: scale-down;" class="matchingimage w-100" id="matchingImage" src="/assets/jkfenner_image_process/images/E70657-4.jpg" alt="Matching Image">
-                            </div>
-                            <p>Struct dim Similarty Score: 65.20</p>
-                            <p>Image Similarty Score:26.09</p>
-                            <p>ID A:50.0,ID B:20.2,ID C:10.0</p>
-                            <button class="btn btn-primary btn-sm primary-action-image navigate-details" >View Details</button>
-                        </div> 
-                    </div>
-                </div>
-              </div>
-              <div class="row row-cols-1 row-cols-md-4 g-4">
-                <!-- <div class="col">
-                  <div class="card-image">
-                    <img src="/assets/jkfenner_image_process/images/E70657-1.jpg" class="card-img-top" alt="...">
-                    <div class="card-body-image">
-                      <h5 class="card-title-image">Matching Percentage : 90%</h5>
-                      <button class="btn btn-primary btn-sm primary-action-image" >View Details</button>
-                    </div>
-                  </div>
-                </div> -->
-                <div class="col">
-                    <div class="card-image">
-                        <div class="card-body-image" style="height: 440px;">
-                            <h5 class="card-title-image">Matching Percentage: 50%</h5>
-                            <div class="card-image-search">
-                                <img style="height: 221px;object-fit: scale-down;" class="matchingimage w-100" id="matchingImage" src="/assets/jkfenner_image_process/images/E70657-5.jpg" alt="Matching Image">
-                            </div>
-                            <p>Struct dim Similarty Score: 55.26</p>
-                            <p>Image Similarty Score:52.09</p>
-                            <p>ID A:30.12,ID B:40.6,ID C:20.0</p>
-                            <button class="btn btn-primary btn-sm primary-action-image navigate-details" >View Details</button>
-                        </div> 
-                    </div>
-                    
-                </div>
-                <div class="col">
-                    <div class="card-image">
-                        <div class="card-body-image" style="height: 440px;">
-                            <h5 class="card-title-image">Matching Percentage: 40%</h5>
-                            <div class="card-image-search">
-                                <img style="height: 221px;object-fit: scale-down;" class="matchingimage w-100" id="matchingImage" src="/assets/jkfenner_image_process/images/E70657-6.jpg" alt="Matching Image">
-                            </div>
-                            <p>Struct dim Similarty Score: 49.25</p>
-                            <p>Image Similarty Score:67.52</p>
-                            <p>ID A:63.51,ID B:29.0,ID C:523.0</p>
-                            <button class="btn btn-primary btn-sm primary-action-image navigate-details" >View Details</button>
-                        </div> 
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card-image">
-                        <div class="card-body-image" style="height: 440px;">
-                            <h5 class="card-title-image">Matching Percentage: 30%</h5>
-                            <div class="card-image-search">
-                                <img style="height: 221px;object-fit: scale-down;" class="matchingimage w-100" id="matchingImage" src="/assets/jkfenner_image_process/images/R7404808 W.jpg" alt="Matching Image">
-                            </div>
-                            <p>Struct dim Similarty Score: 35.25</p>
-                            <p>Image Similarty Score:56.23</p>
-                            <p>ID A:53.29,ID B:36.12,ID C:23.0</p>
-                            <button class="btn btn-primary btn-sm primary-action-image navigate-details" >View Details</button>
-                        </div> 
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card-image">
-                        <div class="card-body-image" style="height: 440px;">
-                            <h5 class="card-title-image">Matching Percentage: 20%</h5>
-                            <div class="card-image-search">
-                                <img style="height: 221px;object-fit: scale-down;" class="matchingimage w-100" id="matchingImage" src="/assets/jkfenner_image_process/images/R7404809 W.jpg" alt="Matching Image">
-                            </div>
-                            <p>Struct dim Similarty Score: 20.85</p>
-                            <p>Image Similarty Score:26.56</p>
-                            <p>ID A:23.55,ID B:78.26,ID C:54.23</p>
-                            <button class="btn btn-primary btn-sm primary-action-image navigate-details" >View Details</button>
-                        </div> 
-                    </div>
-                </div>
-              </div>
+            
+              
             </div>
         </div>    
     </div>

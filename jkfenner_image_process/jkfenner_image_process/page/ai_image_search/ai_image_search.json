@@ -4,17 +4,13 @@
  "docstatus": 0,
  "doctype": "Page",
  "idx": 0,
- "modified": "2024-01-02 20:55:24.258031",
+ "modified": "2024-01-21 15:27:51.865743",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "ai-image-search",
  "owner": "Administrator",
  "page_name": "ai-image-search",
- "roles": [
-  {
-   "role": "Image Searcher"
-  }
- ],
+ "roles": [],
  "script": null,
  "standard": "Yes",
  "style": null,
