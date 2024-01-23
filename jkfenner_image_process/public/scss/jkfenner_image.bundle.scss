@@ -6,11 +6,27 @@ body{
 }
 .navbar{
     // background: linear-gradient(to bottom, #641eff 0, #a307dd 100%);
-    background-image: linear-gradient(to bottom, #651eff, #691dfd, #6d1bfb, #711af9, #7418f7);
+    background-image: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(54,196,180,1) 100%);
 }
 .navbar .navbar-nav .nav-link {
     color: white;
 }
+@media (min-width: 992px){
+    .layout-main-section {
+        border: none !important;
+    }
+}
+
+.layout-main-section{
+//    background-color: #f9fafa00 !important ;
+   background-position: bottom;
+   background-image: url(https://jkfenner.com/wp-content/uploads/2020/03/component.png);
+   background-size: cover;
+   background-repeat: no-repeat;
+//    border-radius: 10px;
+//    padding: 17px;
+}
+
 .form-tabs-list .form-tabs .nav-item .nav-link.active{
     background-color: #009081ab;
     border-radius: 10px;
@@ -25,8 +41,8 @@ body{
     top: var(--navbar-height);
 }
 .btn.btn-default{
-    border-color: #8014f1;
-    background-image: linear-gradient(to bottom, #651eff, #691dfd, #6d1bfb, #711af9, #7418f7);
+    border-color: #0fdecae3;
+    background-color: #018a7ce3;
     color: #fff;
     height: var(--btn-height);
     margin-left: var(--margin-sm, 8px);
@@ -106,15 +122,25 @@ body{
     color: #fff;
     opacity: 0.8;
 }
-// .widget.shortcut-widget-box{
-//     background-image: radial-gradient(circle 248px at center, #008f90bd 5%, #008b8b 46%, #008b8b 122%);
-//     padding: 20px;
-//     border-radius: 10px;
-//     position: relative;
-//     display: grid;
-//     justify-content: center;
-//     // width: 80%;
-// }
+.shortcut-widget-box{
+    // position: relative;
+    /* background: #7fffd4de; */
+    padding: 15px !important;
+    display: grid;
+    justify-content: center;
+    opacity: 1;
+    border: 2px solid #ffffff57;
+    transition: background-color 0.3s ease;
+    background-color: #2c3d6be0;
+    z-index: -2;
+    opacity: 1;
+}
+.widget-title{
+    color: white !important;
+}
+.widget-title:hover{
+    color: aliceblue;
+}
 @media (min-width: 992px){
     .col-lg-3 {
         max-width: 15%;
@@ -155,6 +181,21 @@ body{
 .navbar-home img{
     // width: 150px;
     max-height: 50px !important;
+}
+.codex-editor{
+    background-position: bottom;
+    background-image: url(https://jkfenner.com/wp-content/uploads/2020/03/component.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    padding: 17px;
+}
+.ce-block{
+    margin-bottom: 24px;
+}
+.ce-block__content{
+    background-color: #a9a9a95c;
+    border-radius: 5px;
 }
 .data-pill{
     background-color: #009081b3 !important;

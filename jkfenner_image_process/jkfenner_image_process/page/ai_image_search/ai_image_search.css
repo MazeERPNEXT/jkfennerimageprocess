@@ -1,3 +1,4 @@
+
 /* Create two equal columns that floats next to each other */
 .column {
     float: left;
@@ -10,6 +11,10 @@
     content: "";
     display: table;
     clear: both;
+  }
+  .layout-main-section{
+    background-color: white !important
+    ;
   }
 @media (max-width: 768px){
     .col-md-6.layout-main-section-wrapper-{
@@ -34,8 +39,8 @@
 }
 .btn-sm-image{
     /* background: #0090818a !important; */
-    border-color: #8014f1!important;
-    background-color: #8014f1!important;
+    border-color: #57b6ac!important;
+    background-color: #57b6ac!important;
     margin-top: 23px;
     font-size: 15px;
 }
@@ -309,7 +314,7 @@ body {
 #inputLabel {
   height: 100px;
   width: 600px;
-  background: #8014f1;
+  background: #57b6ac;
   position: relative;
   display: flex;
   align-items: center;
@@ -320,7 +325,7 @@ body {
   text-transform: uppercase;
   color: white;
   letter-spacing: 2px;
-  border: 1px solid #8014f1;
+  border: 1px solid #57b6ac;
 }
 #inputLabel::after {
   content: "";

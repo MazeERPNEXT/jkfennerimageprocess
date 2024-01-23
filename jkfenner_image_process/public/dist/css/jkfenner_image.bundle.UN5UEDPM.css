@@ -1,4 +1,4 @@
-/* ../../../../../tmp/tmp-5246-4w0taO2prr1i/jkfenner_image_process/jkfenner_image_process/public/scss/jkfenner_image.bundle.css */
+/* ../../../../../tmp/tmp-4984-7rqUl60LGkPk/jkfenner_image_process/jkfenner_image_process/public/scss/jkfenner_image.bundle.css */
 body {
   background: #f9fafa !important;
 }
@@ -6,7 +6,7 @@ body {
   background-color: #f9fafa;
 }
 .navbar {
-  background-image: linear-gradient(to bottom, #651eff, #691dfd, #6d1bfb, #711af9, #7418f7);
+  background-image: linear-gradient(0deg, rgb(34, 193, 195) 0%, rgb(54, 196, 180) 100%);
 }
 .navbar .navbar-nav .nav-link {
   color: white;
@@ -28,7 +28,7 @@ body {
   background-image: linear-gradient(to bottom, #651eff, #691dfd, #6d1bfb, #711af9, #7418f7);
   color: #fff;
   height: var(--btn-height);
-  margin-right: var(--margin-sm, 8px);
+  margin-left: var(--margin-sm, 8px);
   border-radius: var(--border-radius);
   padding: 4px 10px;
   border: none;
@@ -46,7 +46,7 @@ body {
 }
 @media (min-width: 992px) {
   [data-page-route=Workspaces] .layout-main .layout-side-section {
-    padding-left: 15px;
+    padding-right: 15px;
     background-image: url(/assets/jkfenner_image_process/images/jk_fenner_background.png);
     display: block;
     overflow: hidden;
@@ -80,11 +80,29 @@ body {
   position: absolute;
   z-index: 0;
   top: -23px;
-  left: -7px;
+  right: -7px;
   font-size: 4rem;
-  transform: rotate(-14deg) !important;
+  transform: rotate(14deg) !important;
   color: #fff;
   opacity: 0.8;
+}
+.shortcut-widget-box {
+  padding: 15px !important;
+  display: grid;
+  justify-content: center;
+  background-color: rgba(0, 255, 255, 0.4705882353);
+  opacity: 1;
+  border: 2px solid rgba(255, 255, 255, 0.3411764706);
+  transition: background-color 0.3s ease;
+  background-color: rgba(1, 138, 124, 0.8901960784);
+  z-index: -2;
+  opacity: 1;
+}
+.widget-title {
+  color: white !important;
+}
+.widget-title:hover {
+  color: aliceblue;
 }
 @media (min-width: 992px) {
   .col-lg-3 {
@@ -186,4 +204,4 @@ body {
 .notifications-icon {
   display: none;
 }
-/*# sourceMappingURL=jkfenner_image.bundle.2RLCISQY.css.map */
+/*# sourceMappingURL=jkfenner_image.bundle.UN5UEDPM.css.map */

@@ -8,7 +8,7 @@ class AiImageSearchPage {
             parent: wrapper,
             title: 'New Image Search',
             single_column: true
-        });	
+        });
 
         this.page.set_title('Image Search');
 
@@ -22,6 +22,17 @@ class AiImageSearchPage {
             // Toggle the visibility of the target div
             $('.preview-section').toggleClass('hide');
         });
+
+        // Dummy API data
+        this.imageData = [
+            { id: 1, src: '/assets/jkfenner_image_process/images/R7404808 W.jpg', title: 'Image 1' },
+            { id: 2, src: '/assets/jkfenner_image_process/images/R7404808 W.jpg', title: 'Image 2' },
+            { id: 3, src: '/assets/jkfenner_image_process/images/R7404808 W.jpg', title: 'Image 3' },
+            // Add more image data as needed
+        ];
+
+        // Display dummy images on page load
+        this.displayImages(this.imageData);
     }
 
     navigateToAiImageDetails() {
@@ -59,6 +70,21 @@ class AiImageSearchPage {
 
         // Read the selected file as a data URL
         reader.readAsDataURL(input.files[0]);
+    }
+
+    displayImages(images) {
+        // Display images in a list or grid format
+        var $imageList = $('.image-list');
+        $imageList.empty();
+
+        images.forEach((image) => {
+            var $imageItem = $('<div class="image-item"></div>');
+            var $image = $('<img src="' + image.src + '" alt="' + image.title + '">');
+            var $title = $('<p>' + image.title + '</p>');
+
+            $imageItem.append($image, $title);
+            $imageList.append($imageItem);
+        });
     }
 }
 

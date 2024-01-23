@@ -9,7 +9,48 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 	let $btn = page.set_primary_action('Back To Search Image', function() {
 		frappe.set_route("ai-image-search")
 	});
-    
+   
+	function createPDF() {
+		var element = document.getElementById('element-to-print');
+		
+		// Find the button with the 'html2PdfConverter' class
+		var button = document.querySelector('.html2PdfConverter');
+	
+		html2pdf(element, {
+			margin: 1,
+			padding: 0,
+			filename: 'myfile.pdf',
+			image: { type: 'jpeg', quality: 1 },
+			html2canvas: { scale: 2, logging: true },
+			jsPDF: { unit: 'in', format: 'A2', orientation: 'P' },
+			// You can use the 'button' variable to access the button element
+			button: button
+		});
+	}
+   // Add Export button
+    let $btnExport = page.set_secondary_action(__('Export as PDF'), function() {
+        // Call a function to export the content as PDF
+        createPDF();
+    });
+    function exportAsPDF() {
+		// You can customize this logic based on your requirements
+		var doc = new jsPDF();
+		
+		// Add content to the PDF
+		doc.text('Image Details', 20, 10);
+		doc.text('---------------------', 20, 20);
+		
+		// Add image
+		var img = new Image();
+		img.src = $('#slider-image').attr('src'); // Get the source of the image
+		doc.addImage(img, 'JPEG', 20, 30, 160, 120); // You may need to adjust the dimensions
+		
+		// Add other details
+		doc.text('Matching Percentage: ' + $('#slider-value').text(), 20, 160);
+		
+		// Save the PDF
+		doc.save('image_details.pdf');
+	}
 	$(frappe.render_template("ai_image_details", {})).appendTo(page.body);
 	frappe.ui.form.on('jkfenner_image_ai', {
 		refresh: function(frm) {
