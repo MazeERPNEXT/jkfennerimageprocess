@@ -37,6 +37,10 @@
     display: flex;
     justify-content: center;
 }
+.btm-primary{
+  border-color: rgba(15, 222, 202, 0.8901960784) !important;
+    background-color: rgba(28, 157, 143, 0.8784313725) !important;
+}
 .btn-sm-image{
     /* background: #0090818a !important; */
     border-color: #57b6ac!important;

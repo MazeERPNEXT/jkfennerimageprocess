@@ -104,7 +104,7 @@ body h1 {
     color: #ffffff !important;
     text-align: left !important;
     /* text-align: center; */
-    background: #8014f1 !important;
+    background: #008174 !important;
     padding: 10px !important;
     font-weight: 700 !important;
     font-size: 20px !important;
@@ -112,14 +112,18 @@ body h1 {
     border-top-right-radius: 10px !important;
     caption-side: top !important;
   }
-/* table details section end */
-
-
-
-
-
-
-/* Create two equal columns that floats next to each other */
+.btn-secondary{
+  border-color: rgba(15, 222, 202, 0.8901960784);
+  background-color: rgba(28, 157, 143, 0.8784313725);
+}
+.btn-primary{
+  border-color: rgba(15, 222, 202, 0.8901960784);
+  background-color: rgba(28, 157, 143, 0.8784313725);
+}
+.btn-sm{
+  border-color: rgba(15, 222, 202, 0.8901960784);
+  background-color: rgba(28, 157, 143, 0.8784313725);
+}
 .column {
   float: left;
   width: 50%;
@@ -607,6 +611,8 @@ top: 45px;
 }
 .card-title-viewimage{
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 5%;
+  left: 50%;
+  transform: translate(-52%, -50%);
+  text-align: center;
 }

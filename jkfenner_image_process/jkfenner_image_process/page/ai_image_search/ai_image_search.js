@@ -8,7 +8,7 @@ class AiImageSearchPage {
             parent: wrapper,
             title: 'New Image Search',
             single_column: true
-        });
+        });	
 
         this.page.set_title('Image Search');
 
@@ -23,17 +23,6 @@ class AiImageSearchPage {
             
             this.pickMatchingImage()
         });
-
-        // Dummy API data
-        this.imageData = [
-            { id: 1, src: '/assets/jkfenner_image_process/images/R7404808 W.jpg', title: 'Image 1' },
-            { id: 2, src: '/assets/jkfenner_image_process/images/R7404808 W.jpg', title: 'Image 2' },
-            { id: 3, src: '/assets/jkfenner_image_process/images/R7404808 W.jpg', title: 'Image 3' },
-            // Add more image data as needed
-        ];
-
-        // Display dummy images on page load
-        this.displayImages(this.imageData);
     }
 
     navigateToAiImageDetails() {
@@ -152,18 +141,29 @@ class AiImageSearchPage {
     async pickMatchingImage(){
         let fileInput = $('.previewImage').prop('files')[0];
         const getScore = async (fileResponse) => {
-            let scores = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.guess_image',{
+            let scores = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image',{
                 image : fileResponse.name
             });
             let imageGrid = "";
+            let imageFileName = (image) =>{
+                let filenameWithExtension = image.split('/').slice(-2).shift();
+                let filenameWithoutExtension = filenameWithExtension.split('.')[0];
+                return filenameWithoutExtension;
+            }
+            let imagePath = "/assets/jkfenner_image_process/images/machine_learning/augment_images/E72068/E72068-16.jpg";
+            let result = imageFileName(imagePath);
+            console.log(result);
             scores.images.forEach((image,_index) => {
                 imageGrid += `<div class="col-4">
                 <div class="card-image">
-                   <div class="card-body-image" style="height: 440px;">
+                   <div class="card-body-image" style="height: 464px;">
                       <h5 class="card-title-image">Matching Percentage: ${Math.round(scores.scores[_index]*100,2)}%</h5>
-                      <div class="card-image-search"> <img style="height: 221px;object-fit: scale-down;" class="matchingimage w-100" id="matchingImage" src="${image}" alt="Matching Image"> </div>
+                      <div class="card-image-search"> 
+                      <img style="height: 221px;object-fit: scale-down;" class="matchingimage w-100" id="matchingImage"  src="${image}" alt="Matching Image">
+                      <p style="text-align:center">${!!image ? imageFileName(image) : "No Image"}</p> 
+                      </div>
                       <p>Struct dim Similarty Score: WIP</p>
-                      <p>Image Similarty Score:  </p>
+                      <p>Image Similarty Score: ${Math.round(scores.scores[_index]*100)} </p>
                       <p>ID A:WIP,ID B:WIP,ID C:WIP</p>
                       <button class="btn btn-primary btn-sm primary-action-image navigate-details">View Details</button> 
                    </div>
@@ -172,6 +172,7 @@ class AiImageSearchPage {
             })
             $('.preview-section').removeClass('hide');
             $('.preview-section').html('<div class="row">'+imageGrid+"</div>")
+            $('.navigate-details').on('click', () => this.navigateToAiImageDetails());
             
         };
         this.upload_file({'file_obj': fileInput, 'name':"TestImg.png","file_name":"TestImg.png"},getScore)
@@ -207,21 +208,6 @@ class AiImageSearchPage {
 
         // Read the selected file as a data URL
         reader.readAsDataURL(input.files[0]);
-    }
-
-    displayImages(images) {
-        // Display images in a list or grid format
-        var $imageList = $('.image-list');
-        $imageList.empty();
-
-        images.forEach((image) => {
-            var $imageItem = $('<div class="image-item"></div>');
-            var $image = $('<img src="' + image.src + '" alt="' + image.title + '">');
-            var $title = $('<p>' + image.title + '</p>');
-
-            $imageItem.append($image, $title);
-            $imageList.append($imageItem);
-        });
     }
 }
 

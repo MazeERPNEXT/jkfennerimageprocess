@@ -6,7 +6,7 @@ body{
 }
 .navbar{
     // background: linear-gradient(to bottom, #641eff 0, #a307dd 100%);
-    background-image: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(54,196,180,1) 100%);
+    background-image: linear-gradient(0deg, #008174bd 0%, rgba(54,196,180,1) 100%);
 }
 .navbar .navbar-nav .nav-link {
     color: white;
@@ -19,12 +19,12 @@ body{
 
 .layout-main-section{
 //    background-color: #f9fafa00 !important ;
-   background-position: bottom;
-   background-image: url(https://jkfenner.com/wp-content/uploads/2020/03/component.png);
-   background-size: cover;
-   background-repeat: no-repeat;
-//    border-radius: 10px;
-//    padding: 17px;
+//    background-position: bottom;
+//    background-image: url(https://jkfenner.com/wp-content/uploads/2020/03/component.png);
+//    background-size: cover;
+//    background-repeat: no-repeat;
+   border-radius: 10px;
+   padding: 17px;
 }
 
 .form-tabs-list .form-tabs .nav-item .nav-link.active{
@@ -40,9 +40,21 @@ body{
     background: white;
     top: var(--navbar-height);
 }
+.btm-primary{
+    border-color: rgba(15, 222, 202, 0.8901960784) !important;
+      background-color: rgba(28, 157, 143, 0.8784313725) !important;
+  }
+  .btm-secondary{
+    border-color: rgba(15, 222, 202, 0.8901960784) !important;
+      background-color: rgba(28, 157, 143, 0.8784313725) !important;
+  }
+  .btm-sm{
+    border-color: rgba(15, 222, 202, 0.8901960784) !important;
+      background-color: rgba(28, 157, 143, 0.8784313725) !important;
+  }
 .btn.btn-default{
     border-color: #0fdecae3;
-    background-color: #018a7ce3;
+    background-color: #1c9d8fe0;
     color: #fff;
     height: var(--btn-height);
     margin-left: var(--margin-sm, 8px);
@@ -54,7 +66,8 @@ body{
     // font-weight: 500;
 }
 .btn-sm{
-    background-image: linear-gradient(to bottom, #651eff, #691dfd, #6d1bfb, #711af9, #7418f7);
+    border-color: rgba(15, 222, 202, 0.8901960784);
+    background-color: rgba(28, 157, 143, 0.8784313725);
 }
 .page-container{
     // background-image: (linear-gradient(to top,#0ba360 0%,#3cba92 100%));
@@ -182,6 +195,15 @@ body{
     // width: 150px;
     max-height: 50px !important;
 }
+.codex-editor__redactor{
+    margin: -11px -11px;
+}
+.ce-header{
+    background-color: rgba(169, 169, 169, 0.3607843137);
+    border-radius: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 .codex-editor{
     background-position: bottom;
     background-image: url(https://jkfenner.com/wp-content/uploads/2020/03/component.png);
@@ -193,10 +215,7 @@ body{
 .ce-block{
     margin-bottom: 24px;
 }
-.ce-block__content{
-    background-color: #a9a9a95c;
-    border-radius: 5px;
-}
+
 .data-pill{
     background-color: #009081b3 !important;
 }
