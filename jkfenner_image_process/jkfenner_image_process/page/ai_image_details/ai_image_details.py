@@ -5,9 +5,11 @@ from PyPDF2 import PdfReader, PdfWriter, PageObject
 import io  
 from jinja2 import Environment, FileSystemLoader
 from ..ai_image_search.ai_image_search import guess_image
+from urllib.parse import urljoin
+from frappe.utils import get_url
 
 @frappe.whitelist(allow_guest=True)
-def get_image_ai_details(part_no):
+def get_image_ai_details(part_no, scores=None):
     part_no =  frappe.form_dict.get('part_no')
     result = frappe.get_all('JKFenner Image AI', filters={'part_no': part_no})
     image_paths = []
@@ -24,7 +26,7 @@ def get_image_ai_details(part_no):
                     <div class="slide-container">
                              {% for image_path in image_paths %}
                                 <div class="slide fade">
-                                    <h5 id="slider-value" class="card-title-viewimage">Matching Percentage: 90%</h5>
+                                    <h5 id="slider-value" class="card-title-viewimage">Matching Percentage: {{scores}}%</h5>
                                     <img class="details-image" id="slider-image" src="{{ image_path }}" alt="Image 1">
                                 </div>
                             {% endfor %}
@@ -142,31 +144,31 @@ def get_image_ai_details(part_no):
                     </table>"""
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(image_html_content)
-    rendered_content = template.render(part_no=part_no, image_paths=image_paths, getAllValues=getAllValues)
-    print (image_paths)
+    rendered_content = template.render(part_no=part_no, image_paths=image_paths, getAllValues=getAllValues, scores=scores)
+    print(image_paths)
     return rendered_content
 
 @frappe.whitelist(allow_guest=True)
-def generate_internal_pdf(part_no):
+def generate_internal_pdf(part_no, scores=None):
     part_no = frappe.form_dict.get('part_no')
     result = frappe.get_all('JKFenner Image AI', filters={'part_no': part_no})
     image_paths = []
-
+    site_url = get_url()
     if result:
-        x = result[0].name 
+        x = result[0].name
         getAllValues = frappe.get_doc('JKFenner Image AI', x)
     
         if hasattr(getAllValues, 'multiple_image_upload'):
-            image_paths = [frappe.utils.get_url(child_row.images) for child_row in getAllValues.multiple_image_upload]
+            image_paths = [urljoin(site_url, child_row.images) for child_row in getAllValues.multiple_image_upload]
         # return image_paths
     html_content_internal = '''<div class="layout-main-section" id="element-to-print">
                             <div style="position: relative;">
                             <!-- Rest of your HTML content -->
-                            <img style="width: 37%; height: auto" src="/assets/jkfenner_image_process/images/JK-finner.png">
+                            <img style="width: 37%; height: auto" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
                         </div>
                         {% for image_path in image_paths %}
                         <div>
-                            <h5 id="slider-value" style="font-size:18px; text-align:center" class="card-title-viewimage">Matching Percentage: 90%</h5>
+                            <h5 id="slider-value" style="font-size:18px; text-align:center" class="card-title-viewimage">Matching Percentage: {{scores}}%</h5>
                             <img id="slider-image" style="width:100%" src="{{ image_path }}" alt="Image 1">
                         </div>
                         {% endfor %}
@@ -347,13 +349,19 @@ def generate_internal_pdf(part_no):
                     </table>
                     
                 </div>'''
+    env = Environment(loader=FileSystemLoader("."))
+    template = env.from_string(html_content_internal)
+    rendered_content = template.render(part_no=part_no, image_paths=image_paths, getAllValues=getAllValues, site_url=site_url, scores=scores)
+
+    # file = open("/tmp/jkfenner.html", "w")
+    # file.write(rendered_content)
+    # file.close()
     
-   
-     # Get the PDF buffer
-    pdf_buffer = get_pdf(html_content_internal)
+    # Get the PDF buffer
+    pdf_buffer = get_pdf(rendered_content)
 
         # Add watermark to the PDF
-    pdf_with_watermark, rendered_content = add_watermark(pdf_buffer, part_no, image_paths, getAllValues, html_content_internal)
+    pdf_with_watermark = add_watermark(pdf_buffer, part_no, image_paths, getAllValues, html_content_internal)
 
         # Set response properties for downloading the PDF
     frappe.response.filename = "test_with_watermark.pdf"
@@ -362,7 +370,7 @@ def generate_internal_pdf(part_no):
     frappe.response.display_content_as = "attachment"
 
         # Render the HTML content (not being used in the current code)
-    print(rendered_content)
+    # print(rendered_content)
 
 def add_watermark(pdf_buffer, part_no, image_paths, getAllValues,html_content_internal):
     watermark_text = "Confidential - Internal Use Only"
@@ -411,11 +419,11 @@ def add_watermark(pdf_buffer, part_no, image_paths, getAllValues,html_content_in
     output_buffer.seek(0)
 
     # Render HTML content (not being used in the current code)
-    env = Environment(loader=FileSystemLoader("."))
-    template = env.from_string(html_content_internal)
-    rendered_content = template.render(part_no=part_no, image_paths=image_paths, getAllValues=getAllValues)
+    # env = Environment(loader=FileSystemLoader("."))
+    # template = env.from_string(html_content_internal)
+    # rendered_content = template.render(part_no=part_no, image_paths=image_paths, getAllValues=getAllValues)
 
-    return output_buffer.read(), rendered_content
+    return output_buffer.read() #, rendered_content
 
 
 
