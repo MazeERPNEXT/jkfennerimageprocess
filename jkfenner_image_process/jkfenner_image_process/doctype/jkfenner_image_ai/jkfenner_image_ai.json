@@ -10,13 +10,12 @@
  "field_order": [
   "image_details_page_single_size",
   "generic_details",
-  "domestic__export",
   "part_no",
   "part_description",
-  "sap_asset_code",
   "type_of_hose",
   "toolings_created_on",
   "ean",
+  "domestic__export",
   "upc",
   "customer_1_cross_ref",
   "customer_2_cross_ref",
@@ -75,7 +74,7 @@
   {
    "fieldname": "generic_details",
    "fieldtype": "Heading",
-   "label": "Generic Detailsss"
+   "label": "Generic Details"
   },
   {
    "fieldname": "part_no",
@@ -88,22 +87,19 @@
   {
    "fieldname": "part_description",
    "fieldtype": "Data",
-   "label": "Part Description"
-  },
-  {
-   "fieldname": "sap_asset_code",
-   "fieldtype": "Data",
-   "label": "SAP Asset Code"
+   "label": "Customer",
+   "reqd": 1
   },
   {
    "fieldname": "type_of_hose",
    "fieldtype": "Data",
-   "label": "Type of Hose"
+   "label": "Type of Hose",
+   "reqd": 1
   },
   {
    "fieldname": "toolings_created_on",
    "fieldtype": "Data",
-   "label": "Tooling's Created on"
+   "label": "Development Status"
   },
   {
    "fieldname": "ean",
@@ -225,7 +221,7 @@
   },
   {
    "fieldname": "column_break_cmoup",
-   "fieldtype": "Column Break"
+   "fieldtype": "Section Break"
   },
   {
    "fieldname": "applicationperformance",
@@ -352,12 +348,13 @@
   {
    "fieldname": "domestic__export",
    "fieldtype": "Data",
-   "label": "Domestic / Export"
+   "label": "Domestic / Export",
+   "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-02-01 18:26:25.044545",
+ "modified": "2024-02-02 02:10:49.263124",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "JKFenner Image AI",
