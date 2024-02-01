@@ -1,22 +1,96 @@
 frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
+	var partNo = frappe.utils.get_url_arg('part_no');
+	console.log(partNo,'dddd')
 	var page = frappe.ui.make_app_page({
 		parent: wrapper,
 		title: 'View Image Details',
 		single_column: true
 	});
-
+	
+	
+	
 	page.set_title('Result Details')
 	let $btn = page.set_primary_action('Back To Search Image', function() {
+		// window.history.go(-1)
 		frappe.set_route("ai-image-search")
 	});
    
 	
    // Add Export button PDF
-    let $btnExport = page.set_secondary_action(__('Export as PDF'), function() {
-   		 window.open("/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_pdf" , '_blank');
-    });
+    // let $btnExport = page.set_secondary_action(__('Export PDF For Internal '), function() {
+   	// 	method : window.open("/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_internal_pdf" , '_blank');
+    // });
+
+	page.add_action_item('Export PDF For Internal', () => {
+		window.open(`/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_internal_pdf?part_no=${partNo}`, '_blank');
+	});
+	// page.add_action_item('Export PDF For Client', () => {
+	// 	window.open("/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_client_pdf" , '_blank');
+	// });
+
+	// let $btnExportClient = page.set_inner_button(__('Export PDF For Client'), function() {
+	// 	method : window.open("/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_client_pdf" , '_blank');
+    // });
    
 	$(frappe.render_template("ai_image_details", {})).appendTo(page.body);
+
+	
+		frappe.call({
+			method: 'jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.get_image_ai_details',
+			args: {
+				part_no: partNo  // Pass the actual part_no here
+			},
+		
+			callback: function(response) {
+				// console.log(response.message)
+				if (response) {
+					// Access server-side data in the response
+					var serverHtml = response.message;
+					$('.layout-main-section').html('<div>'+serverHtml+"</div>")
+					  
+					// Add the slideshow script dynamically to the DOM
+					var script = document.createElement('script');
+					script.innerHTML = `
+						var slideIndex = 0;
+						showSlides();
+		
+						function showSlides() {
+							var slides = document.getElementsByClassName("slide");
+							for (var i = 0; i < slides.length; i++) {
+								slides[i].style.display = "none";
+							}
+							slideIndex++;
+							if (slideIndex > slides.length) {
+								slideIndex = 1;
+							}
+							slides[slideIndex - 1].style.display = "block";
+							setTimeout(showSlides, 8000); // Change slide every 8 seconds (adjust as needed)
+						}
+		
+						document.querySelector('.prev').addEventListener('click', function() {
+							slideIndex--;
+							if (slideIndex < 1) {
+								slideIndex = slides.length;
+							}
+							showSlides();
+						});
+		
+						document.querySelector('.next').addEventListener('click', function() {
+							slideIndex++;
+							if (slideIndex > slides.length) {
+								slideIndex = 1;
+							}
+							showSlides();
+						});
+					`;
+					document.head.appendChild(script);
+				}
+			}
+		});
+	
+
+	
+
 	frappe.ui.form.on('jkfenner_image_ai', {
 		refresh: function(frm) {
 			// Your Frappe method initialization code here
@@ -63,7 +137,7 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 	
 				dots.forEach((dot, i) => {
 					dot.addEventListener("click", () => {
-						console.log(currentSlide);
+						// console.log(currentSlide);
 						init(i);
 						currentSlide = i;
 					});

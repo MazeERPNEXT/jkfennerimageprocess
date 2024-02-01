@@ -70,7 +70,7 @@ body h1 {
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 728px;
+  max-width: 581px;
   margin: auto;
   position: relative;
 }
@@ -89,6 +89,11 @@ body h1 {
 
 .slide-container .slide img {
   width: 100%;
+}
+
+.details-image{
+    max-width: 100%;
+    height: 488px !important;
 }
 
 /* Slider section end */
@@ -113,16 +118,16 @@ body h1 {
     caption-side: top !important;
   }
 .btn-secondary{
-  border-color: rgba(15, 222, 202, 0.8901960784);
-  background-color: rgba(28, 157, 143, 0.8784313725);
+  border-color: rgba(15, 222, 202, 0.8901960784) !important;
+  background-color: rgba(28, 157, 143, 0.8784313725) !important;
 }
 .btn-primary{
-  border-color: rgba(15, 222, 202, 0.8901960784);
-  background-color: rgba(28, 157, 143, 0.8784313725);
+  border-color: rgba(15, 222, 202, 0.8901960784) !important;
+  background-color: rgba(28, 157, 143, 0.8784313725) !important;
 }
 .btn-sm{
-  border-color: rgba(15, 222, 202, 0.8901960784);
-  background-color: rgba(28, 157, 143, 0.8784313725);
+  border-color: rgba(15, 222, 202, 0.8901960784) !important;
+  background-color: rgba(28, 157, 143, 0.8784313725) !important;
 }
 .column {
   float: left;
@@ -152,9 +157,7 @@ body h1 {
   }
 
 }
-.btn-sm{
-  background-image:linear-gradient(to bottom, #651eff, #691dfd, #6d1bfb, #711af9, #7418f7);
-}
+
 .btn-image-search{
   display: flex;
   justify-content: center;

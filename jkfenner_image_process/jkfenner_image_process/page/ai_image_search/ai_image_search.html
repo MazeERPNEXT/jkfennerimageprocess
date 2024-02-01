@@ -1,67 +1,38 @@
-<!-- {% extends 'templates/form.html' %} -->
-
-<!-- {% block script %}
-    {{ frappe.form_script('ai_image_search.js') }}
-{% endblock %} -->
-
-<!-- {% block page_content %} -->
 
 <div class="row layout-main">
-    <!-- <div class="col-md-2"></div> -->
     <div class="col-md-12 layout-main-section-wrapper">
         <div class="layout-main-section">
             <div class="page-form row hide"></div>
-            <!-- <h3 class="ellipsis title-text">Search Image:</h3> -->
             <div class="search-image-section">
                 <label for="finput" class="image_upload"  id="inputLabel">Click Here to upload image</label>
                     <input type="file" multiple="false" class="previewImage" accept="image/*" id="finput">
                     <div id="preview-image">
                         <img class="preview_search_image" id="uploaded-image" src="https://avatars.mds.yandex.net/i?id=ac9425f0536b1cc38165d187ca0db7fcfce1f2f6-9181395-images-thumbs&n=13" />
                     </div>
-                    <canvas id="canv1" style="display: none;"></canvas>
-                <!-- <div class="Neon Neon-theme-dragdropbox"> 
-                    <input type="file"  accept="image/*" 
-                        style="z-index: 999; opacity: 0; width: 320px; height: 200px; position: absolute; right: 0px; left: 0px; margin-right: auto; margin-left: auto;">
-                    <div class="Neon-input-dragDrop">
-                        <div class="Neon-input-inner">
-                            <div class="Neon-input-icon"><i class="fa fa-file-image-o"></i></div>
-                            <div class="Neon-input-text" >
-                                <img id="output" width="200" />
-                                <h3>Upload files here</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-                <!-- <div class="image-upload-container"></div> -->
+                    <canvas id="canv1" style="display: none;"></canvas> 
             </div>
             <div class="btn-image-search">
-                <!-- <a href="http://jkfennerimageprocess.localhost.com:8000/app/ai-image-details" style="color: white;"> -->
                     <button id="matchingImageButton" class="btn btn-primary btn-sm-image primary-action navigate-button" data-label="Pick the matching image">
                         Pick the matching image
                     </button>
-                <!-- </a> -->
             </div>
         </div>    
     </div>
-    <!-- <div class="col-md-2"></div> -->
 </div>
+
 <br/><br/><br/>
 <div class="row layout-main">
-    <!-- <div class="col-md-2"></div> -->
     <div class="col-md-12 layout-main-section-wrapper">
         <div class="layout-main-section">
             <div class="page-form row hide"></div>
-            <!-- <h3 class="ellipsis title-text">Search Image:</h3> -->
         <div class="preview-section hide">
             
               
             </div>
         </div>    
     </div>
-    <!-- <div class="col-md-2"></div> -->
 </div>
-<!-- {% endblock %} -->
 
-  
+<div id="loader" class="loader"></div>
 
  

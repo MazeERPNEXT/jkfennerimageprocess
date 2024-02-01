@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_rename": 1,
+ "autoname": "field:part_no",
  "creation": "2023-12-23 12:46:42.950961",
  "default_view": "List",
  "doctype": "DocType",
@@ -77,14 +78,12 @@
    "label": "Generic Detailsss"
   },
   {
-   "fieldname": "domestic__export",
-   "fieldtype": "Data",
-   "label": "Domestic / Export"
-  },
-  {
    "fieldname": "part_no",
    "fieldtype": "Data",
-   "label": "Part No."
+   "in_list_view": 1,
+   "label": "Part No.",
+   "reqd": 1,
+   "unique": 1
   },
   {
    "fieldname": "part_description",
@@ -349,14 +348,20 @@
    "fieldname": "image_upload_section",
    "fieldtype": "Section Break",
    "label": "Multiple Image Upload"
+  },
+  {
+   "fieldname": "domestic__export",
+   "fieldtype": "Data",
+   "label": "Domestic / Export"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-01-11 20:18:59.390403",
+ "modified": "2024-02-01 18:26:25.044545",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "JKFenner Image AI",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
@@ -372,7 +377,10 @@
    "write": 1
   }
  ],
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "part_no",
+ "translated_doctype": 1
 }

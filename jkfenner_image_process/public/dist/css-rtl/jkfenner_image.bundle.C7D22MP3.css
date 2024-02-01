@@ -1,4 +1,4 @@
-/* ../../../../../tmp/tmp-68005-LRGJEgM9O4lM/jkfenner_image_process/jkfenner_image_process/public/scss/jkfenner_image.bundle.css */
+/* ../../../../../tmp/tmp-5327-I8FBcTx5rNP1/jkfenner_image_process/jkfenner_image_process/public/scss/jkfenner_image.bundle.css */
 body {
   background: #f9fafa !important;
 }
@@ -31,6 +31,21 @@ body {
 .page-head {
   background: white;
   top: var(--navbar-height);
+}
+.btm-primary {
+  border-color: rgba(15, 222, 202, 0.8901960784) !important;
+  background-color: rgba(28, 157, 143, 0.8784313725) !important;
+}
+.btm-secondary {
+  border-color: rgba(15, 222, 202, 0.8901960784) !important;
+  background-color: rgba(28, 157, 143, 0.8784313725) !important;
+}
+.btm-sm {
+  border-color: rgba(15, 222, 202, 0.8901960784) !important;
+  background-color: rgba(28, 157, 143, 0.8784313725) !important;
+}
+.btn.btn-primary {
+  background-color: #39aba0 !important;
 }
 .btn.btn-default {
   border-color: rgba(15, 222, 202, 0.8901960784);
@@ -233,4 +248,4 @@ body {
 .notifications-icon {
   display: none;
 }
-/*# sourceMappingURL=jkfenner_image.bundle.TJY5UJUC.css.map */
+/*# sourceMappingURL=jkfenner_image.bundle.C7D22MP3.css.map */
