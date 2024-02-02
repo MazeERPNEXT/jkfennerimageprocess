@@ -1,6 +1,8 @@
 frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 	var partNo = frappe.utils.get_url_arg('part_no');
-	console.log(partNo,'dddd')
+	var scores = frappe.utils.get_url_arg('scores');
+	console.log("🚀 ~ scores:", scores)
+	
 	var page = frappe.ui.make_app_page({
 		parent: wrapper,
 		title: 'View Image Details',
@@ -22,7 +24,10 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
     // });
 
 	page.add_action_item('Export PDF For Internal', () => {
-		window.open(`/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_internal_pdf?part_no=${partNo}`, '_blank');
+		window.open(`/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_internal_pdf?part_no=${partNo}&scores=${scores}`, '_blank');
+	});
+	page.add_action_item('Export PDF For Client', () => {
+		window.open(`/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_client_pdf?part_no=${partNo}&scores=${scores}`, '_blank');
 	});
 	// page.add_action_item('Export PDF For Client', () => {
 	// 	window.open("/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_client_pdf" , '_blank');
@@ -38,7 +43,8 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 		frappe.call({
 			method: 'jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.get_image_ai_details',
 			args: {
-				part_no: partNo  // Pass the actual part_no here
+				'part_no': partNo,  // Pass the actual part_no here
+				'scores': scores
 			},
 		
 			callback: function(response) {
