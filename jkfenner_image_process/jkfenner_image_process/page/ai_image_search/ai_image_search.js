@@ -32,35 +32,8 @@
 
         navigateToAiImageDetails(partNo,Score,scores) {
             typeof(partNo)
-            console.log(  partNo,Score, "jasndbhan")
-            // window.open(`/app/ai-image-details?part_no=${partNo}`, '_blank');
-            // frappe.local.flags.redirect_location = '/custom_webpage'
-            // frappe.set_route('ai-image-details',{part_no:parent})
-            // getAIImageDetails();
-            // window.open(`/app/ai-image-details?part_no=${partNo}`)
-            // let aiImageDetailsURL = `/app/ai-image-details?part_no=${partNo}`;
-            // window.location.href = aiImageDetailsURL;
-            // window.open(`/app/ai-image-details?part_no=${partNo}`, '_blank');
-
-            // let aiImageDetailsURL = `/app/ai-image-details?part_no=${partNo}`;
-            // frappe.set_route(aiImageDetailsURL);
-            // frappe.set_route("Form", "ai-image-details", {
-            //     "part_no": partNo
-            // });
-            // frappe.route_options = {
-            //     "part_no": partNo
-            // };
-            // frappe.set_route('ai-image-details',partNo,{ status: 'Open' })
-            // frappe.set_route("Form", "ai-image-details",{'part_no': partNo});
-            // frappe.set_route(['List', 'Task', 'Task'], { status: 'Open' })
-            // frappe.set_route(['Form', 'ai-image-details', 'partNo'], { status: 'Open' })
-            // let partNo = "E72068";  // assuming partNo is a string
-            // let scores = {  };
             let jsonString = JSON.stringify(Score);
             console.log(jsonString)
-            // let roundedScores = Math.round(scores.scores[_index] * 100, 2);
-            // let url = `/app/ai-image-details?part_no=${partNo}&scores=${Score}`;
-            
             window.open(`/app/ai-image-details?part_no=${partNo}&scores=${Score}`, '_blank');
         }
         
@@ -191,8 +164,11 @@
                 let result = imageFileName(imagePath);
                 
                 console.log(result);
-                scores.images.forEach((image,_index) => {
+                scores.images.slice(0, 3).forEach((image,_index) => {
                     let currentImageFileName = imageFileName(image);
+                    let innerDiameter1 = scores.docs && scores.docs[_index] ? scores.docs[_index].product_dimensions[0].inner_diameter_1_mm : 'WIP';
+                    let length = scores.docs && scores.docs[_index] ? scores.docs[_index].product_dimensions[0].length : 'WIP';
+                    console.log(innerDiameter1,);
                     imageGrid += `<div class="col-4">
                     <div class="card-image">
                     <div id="image-details" class="card-body-image" style="height: 464px;">
@@ -203,7 +179,7 @@
                         </div>
                         <p>Struct dim Similarty Score: WIP</p>
                         <p>Image Similarty Score: ${(scores.scores[_index]*100)} </p>
-                        <p>ID A:WIP,ID B:WIP,ID C:WIP</p>
+                        <p>ID A: ${innerDiameter1}, ID B: ${length}, ID C: WIP</p>
                         <button class="btn btn-primary btn-sm primary-action-image navigate-details" data-image-name="${currentImageFileName}" data-image-percentage="${Math.round(scores.scores[_index] * 100, 2)}">View Details</button> 
                     </div>
                     </div>

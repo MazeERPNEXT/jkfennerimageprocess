@@ -29,14 +29,9 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 	page.add_action_item('Export PDF For Client', () => {
 		window.open(`/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_client_pdf?part_no=${partNo}&scores=${scores}`, '_blank');
 	});
-	// page.add_action_item('Export PDF For Client', () => {
-	// 	window.open("/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_client_pdf" , '_blank');
-	// });
+	
 
-	// let $btnExportClient = page.set_inner_button(__('Export PDF For Client'), function() {
-	// 	method : window.open("/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_client_pdf" , '_blank');
-    // });
-   
+
 	$(frappe.render_template("ai_image_details", {})).appendTo(page.body);
 
 	
@@ -44,7 +39,8 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 			method: 'jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.get_image_ai_details',
 			args: {
 				'part_no': partNo,  // Pass the actual part_no here
-				'scores': scores
+				'scores': scores,
+				
 			},
 		
 			callback: function(response) {

@@ -1,0 +1,71 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-01-03 17:58:41.853243",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "hoses",
+  "inner_diameter_1_mm",
+  "inner_diameter_2_mm",
+  "thickness",
+  "length",
+  "overall_product_weight_without_childpart"
+ ],
+ "fields": [
+  {
+   "fieldname": "inner_diameter_1_mm",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "ID 1",
+   "reqd": 1
+  },
+  {
+   "fieldname": "hoses",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Hoses",
+   "options": "HOSE A\nHOSE B\nHOSE C\nHOSE D\nHOSE E"
+  },
+  {
+   "fieldname": "inner_diameter_2_mm",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "ID 2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "length",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Length",
+   "reqd": 1
+  },
+  {
+   "fieldname": "thickness",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Thickness"
+  },
+  {
+   "fieldname": "overall_product_weight_without_childpart",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Overall product weight without childpart"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2024-02-05 19:50:26.535956",
+ "modified_by": "Administrator",
+ "module": "JKfenner Image Process",
+ "name": "Product Dimensions",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

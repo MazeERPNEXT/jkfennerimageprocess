@@ -13,12 +13,17 @@ def get_image_ai_details(part_no, scores=None):
     part_no =  frappe.form_dict.get('part_no')
     result = frappe.get_all('JKFenner Image AI', filters={'part_no': part_no})
     image_paths = []
+    product_dimensions = []
+
     getAllValues = None
     if result:
         x = result[0].name 
         getAllValues = frappe.get_doc('JKFenner Image AI', x)
         if hasattr(getAllValues, 'multiple_image_upload'):
             image_paths = [ child_row.images for child_row in getAllValues.multiple_image_upload]
+
+        if hasattr(getAllValues, 'product_dimensions'):
+            product_dimensions = [ child_row.images for child_row in getAllValues.product_dimensions]    
     image_html_content = """ 
                     <div>
                         <p style="text-align: center; font-size: 20px;">{{getAllValues.part_no}}</p>
@@ -37,28 +42,36 @@ def get_image_ai_details(part_no, scores=None):
                         <caption class="captions-image">Generic Details</caption>
                         <tbody>
                             <tr>
-                                <td scope="row">Domestic / Export</td>
-                                <td>{{getAllValues.domestic__export}}</td>
-                            </tr>
-                            <tr>
                                 <td scope="row">Part No.</td>
                                 <td>{{getAllValues.part_no}}</td>
                             </tr>
                             <tr>
-                                <td scope="row">Part Description</td>
-                                <td>{{getAllValues.part_description}}</td>
+                                <td scope="row">Customer</td>
+                                <td>{{getAllValues.customer}}</td>
                             </tr>
                             <tr>
-                                <td scope="row">SAP Asset Code</td>
-                                <td>{{getAllValues.sap_asset_code}}</td>
+                                <td scope="row">Cross Ref.Part No 1</td>
+                                <td>{{getAllValues.cross_refpart_no_1}}</td>
                             </tr>
                             <tr>
-                                <td scope="row">Type of Hose</td>
-                                <td>{{getAllValues.type_of_hose}}</td>
+                                <td scope="row">Cross Ref.Part No 2</td>
+                                <td>{{getAllValues.cross_refpart_no_2}}</td>
                             </tr>
                             <tr>
-                                <td scope="row">Toolings Created on</td>
-                                <td>{{getAllValues.toolings_created_on}}</td>
+                                <td scope="row">Hose Type</td>
+                                <td>{{getAllValues.hose_type}}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Development status</td>
+                                <td>{{getAllValues.development_status}}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Export / Domestic AAM</td>
+                                <td>{{getAllValues.export__domestic_aam}}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row">Product SAP Code</td>
+                                <td>{{getAllValues.product_sap_code}}</td>
                             </tr>
                             <tr>
                                 <td scope="row">EAN</td>
@@ -68,18 +81,6 @@ def get_image_ai_details(part_no, scores=None):
                                 <td scope="row">UPC</td>
                                 <td>{{getAllValues.upc}}</td>
                             </tr>
-                            <tr>
-                                <td scope="row">Customer 1 (Cross Ref)</td>
-                                <td>{{getAllValues.customer_1_cross_ref}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Customer 2 (Cross Ref)</td>
-                                <td>{{getAllValues.customer_2_cross_ref}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Customer 3,4,5 (Cross Ref)</td>
-                                <td>{{getAllValues.customer_345_cross_ref}}</td>
-                            </tr>
                         </tbody>
                     </table>
     
@@ -87,20 +88,20 @@ def get_image_ai_details(part_no, scores=None):
                         <caption class="captions-image">Application/Performance</caption>
                         <tbody>
                             <tr>
+                                <td scope="row">Vehicle Manufacturer</td>
+                                <td>{{getAllValues.vehicle_manufacturer}}</td>
+                            </tr>
+                            <tr>
                                 <td scope="row">Vehicle Model</td>
                                 <td>{{getAllValues.vehicle_model}}</td>
                             </tr>
                             <tr>
-                                <td scope="row">Application (Radiator / Heater ) </td>
-                                <td>{{getAllValues.application_radiator__heater_}}</td>
+                                <td scope="row">Vehicle Make Year</td>
+                                <td>{{getAllValues.vehicle_make_year}}</td>
                             </tr>
                             <tr>
-                                <td scope="row">Vehicle manufacturer </td>
-                                <td>{{getAllValues.vehicle_manufacturer}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Vehicle Make/Year</td>
-                                <td>{{getAllValues.vehicle_makeyear}}</td>
+                                <td scope="row">Hose Application</td>
+                                <td>{{getAllValues.hose_application}}</td>
                             </tr>
                             <tr>
                                 <td scope="row">Sub Application </td>
@@ -114,7 +115,9 @@ def get_image_ai_details(part_no, scores=None):
                         <tbody>
                             <tr>
                                 <td scope="row">Inner Diameter A (MM)</td>
-                                <td>{{getAllValues.inner_diameter_a_mm}}</td>
+                                { % for product_dimension in product_dimensions %}
+                                <td>{{ product_dimension }}</td>
+                                { % endfor % }
                             </tr>
                             <tr>
                                 <td scope="row">Inner Diameter B (MM)</td>
@@ -144,8 +147,8 @@ def get_image_ai_details(part_no, scores=None):
                     </table>"""
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(image_html_content)
-    rendered_content = template.render(part_no=part_no, image_paths=image_paths, getAllValues=getAllValues, scores=scores)
-    print(image_paths)
+    rendered_content = template.render(part_no=part_no, image_paths=image_paths, product_dimensions=product_dimensions, getAllValues=getAllValues, scores=scores)
+    print(image_paths,product_dimensions)
     return rendered_content
 
 @frappe.whitelist(allow_guest=True)
@@ -161,7 +164,7 @@ def generate_internal_pdf(part_no, scores=None):
         if hasattr(getAllValues, 'multiple_image_upload'):
             image_paths = [urljoin(site_url, child_row.images) for child_row in getAllValues.multiple_image_upload]
         # return image_paths
-    html_content_internal = '''<div class="layout-main-section" id="element-to-print">
+    html_content_internal = '''
                             <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex;">
                             <!-- Rest of your HTML content -->
                             <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
@@ -347,7 +350,7 @@ def generate_internal_pdf(part_no, scores=None):
                             </tr>
                         </tbody>
                     </table>
-                </div>'''
+                '''
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(html_content_internal)
     rendered_content = template.render(part_no=part_no, image_paths=image_paths, getAllValues=getAllValues, site_url=site_url, scores=scores)
@@ -359,7 +362,7 @@ def generate_internal_pdf(part_no, scores=None):
     # Get the PDF buffer
     pdf_buffer = get_pdf(rendered_content)
 
-        # Add watermark to the PDF
+    # Add watermark to the PDF
     pdf_with_watermark = add_watermark(pdf_buffer, part_no, image_paths, getAllValues, html_content_internal)
 
         # Set response properties for downloading the PDF

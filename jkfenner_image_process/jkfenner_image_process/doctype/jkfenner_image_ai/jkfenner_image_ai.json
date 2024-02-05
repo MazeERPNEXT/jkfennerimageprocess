@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:part_no",
  "creation": "2023-12-23 12:46:42.950961",
@@ -9,59 +10,54 @@
  "engine": "InnoDB",
  "field_order": [
   "image_details_page_single_size",
-  "generic_details",
+  "generic_details_section",
   "part_no",
-  "part_description",
-  "type_of_hose",
-  "toolings_created_on",
-  "ean",
-  "domestic__export",
-  "upc",
-  "customer_1_cross_ref",
-  "customer_2_cross_ref",
-  "customer_345_cross_ref",
-  "section_break_3xctf",
-  "properties",
-  "standard",
-  "compound_code",
+  "customer",
+  "cross_ref_part_no_1",
+  "cross_ref_part_no_2",
+  "column_break_idojd",
+  "hose_type",
+  "development_status",
+  "export__domestic_aam",
+  "product_sap_code",
+  "column_break_hxx7w",
+  "ean_no",
+  "upc_no",
+  "child_part_details_section",
+  "child_part",
+  "child_part_details",
+  "column_break_ylmei",
+  "normal_with_out_childpartquick__connector",
+  "radiator_cap__spring",
+  "column_break_7h3d",
+  "clamps",
+  "polyester_aluminium__sleeve",
+  "tooling_section",
+  "no_of_mandrel_available",
+  "product_dimensions_section",
+  "product_dimensions",
+  "product_properties_section",
+  "product_standard",
+  "rubber_compound_code",
   "compound_hardness",
-  "compound_weight_grams",
+  "column_break_hzic",
+  "compound_weight",
   "yarn_type",
-  "yarn_weight_grams",
-  "burst_pressure",
+  "yarn_denier",
+  "column_break_bjpq",
+  "yarn_weight",
+  "hose_burst_pressure",
   "adhesion",
-  "column_break_cmoup",
-  "applicationperformance",
-  "vehicle_model",
-  "application_radiator__heater_",
+  "product_application_section",
   "vehicle_manufacturer",
-  "vehicle_makeyear",
+  "vehicle_model",
+  "column_break_ivbm",
+  "vehicle_make_year",
+  "hose_application",
+  "column_break_4n52",
   "sub_application",
-  "column_break_j05dq",
-  "dimensions",
-  "inner_diameter_a_mm",
-  "inner_diameter_b_mm",
-  "thickness",
-  "outer_diameter_a_mm",
-  "outer_diameter_b_mm",
-  "central_axis_length_mm",
-  "product_weight_grams",
-  "section_break_ryypm",
-  "image_upload",
   "image_upload_section",
   "multiple_image_upload",
-  "preview_image",
-  "image__1",
-  "column_break_wdykv",
-  "image__2",
-  "column_break_laxds",
-  "image__3",
-  "column_break_idojd",
-  "image__4",
-  "column_break_hxx7w",
-  "image__5",
-  "column_break_ylmei",
-  "image_6",
   "preview_image_section",
   "preview_image_html"
  ],
@@ -72,224 +68,12 @@
    "label": "Image Details page (Single size)"
   },
   {
-   "fieldname": "generic_details",
-   "fieldtype": "Heading",
-   "label": "Generic Details"
-  },
-  {
    "fieldname": "part_no",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Part No.",
+   "label": "Part No",
    "reqd": 1,
    "unique": 1
-  },
-  {
-   "fieldname": "part_description",
-   "fieldtype": "Data",
-   "label": "Customer",
-   "reqd": 1
-  },
-  {
-   "fieldname": "type_of_hose",
-   "fieldtype": "Data",
-   "label": "Type of Hose",
-   "reqd": 1
-  },
-  {
-   "fieldname": "toolings_created_on",
-   "fieldtype": "Data",
-   "label": "Development Status"
-  },
-  {
-   "fieldname": "ean",
-   "fieldtype": "Data",
-   "label": "EAN"
-  },
-  {
-   "fieldname": "upc",
-   "fieldtype": "Data",
-   "label": "UPC"
-  },
-  {
-   "fieldname": "customer_1_cross_ref",
-   "fieldtype": "Data",
-   "label": "Customer 1 (Cross Ref)"
-  },
-  {
-   "fieldname": "customer_2_cross_ref",
-   "fieldtype": "Data",
-   "label": "Customer 2 (Cross Ref)"
-  },
-  {
-   "fieldname": "customer_345_cross_ref",
-   "fieldtype": "Data",
-   "label": "Customer 3,4,5 (Cross Ref)"
-  },
-  {
-   "fieldname": "column_break_j05dq",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "dimensions",
-   "fieldtype": "Heading",
-   "label": "Dimensions"
-  },
-  {
-   "fieldname": "inner_diameter_a_mm",
-   "fieldtype": "Data",
-   "label": "Inner Diameter A (MM)"
-  },
-  {
-   "fieldname": "inner_diameter_b_mm",
-   "fieldtype": "Data",
-   "label": "Inner Diameter B (MM)"
-  },
-  {
-   "fieldname": "thickness",
-   "fieldtype": "Data",
-   "label": "Thickness"
-  },
-  {
-   "fieldname": "outer_diameter_a_mm",
-   "fieldtype": "Data",
-   "label": "Outer Diameter A (mm)"
-  },
-  {
-   "fieldname": "outer_diameter_b_mm",
-   "fieldtype": "Data",
-   "label": "Outer Diameter B (mm)"
-  },
-  {
-   "fieldname": "central_axis_length_mm",
-   "fieldtype": "Data",
-   "label": "Central axis length (mm)"
-  },
-  {
-   "fieldname": "product_weight_grams",
-   "fieldtype": "Data",
-   "label": "Product weight (grams)"
-  },
-  {
-   "fieldname": "section_break_3xctf",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "properties",
-   "fieldtype": "Heading",
-   "label": "Properties"
-  },
-  {
-   "fieldname": "standard",
-   "fieldtype": "Data",
-   "label": "Standard"
-  },
-  {
-   "fieldname": "compound_code",
-   "fieldtype": "Data",
-   "label": "Compound Code"
-  },
-  {
-   "fieldname": "compound_hardness",
-   "fieldtype": "Data",
-   "label": "Compound hardness"
-  },
-  {
-   "fieldname": "compound_weight_grams",
-   "fieldtype": "Data",
-   "label": "Compound weight (grams)"
-  },
-  {
-   "fieldname": "yarn_type",
-   "fieldtype": "Data",
-   "label": "Yarn Type"
-  },
-  {
-   "fieldname": "yarn_weight_grams",
-   "fieldtype": "Data",
-   "label": "Yarn Weight (grams)"
-  },
-  {
-   "fieldname": "burst_pressure",
-   "fieldtype": "Data",
-   "label": "Burst pressure"
-  },
-  {
-   "fieldname": "adhesion",
-   "fieldtype": "Data",
-   "label": "Adhesion"
-  },
-  {
-   "fieldname": "column_break_cmoup",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "applicationperformance",
-   "fieldtype": "Heading",
-   "label": "Application/Performance"
-  },
-  {
-   "fieldname": "vehicle_model",
-   "fieldtype": "Data",
-   "label": "Vehicle Model"
-  },
-  {
-   "fieldname": "application_radiator__heater_",
-   "fieldtype": "Data",
-   "label": "Application (Radiator / Heater )"
-  },
-  {
-   "fieldname": "vehicle_manufacturer",
-   "fieldtype": "Data",
-   "label": "Vehicle manufacturer"
-  },
-  {
-   "fieldname": "vehicle_makeyear",
-   "fieldtype": "Data",
-   "label": "Vehicle Make/Year"
-  },
-  {
-   "fieldname": "sub_application",
-   "fieldtype": "Data",
-   "label": "Sub Application"
-  },
-  {
-   "fieldname": "image__1",
-   "fieldtype": "HTML",
-   "label": "Image  1",
-   "options": "<div class=\"card\" style=\"box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s; width: 100%;border: 2px solid darkgray;border-top-left-radius: 10px;    border-top-right-radius: 10px;\">\n \n  <div class=\"container\" style=\"padding: 15px 16px;\">\n    <p>E70657-1</p> \n  </div>\n</div>"
-  },
-  {
-   "fieldname": "image__2",
-   "fieldtype": "HTML",
-   "label": "Image  2",
-   "options": "<div class=\"card\" style=\"box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s; width: 100%;border: 2px solid darkgray;border-top-left-radius: 10px;    border-top-right-radius: 10px;\">\n  <img src=\"/assets/jkfenner_image_process/images/E70657-2.jpg\" alt=\"Avatar\" style=\"width:100%;border-top-left-radius: 10px;border-top-right-radius: 10px;\">\n  <div class=\"container\" style=\"padding: 15px 16px;\">\n    <p>E70657-1</p> \n  </div>\n</div>"
-  },
-  {
-   "fieldname": "image__3",
-   "fieldtype": "HTML",
-   "label": "Image  3",
-   "options": "<div class=\"card\" style=\"box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s; width: 100%;border: 2px solid darkgray;border-top-left-radius: 10px;    border-top-right-radius: 10px;\">\n  <img src=\"/assets/jkfenner_image_process/images/E70657-2.jpg\" alt=\"Avatar\" style=\"width:100%;border-top-left-radius: 10px;border-top-right-radius: 10px;\">\n  <div class=\"container\" style=\"padding: 15px 16px;\">\n    <p>E70657-1</p> \n  </div>\n</div>"
-  },
-  {
-   "fieldname": "image__4",
-   "fieldtype": "HTML",
-   "label": "Image  4",
-   "options": "<div class=\"card\" style=\"box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s; width: 100%;border: 2px solid darkgray;border-top-left-radius: 10px;    border-top-right-radius: 10px;\">\n  <img src=\"/assets/jkfenner_image_process/images/E70657-2.jpg\" alt=\"Avatar\" style=\"width:100%;border-top-left-radius: 10px;border-top-right-radius: 10px;\">\n  <div class=\"container\" style=\"padding: 15px 16px;\">\n    <p>E70657-1</p> \n  </div>\n</div>"
-  },
-  {
-   "fieldname": "image__5",
-   "fieldtype": "HTML",
-   "label": "Image  5",
-   "options": "<div class=\"card\" style=\"box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s; width: 100%;border: 2px solid darkgray;border-top-left-radius: 10px;    border-top-right-radius: 10px;\">\n  <img src=\"/assets/jkfenner_image_process/images/sku_no_img.png\" alt=\"Avatar\" style=\"width:100%;border-top-left-radius: 10px;border-top-right-radius: 10px;\">\n  <div class=\"container\" style=\"padding: 15px 16px;\">\n    <p>E70657-1</p> \n  </div>\n</div>"
-  },
-  {
-   "fieldname": "column_break_laxds",
-   "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "column_break_wdykv",
-   "fieldtype": "Column Break"
   },
   {
    "fieldname": "column_break_idojd",
@@ -300,24 +84,223 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "section_break_ryypm",
-   "fieldtype": "Section Break",
-   "label": "Multiple Image Sizes"
-  },
-  {
-   "fieldname": "image_upload",
-   "fieldtype": "Table",
-   "options": "Image Details page Multiple size"
-  },
-  {
    "fieldname": "column_break_ylmei",
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "image_6",
-   "fieldtype": "HTML",
-   "label": "Image 6",
-   "options": "<div class=\"card\" style=\"box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s; width: 100%;border: 2px solid darkgray;border-top-left-radius: 10px;    border-top-right-radius: 10px;\">\n  <img src=\"/assets/jkfenner_image_process/images/sku_no_img.png\" alt=\"Avatar\" style=\"width:100%;border-top-left-radius: 10px;border-top-right-radius: 10px;\">\n  <div class=\"container\" style=\"padding: 15px 16px;\">\n    <p>E70657-1</p> \n  </div>\n</div>"
+   "fieldname": "generic_details_section",
+   "fieldtype": "Section Break",
+   "label": "Generic Details"
+  },
+  {
+   "fieldname": "customer",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cross_ref_part_no_1",
+   "fieldtype": "Data",
+   "label": "Cross Ref. Part No 1"
+  },
+  {
+   "fieldname": "cross_ref_part_no_2",
+   "fieldtype": "Data",
+   "label": "Cross Ref. Part No 2"
+  },
+  {
+   "fieldname": "hose_type",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Hose Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "development_status",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Development status",
+   "reqd": 1
+  },
+  {
+   "fieldname": "export__domestic_aam",
+   "fieldtype": "Data",
+   "label": "Export / Domestic AAM",
+   "reqd": 1
+  },
+  {
+   "fieldname": "product_sap_code",
+   "fieldtype": "Data",
+   "label": "Product SAP Code"
+  },
+  {
+   "fieldname": "ean_no",
+   "fieldtype": "Data",
+   "label": "EAN No"
+  },
+  {
+   "fieldname": "upc_no",
+   "fieldtype": "Data",
+   "label": "UPC No"
+  },
+  {
+   "fieldname": "child_part_details_section",
+   "fieldtype": "Section Break",
+   "label": "Child Part Details"
+  },
+  {
+   "fieldname": "child_part",
+   "fieldtype": "Select",
+   "label": "Child part ",
+   "options": "\nYes\nNo",
+   "reqd": 1
+  },
+  {
+   "fieldname": "child_part_details",
+   "fieldtype": "Data",
+   "label": "Child Part Details"
+  },
+  {
+   "fieldname": "normal_with_out_childpartquick__connector",
+   "fieldtype": "Data",
+   "label": "Normal with out childpart/Quick  connector"
+  },
+  {
+   "fieldname": "radiator_cap__spring",
+   "fieldtype": "Data",
+   "label": "Radiator Cap / Spring"
+  },
+  {
+   "fieldname": "clamps",
+   "fieldtype": "Data",
+   "label": "Clamps"
+  },
+  {
+   "fieldname": "polyester_aluminium__sleeve",
+   "fieldtype": "Data",
+   "label": "Polyester/ Aluminium  Sleeve"
+  },
+  {
+   "fieldname": "column_break_7h3d",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "tooling_section",
+   "fieldtype": "Section Break",
+   "label": "Tooling"
+  },
+  {
+   "fieldname": "no_of_mandrel_available",
+   "fieldtype": "Float",
+   "label": "No. of mandrel available"
+  },
+  {
+   "fieldname": "product_dimensions_section",
+   "fieldtype": "Section Break",
+   "label": "Product Dimensions"
+  },
+  {
+   "fieldname": "product_dimensions",
+   "fieldtype": "Table",
+   "options": "Product Dimensions"
+  },
+  {
+   "fieldname": "product_properties_section",
+   "fieldtype": "Section Break",
+   "label": "Product Properties"
+  },
+  {
+   "fieldname": "product_standard",
+   "fieldtype": "Data",
+   "label": "Product Standard"
+  },
+  {
+   "fieldname": "rubber_compound_code",
+   "fieldtype": "Data",
+   "label": "Rubber compound code"
+  },
+  {
+   "fieldname": "compound_hardness",
+   "fieldtype": "Data",
+   "label": "Compound Hardness"
+  },
+  {
+   "fieldname": "column_break_hzic",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "compound_weight",
+   "fieldtype": "Data",
+   "label": "Compound weight"
+  },
+  {
+   "fieldname": "yarn_type",
+   "fieldtype": "Data",
+   "label": "Yarn type"
+  },
+  {
+   "fieldname": "yarn_denier",
+   "fieldtype": "Data",
+   "label": "Yarn Denier"
+  },
+  {
+   "fieldname": "column_break_bjpq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "yarn_weight",
+   "fieldtype": "Data",
+   "label": "Yarn weight"
+  },
+  {
+   "fieldname": "hose_burst_pressure",
+   "fieldtype": "Data",
+   "label": "Hose Burst pressure"
+  },
+  {
+   "fieldname": "adhesion",
+   "fieldtype": "Data",
+   "label": "Adhesion"
+  },
+  {
+   "fieldname": "product_application_section",
+   "fieldtype": "Section Break",
+   "label": "Product Application"
+  },
+  {
+   "fieldname": "vehicle_manufacturer",
+   "fieldtype": "Data",
+   "label": "Vehicle manufacturer"
+  },
+  {
+   "fieldname": "vehicle_model",
+   "fieldtype": "Data",
+   "label": "Vehicle Model"
+  },
+  {
+   "fieldname": "column_break_ivbm",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "vehicle_make_year",
+   "fieldtype": "Data",
+   "label": "Vehicle Make Year"
+  },
+  {
+   "fieldname": "hose_application",
+   "fieldtype": "Data",
+   "label": "Hose Application",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_4n52",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sub_application",
+   "fieldtype": "Data",
+   "label": "Sub Application"
   },
   {
    "fieldname": "multiple_image_upload",
@@ -325,15 +308,9 @@
    "options": "Multiple Image Upload"
   },
   {
-   "fieldname": "preview_image",
+   "fieldname": "image_upload_section",
    "fieldtype": "Section Break",
-   "hidden": 1,
-   "label": "Preview Image"
-  },
-  {
-   "fieldname": "preview_image_html",
-   "fieldtype": "HTML",
-   "label": "Preview Image Html"
+   "label": "Multiple Image Upload"
   },
   {
    "fieldname": "preview_image_section",
@@ -341,20 +318,14 @@
    "label": "Preview Image"
   },
   {
-   "fieldname": "image_upload_section",
-   "fieldtype": "Section Break",
-   "label": "Multiple Image Upload"
-  },
-  {
-   "fieldname": "domestic__export",
-   "fieldtype": "Data",
-   "label": "Domestic / Export",
-   "reqd": 1
+   "fieldname": "preview_image_html",
+   "fieldtype": "HTML",
+   "label": "Preview Image Html"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-02-02 02:10:49.263124",
+ "modified": "2024-02-05 20:23:57.768226",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "JKFenner Image AI",
