@@ -6,7 +6,7 @@ import os
 
 @frappe.whitelist(allow_guest=True)
 def guess_image(image):
-    return {
+    ai_responses = {
         "images": [
             "/assets/jkfenner_image_process/images/machine_learning/augment_images/E72068/E72068-16.jpg",
             "/assets/jkfenner_image_process/images/machine_learning/augment_images/C70368/C70368-41.jpg",
@@ -32,20 +32,20 @@ def guess_image(image):
             "0.7229657"
         ]
     }
-    config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
-    _file = frappe.get_doc("File", {'name': image})
-    img_path = _file.get_full_path()
-    predictor = predict(config_file_path)
-    similarity_scores, similarity_images, pad_img = predictor.run(img_path)
-    similarity_images_with_path = []
-    for similarity_image in similarity_images:
-        imagefolder = str(similarity_image).split('-')[0]
-        similarity_images_with_path.append("/assets/jkfenner_image_process/images/machine_learning/augment_images/{}/{}".format(imagefolder, similarity_image))
-    similarity_scores = [str(similarity_score) for similarity_score in similarity_scores]
-    return {
-        'images': similarity_images_with_path,
-        'scores': similarity_scores
-    }
+    # config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
+    # _file = frappe.get_doc("File", {'name': image})
+    # img_path = _file.get_full_path()
+    # predictor = predict(config_file_path)
+    # similarity_scores, similarity_images, pad_img = predictor.run(img_path)
+    # similarity_images_with_path = []
+    # for similarity_image in similarity_images:
+    #     imagefolder = str(similarity_image).split('-')[0]
+    #     similarity_images_with_path.append("/assets/jkfenner_image_process/images/machine_learning/augment_images/{}/{}".format(imagefolder, similarity_image))
+    # similarity_scores = [str(similarity_score) for similarity_score in similarity_scores]
+    # return {
+    #     'images': similarity_images_with_path,
+    #     'scores': similarity_scores
+    # }
     # config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
     # _file = frappe.get_doc("File", {'name': image})
     # img_path = _file.get_full_path()
