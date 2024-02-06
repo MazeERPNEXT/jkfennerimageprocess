@@ -32,7 +32,7 @@ def guess_image(image):
     #         "0.7229657"
     #     ]
     # }
-    ai_responses = {}
+    ai_responses = []
     config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
     _file = frappe.get_doc("File", {'name': image})
     img_path = _file.get_full_path()
@@ -45,6 +45,7 @@ def guess_image(image):
     similarity_scores = [str(similarity_score) for similarity_score in similarity_scores]
     ai_responses["images"] = similarity_images_with_path
     ai_responses["scores"] = similarity_scores
+    
     predicted_images = ai_responses['images']
     docsinfo = [ image.split('/')[-2] for image in predicted_images]
     docs = []
@@ -55,28 +56,3 @@ def guess_image(image):
             docs.append(None)
     ai_responses["docs"] = docs
     return ai_responses
-    # config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
-    # _file = frappe.get_doc("File", {'name': image})
-    # img_path = _file.get_full_path()
-    # predictor = predict(config_file_path)
-    # similarity_scores, similarity_images, pad_img = predictor.run(img_path)
-    # similarity_images_with_path = []
-    # for similarity_image in similarity_images:
-    #     imagefolder = str(similarity_image).split('-')[0]
-    #     similarity_images_with_path.append("/assets/jkfenner_image_process/images/machine_learning/augment_images/{}/{}".format(imagefolder, similarity_image))
-    # similarity_scores = [str(similarity_score) for similarity_score in similarity_scores]
-    # ai_responses = {
-    #     'images': similarity_images_with_path,
-    #     'scores': similarity_scores
-    # }
-    
-    # predicted_images = ai_responses['images']
-    # docsinfo = [ image.split('/')[-2] for image in predicted_images]
-    # docs = []
-    # for docinfo in docsinfo:
-    #     try:
-    #         docs.append(frappe.get_last_doc('JKFenner Image AI', filters=[["name","=",docinfo]]))
-    #     except frappe.DoesNotExistError:
-    #         docs.append(None)
-    # ai_responses["docs"] = docs
-    # return ai_responses
