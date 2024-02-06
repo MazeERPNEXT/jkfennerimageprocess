@@ -185,27 +185,32 @@ def generate_internal_pdf(part_no, scores=None):
                     'length': length
                     })
     html_content_internal = ''' 
-     <style>
-            .table-bordered {
-                border-collapse: collapse;
-            }
-            .table-bordered th,
-            .table-bordered td {
-                border: 1px solid #dddddd;
-                padding: 8px;
-                text-align: left;
-            }
-            .table-bordered th {
-                background-color: #f2f2f2;
-            }
-        </style>   
-                        <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex; margin-top:-20px">
-                            <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
-                        </div>
-                        <hr>
+                        <style>
+                                .table-bordered {
+                                    border-collapse: collapse;
+                                    width:80%;
+                                    margin-left:20px;
+                                    margin-bottom:20px;
+                                }
+                                .table-bordered th,
+                                .table-bordered td {
+                                    border: 2px solid #dddddd;
+                                    padding: 8px;
+                                    text-align: left;
+                                    border-right-color: #dddddd;
+                                    border-right-width: medium;
+                                }
+                                .table-bordered th {
+                                    background-color: #f2f2f2;
+                                }
+                            </style>   
+                            <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex; margin-top:-10px;bottom:10px;margin-bottom:10px">
+                                <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
+                            </div> 
+                            <hr>                        
                         {% for image_path in image_paths %}
                         <div >
-                            <img id="slider-image" style="width:30%;margin-left:200px; height:auto" src="{{ image_path }}" alt="Image 1">
+                            <img id="slider-image" style="width:25%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ image_path }}" alt="Image 1">
                         </div>
                         {% endfor %}
                     <table class="table table-bordered" 
@@ -215,7 +220,6 @@ def generate_internal_pdf(part_no, scores=None):
                             text-overflow: ellipsis;
                             font-size: inherit;
                             border-collapse: collapse;
-                            margin-top:10px
                             ">
                         <caption class="captions-image"
                           style="
@@ -244,11 +248,11 @@ def generate_internal_pdf(part_no, scores=None):
                             </tr>
                             <tr>
                                 <td " scope="row">Cross Ref.Part No 1</td>
-                                <td ">{{getAllValues.cross_refpart_no_1}}</td>
+                                <td ">{{getAllValues.cross_ref_part_no_1}}</td>
                             </tr>
                             <tr>
                                 <td " scope="row">Cross Ref.Part No 2</td>
-                                <td ">{{getAllValues.cross_refpart_no_2}}</td>
+                                <td ">{{getAllValues.cross_ref_part_no_2}}</td>
                             </tr>
                             <tr>
                                 <td " scope="row">Hose Type</td>
@@ -268,11 +272,11 @@ def generate_internal_pdf(part_no, scores=None):
                             </tr>
                             <tr>
                                 <td " scope="row">EAN</td>
-                                <td ">{{getAllValues.ean}}</td>
+                                <td ">{{getAllValues.ean_no}}</td>
                             </tr>
                             <tr>
                                 <td " scope="row">UPC</td>
-                                <td ">{{getAllValues.upc}}</td>
+                                <td ">{{getAllValues.upc_no}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -282,7 +286,6 @@ def generate_internal_pdf(part_no, scores=None):
                             overflow: hidden;
                             text-overflow: ellipsis;
                             font-size: inherit;
-                            margin: 20px 0px;
                             border-collapse: collapse;">
                         <caption class="captions-image"
                           style="
@@ -328,9 +331,8 @@ def generate_internal_pdf(part_no, scores=None):
                             overflow: hidden;
                             text-overflow: ellipsis;
                             font-size: inherit;
-                            margin: 20px 0px;
                             border-collapse: collapse;
-                            margin-top:10px">
+                            ">
                         <caption class="captions-image"
                           style="
                             color: #ffffff !important;
@@ -474,13 +476,32 @@ def generate_client_pdf(part_no, scores=None):
                     'length': length
                     })
     html_content_client = '''
-                        <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex; margin-top:-20px">
-                            <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
-                        </div>
-                        <hr>
+    <style>
+                                .table-bordered {
+                                    border-collapse: collapse;
+                                    width:80%;
+                                    margin-left:20px;
+                                    margin-bottom:20px;
+                                }
+                                .table-bordered th,
+                                .table-bordered td {
+                                    border: 2px solid #dddddd;
+                                    padding: 8px;
+                                    text-align: left;
+                                    border-right-color: #dddddd;
+                                    border-right-width: medium;
+                                }
+                                .table-bordered th {
+                                    background-color: #f2f2f2;
+                                }
+                            </style>
+                         <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex; margin-top:-10px;bottom:10px;margin-bottom:10px">
+                                <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
+                            </div> 
+                            <hr>                        
                         {% for image_path in image_paths %}
                         <div >
-                            <img id="slider-image" style="width:30%;margin-left:200px; height:auto" src="{{ image_path }}" alt="Image 1">
+                            <img id="slider-image" style="width:25%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ image_path }}" alt="Image 1">
                         </div>
                         {% endfor %}
                     <table class="table table-bordered" 
@@ -489,7 +510,6 @@ def generate_client_pdf(part_no, scores=None):
                             overflow: hidden;
                             text-overflow: ellipsis;
                             font-size: inherit;
-                            margin-top:10px
                             border-collapse: collapse;
                             ">
                         <caption class="captions-image"
@@ -542,7 +562,6 @@ def generate_client_pdf(part_no, scores=None):
                             overflow: hidden;
                             text-overflow: ellipsis;
                             font-size: inherit;
-                            margin: 20px 0px;
                             border-collapse: collapse;">
                         <caption class="captions-image"
                           style="
@@ -588,7 +607,6 @@ def generate_client_pdf(part_no, scores=None):
                             overflow: hidden;
                             text-overflow: ellipsis;
                             font-size: inherit;
-                            margin: 20px 0px;
                             border-collapse: collapse;
                             margin-top:10px">
                         <caption class="captions-image"
