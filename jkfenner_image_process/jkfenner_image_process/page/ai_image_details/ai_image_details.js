@@ -25,10 +25,10 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
     // });
 
 	page.add_action_item('Export PDF For Internal', () => {
-		window.open(`/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_internal_pdf?part_no=${partNo}&scores=${scores}`, '_blank');
+		window.open(`/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_internal_pdf?part_no=${partNo}&scores=${scores}&image=${image}`, '_blank');
 	});
 	page.add_action_item('Export PDF For Client', () => {
-		window.open(`/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_client_pdf?part_no=${partNo}&scores=${scores}`, '_blank');
+		window.open(`/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_client_pdf?part_no=${partNo}&scores=${scores}&image=${image}`, '_blank');
 	});
 	
 
