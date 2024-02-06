@@ -30,11 +30,11 @@
         this.loader = $('<div id="loader" class="loader"></div>').appendTo(this.page.body);
         }
 
-        navigateToAiImageDetails(partNo,Score,scores) {
+        navigateToAiImageDetails(partNo,Score,Image) {
             typeof(partNo)
-            let jsonString = JSON.stringify(Score);
+            let jsonString = JSON.stringify(Score,Image);
             console.log(jsonString)
-            window.open(`/app/ai-image-details?part_no=${partNo}&scores=${Score}`, '_blank');
+            window.open(`/app/ai-image-details?part_no=${partNo}&scores=${Score}&image=${Image}`, '_blank');
         }
         
 
@@ -189,7 +189,7 @@
                         </div>
                         <p>Image Similarty Score: ${(scores.scores[_index]*100)} </p>
                         <p>ID A1: ${innerDiameter1}, ID A2: ${innerDiameter2}, Length: ${length}, Thickness: ${thickness}</p>
-                        <button class="btn btn-primary btn-sm primary-action-image navigate-details" data-image-name="${currentImageFileName}" data-image-percentage="${Math.round(scores.scores[_index] * 100, 2)}">View Details</button> 
+                        <button class="btn btn-primary btn-sm primary-action-image navigate-details" data-image-name="${currentImageFileName}" data-image-path="${image}" data-image-percentage="${Math.round(scores.scores[_index] * 100, 2)}">View Details</button> 
                     </div>
                     </div>
                 </div>`;
@@ -200,10 +200,9 @@
                 $('.navigate-details').on('click', (event) => {
                     const imageName = $(event.target).data('image-name');
                     const imagePercentage = $(event.target).data('image-percentage');
-                    
-                
+                    const imagesPath = $(event.target).data('image-path');
                     // Now you can use imageName, imagePercentage, and partNo in your function
-                    this.navigateToAiImageDetails(imageName, imagePercentage,);
+                    this.navigateToAiImageDetails(imageName, imagePercentage,imagesPath);
                 });
                 
                

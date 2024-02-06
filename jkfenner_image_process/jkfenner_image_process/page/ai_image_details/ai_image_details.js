@@ -1,6 +1,7 @@
 frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 	var partNo = frappe.utils.get_url_arg('part_no');
 	var scores = frappe.utils.get_url_arg('scores');
+	var image = frappe.utils.get_url_arg('image');
 	console.log("🚀 ~ scores:", scores)
 	
 	var page = frappe.ui.make_app_page({
@@ -40,6 +41,7 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 			args: {
 				'part_no': partNo,  // Pass the actual part_no here
 				'scores': scores,
+				'image':image,
 				
 			},
 		

@@ -9,7 +9,7 @@ from urllib.parse import urljoin
 from frappe.utils import get_url
 
 @frappe.whitelist(allow_guest=True)
-def get_image_ai_details(part_no, scores=None):
+def get_image_ai_details(part_no, scores=None, image=""):
     part_no =  frappe.form_dict.get('part_no')
     result = frappe.get_all('JKFenner Image AI', filters={'part_no': part_no})
     image_paths = []
@@ -44,7 +44,7 @@ def get_image_ai_details(part_no, scores=None):
                              {% for image_path in image_paths %}
                                 <div class="slide fade">
                                     <h5 id="slider-value" class="card-title-viewimage">Matching Percentage: {{scores}}%</h5>
-                                    <img class="details-image" id="slider-image" src="{{ image_path }}" alt="Image 1">
+                                    <img class="details-image" id="slider-image" src="{{ image }}" alt="Image 1">
                                 </div>
                             {% endfor %}
                         <a href="#" class="prev" title="Previous">&#10094;</a>
@@ -154,7 +154,7 @@ def get_image_ai_details(part_no, scores=None):
                  """
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(image_html_content)
-    rendered_content = template.render(part_no=part_no, image_paths=image_paths, product_dimensions=product_dimensions, getAllValues=getAllValues, scores=scores)
+    rendered_content = template.render(part_no=part_no, image_paths=image_paths, product_dimensions=product_dimensions, getAllValues=getAllValues, scores=scores,image=image)
     print(image_paths,product_dimensions)
     return rendered_content
 
