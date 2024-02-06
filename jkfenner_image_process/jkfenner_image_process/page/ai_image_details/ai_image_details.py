@@ -159,7 +159,7 @@ def get_image_ai_details(part_no, scores=None, image=""):
     return rendered_content
 
 @frappe.whitelist(allow_guest=True)
-def generate_internal_pdf(part_no, scores=None):
+def generate_internal_pdf(part_no, scores=None, image=""):
     part_no = frappe.form_dict.get('part_no')
     result = frappe.get_all('JKFenner Image AI', filters={'part_no': part_no})
     image_paths = []
@@ -210,7 +210,7 @@ def generate_internal_pdf(part_no, scores=None):
                             <hr>                        
                         {% for image_path in image_paths %}
                         <div >
-                            <img id="slider-image" style="width:25%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ image_path }}" alt="Image 1">
+                            <img id="slider-image" style="width:25%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ image }}" alt="Image 1">
                         </div>
                         {% endfor %}
                     <table class="table table-bordered" 
@@ -373,7 +373,7 @@ def generate_internal_pdf(part_no, scores=None):
                 '''
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(html_content_internal)
-    rendered_content = template.render(part_no=part_no, image_paths=image_paths,product_dimensions=product_dimensions, getAllValues=getAllValues, site_url=site_url, scores=scores)
+    rendered_content = template.render(part_no=part_no, image_paths=image_paths,product_dimensions=product_dimensions, getAllValues=getAllValues, site_url=site_url, scores=scores, image=image)
 
     # file = open("/tmp/jkfenner.html", "w")
     # file.write(rendered_content)
@@ -450,7 +450,7 @@ def add_watermark(pdf_buffer, part_no, image_paths, getAllValues,html_content_in
 
 
 @frappe.whitelist(allow_guest=True)
-def generate_client_pdf(part_no, scores=None):
+def generate_client_pdf(part_no, scores=None, image=""):
     part_no = frappe.form_dict.get('part_no')
     result = frappe.get_all('JKFenner Image AI', filters={'part_no': part_no})
     image_paths = []
@@ -501,7 +501,7 @@ def generate_client_pdf(part_no, scores=None):
                             <hr>                        
                         {% for image_path in image_paths %}
                         <div >
-                            <img id="slider-image" style="width:25%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ image_path }}" alt="Image 1">
+                            <img id="slider-image" style="width:25%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ image }}" alt="Image 1">
                         </div>
                         {% endfor %}
                     <table class="table table-bordered" 
@@ -650,7 +650,7 @@ def generate_client_pdf(part_no, scores=None):
                 </div>'''
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(html_content_client)
-    rendered_content = template.render(part_no=part_no, image_paths=image_paths,product_dimensions=product_dimensions, getAllValues=getAllValues, site_url=site_url, scores=scores)
+    rendered_content = template.render(part_no=part_no, image_paths=image_paths,product_dimensions=product_dimensions, getAllValues=getAllValues, site_url=site_url, scores=scores, image=image)
 
     # file = open("/tmp/jkfenner.html", "w")
     # file.write(rendered_content)
