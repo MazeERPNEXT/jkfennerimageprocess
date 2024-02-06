@@ -65,11 +65,11 @@ def get_image_ai_details(part_no, scores=None):
                                     </tr>
                                     <tr>
                                         <td scope="row">Cross Ref.Part No 1</td>
-                                        <td>{{getAllValues.cross_refpart_no_1}}</td>
+                                        <td>{{getAllValues.cross_ref_part_no_1}}</td>
                                     </tr>
                                     <tr>
                                         <td scope="row">Cross Ref.Part No 2</td>
-                                        <td>{{getAllValues.cross_refpart_no_2}}</td>
+                                        <td>{{getAllValues.cross_ref_part_no_2}}</td>
                                     </tr>
                                     <tr>
                                         <td scope="row">Hose Type</td>
@@ -89,11 +89,11 @@ def get_image_ai_details(part_no, scores=None):
                                     </tr>
                                     <tr>
                                         <td scope="row">EAN</td>
-                                        <td>{{getAllValues.ean}}</td>
+                                        <td>{{getAllValues.ean_no}}</td>
                                     </tr>
                                     <tr>
                                         <td scope="row">UPC</td>
-                                        <td>{{getAllValues.upc}}</td>
+                                        <td>{{getAllValues.upc_no}}</td>
                                     </tr>
                                 </tbody>
                             </table>

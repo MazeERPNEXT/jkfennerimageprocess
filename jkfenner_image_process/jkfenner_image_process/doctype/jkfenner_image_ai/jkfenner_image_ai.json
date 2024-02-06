@@ -94,7 +94,7 @@
   },
   {
    "fieldname": "customer",
-   "fieldtype": "Text",
+   "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Customer",
    "reqd": 1
@@ -329,7 +329,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-02-06 12:04:15.331418",
+ "modified": "2024-02-06 16:13:53.896809",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "JKFenner Image AI",
