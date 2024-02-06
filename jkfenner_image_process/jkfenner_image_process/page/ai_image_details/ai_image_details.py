@@ -184,7 +184,21 @@ def generate_internal_pdf(part_no, scores=None):
                     'thickness': thickness,
                     'length': length
                     })
-    html_content_internal = '''    
+    html_content_internal = ''' 
+     <style>
+            .table-bordered {
+                border-collapse: collapse;
+            }
+            .table-bordered th,
+            .table-bordered td {
+                border: 1px solid #dddddd;
+                padding: 8px;
+                text-align: left;
+            }
+            .table-bordered th {
+                background-color: #f2f2f2;
+            }
+        </style>   
                         <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex; margin-top:-20px">
                             <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
                         </div>
@@ -221,44 +235,44 @@ def generate_internal_pdf(part_no, scores=None):
                         </caption>
                         <tbody>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Part No.</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.part_no}}</td>
+                                <td " scope="row">Part No.</td>
+                                <td ">{{getAllValues.part_no}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Customer</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.customer}}</td>
+                                <td " scope="row">Customer</td>
+                                <td ">{{getAllValues.customer}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Cross Ref.Part No 1</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.cross_refpart_no_1}}</td>
+                                <td " scope="row">Cross Ref.Part No 1</td>
+                                <td ">{{getAllValues.cross_refpart_no_1}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Cross Ref.Part No 2</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.cross_refpart_no_2}}</td>
+                                <td " scope="row">Cross Ref.Part No 2</td>
+                                <td ">{{getAllValues.cross_refpart_no_2}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Hose Type</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.hose_type}}</td>
+                                <td " scope="row">Hose Type</td>
+                                <td ">{{getAllValues.hose_type}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Development status</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.development_status}}</td>
+                                <td " scope="row">Development status</td>
+                                <td ">{{getAllValues.development_status}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Export / Domestic AAM</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.export__domestic_aam}}</td>
+                                <td " scope="row">Export / Domestic AAM</td>
+                                <td ">{{getAllValues.export__domestic_aam}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Product SAP Code</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.product_sap_code}}</td>
+                                <td " scope="row">Product SAP Code</td>
+                                <td ">{{getAllValues.product_sap_code}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">EAN</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.ean}}</td>
+                                <td " scope="row">EAN</td>
+                                <td ">{{getAllValues.ean}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">UPC</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.upc}}</td>
+                                <td " scope="row">UPC</td>
+                                <td ">{{getAllValues.upc}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -287,24 +301,24 @@ def generate_internal_pdf(part_no, scores=None):
                             </caption>
                         <tbody>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Vehicle Manufacturer	</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.vehicle_manufacturer}}</td>
+                                <td  scope="row">Vehicle Manufacturer	</td>
+                                <td >{{getAllValues.vehicle_manufacturer}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Vehicle Model</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.vehicle_model}}</td>
+                                <td  scope="row">Vehicle Model</td>
+                                <td >{{getAllValues.vehicle_model}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Vehicle Make Year	</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.vehicle_make_year}}</td>
+                                <td  scope="row">Vehicle Make Year	</td>
+                                <td >{{getAllValues.vehicle_make_year}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Hose Application</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.hose_application}}</td>
+                                <td  scope="row">Hose Application</td>
+                                <td >{{getAllValues.hose_application}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Sub Application</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.sub_application}}</td>
+                                <td  scope="row">Sub Application</td>
+                                <td >{{getAllValues.sub_application}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -336,20 +350,20 @@ def generate_internal_pdf(part_no, scores=None):
                         <tbody>
                         {% for product_dimension in product_dimensions %}
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">ID A1 (mm)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{ product_dimension.inner_diameter_1_mm }}</td>
+                                <td  scope="row">ID A1 (mm)</td>
+                                <td >{{ product_dimension.inner_diameter_1_mm }}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">ID A2 (mm)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{ product_dimension.inner_diameter_2_mm }}</td>
+                                <td  scope="row">ID A2 (mm)</td>
+                                <td >{{ product_dimension.inner_diameter_2_mm }}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Thickness</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{ product_dimension.thickness }}</td>
+                                <td  scope="row">Thickness</td>
+                                <td >{{ product_dimension.thickness }}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Length (mm)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{ product_dimension.length }}</td>
+                                <td  scope="row">Length (mm)</td>
+                                <td >{{ product_dimension.length }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
