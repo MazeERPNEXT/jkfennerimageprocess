@@ -208,8 +208,8 @@ def generate_internal_pdf(part_no, scores=None, image=""):
                                 <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
                             </div> 
                             <hr>                        
-                        <div >
-                            <img id="slider-image" style="width:25%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ image }}" alt="Image 1">
+                        <div class="slide fade">
+                                    <img class="details-image" id="slider-image" src="{{ image }}" alt="Image 1">
                         </div>
                     <table class="table table-bordered" 
                             style="border: 1px solid #1819194f;
