@@ -172,12 +172,12 @@
                 let result = imageFileName(imagePath);
                 
                 console.log(result);
-                scores.images.slice(0, 3).forEach((image,_index) => {
+                scores.images.slice(0,3).forEach((image,_index) => {
                     let currentImageFileName = imageFileName(image);
                     let innerDiameter1 = scores.docs && scores.docs[_index] && scores.docs[_index].product_dimensions[0]  ? scores.docs[_index].product_dimensions[0].inner_diameter_1_mm : '0';
                     let innerDiameter2 = scores.docs && scores.docs[_index] && scores.docs[_index].product_dimensions[0] ? scores.docs[_index].product_dimensions[0].inner_diameter_2_mm : '0';
                     let length = scores.docs && scores.docs[_index] && scores.docs[_index].product_dimensions[0] ? scores.docs[_index].product_dimensions[0].length : '0';
-                    let thickness = scores.docs && scores.docs[_index] && scores.docs[_index].product_dimensions[0] ? scores.docs[_index].product_dimensions[0].thickness : '0';
+                    let thickness = scores.docs && scores.docs[_index] && scores.docs[_index].product_dimensions[0] ? scores.docs[_index].product_dimensions[0].thickness ?? 0 : '0';
                     console.log(innerDiameter1,);
                     imageGrid += `<div class="col-4">
                     <div class="card-image">
