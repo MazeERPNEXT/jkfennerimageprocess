@@ -166,8 +166,10 @@
                 console.log(result);
                 scores.images.slice(0, 3).forEach((image,_index) => {
                     let currentImageFileName = imageFileName(image);
-                    let innerDiameter1 = scores.docs && scores.docs[_index] ? scores.docs[_index].product_dimensions[0].inner_diameter_1_mm : 'WIP';
-                    let length = scores.docs && scores.docs[_index] ? scores.docs[_index].product_dimensions[0].length : 'WIP';
+                    let innerDiameter1 = scores.docs && scores.docs[_index] ? scores.docs[_index].product_dimensions[0].inner_diameter_1_mm : '0';
+                    let innerDiameter2 = scores.docs && scores.docs[_index] ? scores.docs[_index].product_dimensions[0].inner_diameter_2_mm : '0';
+                    let length = scores.docs && scores.docs[_index] ? scores.docs[_index].product_dimensions[0].length : '0';
+                    let thickness = scores.docs && scores.docs[_index] ? scores.docs[_index].product_dimensions[0].thickness : '0'; 'WIP';
                     console.log(innerDiameter1,);
                     imageGrid += `<div class="col-4">
                     <div class="card-image">
@@ -179,7 +181,7 @@
                         </div>
                         <p>Struct dim Similarty Score: WIP</p>
                         <p>Image Similarty Score: ${(scores.scores[_index]*100)} </p>
-                        <p>ID A: ${innerDiameter1}, ID B: ${length}, ID C: WIP</p>
+                       <p>ID A1: ${innerDiameter1}, ID A2: ${innerDiameter2}, Length: ${length}, Thickness: ${thickness}</p>
                         <button class="btn btn-primary btn-sm primary-action-image navigate-details" data-image-name="${currentImageFileName}" data-image-percentage="${Math.round(scores.scores[_index] * 100, 2)}">View Details</button> 
                     </div>
                     </div>
