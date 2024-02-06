@@ -111,22 +111,25 @@
   },
   {
    "fieldname": "hose_type",
-   "fieldtype": "Data",
+   "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Hose Type",
+   "options": "\nBranched\nMoulded\nNormal with child part\nNormal with out childpart",
    "reqd": 1
   },
   {
    "fieldname": "development_status",
-   "fieldtype": "Data",
+   "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Development status",
+   "options": "\nDeveloped\nNot developed",
    "reqd": 1
   },
   {
    "fieldname": "export__domestic_aam",
-   "fieldtype": "Data",
+   "fieldtype": "Select",
    "label": "Export / Domestic AAM",
+   "options": "\nExport AAM\nDomestic AAM",
    "reqd": 1
   },
   {
@@ -142,7 +145,8 @@
   {
    "fieldname": "upc_no",
    "fieldtype": "Data",
-   "label": "UPC No"
+   "label": "UPC No",
+   "max_height": "30px"
   },
   {
    "fieldname": "child_part_details_section",
@@ -325,7 +329,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-02-05 20:23:57.768226",
+ "modified": "2024-02-06 16:13:53.896809",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "JKFenner Image AI",

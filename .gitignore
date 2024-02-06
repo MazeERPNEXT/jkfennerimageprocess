@@ -7,3 +7,4 @@ jkfenner_image_process/docs/current
 node_modules/
 *.feather
 *.pth
+jkfenner_image_process/public/dist/

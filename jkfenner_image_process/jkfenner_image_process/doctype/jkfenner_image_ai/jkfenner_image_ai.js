@@ -8,6 +8,7 @@ frappe.ui.form.on('JKFenner Image AI', {
 			);
 		}	
 	},
+	
 	get_image: function (frm) {
 
 		if(!!frm.preview_image_area){
@@ -45,7 +46,8 @@ frappe.ui.form.on('JKFenner Image AI', {
 	},
 	refresh: function (frm) {
 		frm.trigger('get_image');
-	}
+		$("textarea[data-fieldname='customer']").css({'height':'10px !important'});
+	},
 });
 
 

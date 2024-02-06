@@ -13,7 +13,7 @@ def get_image_ai_details(part_no, scores=None):
     part_no =  frappe.form_dict.get('part_no')
     result = frappe.get_all('JKFenner Image AI', filters={'part_no': part_no})
     image_paths = []
-    product_dimensions = []
+   
 
     getAllValues = None
     if result:
@@ -23,7 +23,19 @@ def get_image_ai_details(part_no, scores=None):
             image_paths = [ child_row.images for child_row in getAllValues.multiple_image_upload]
 
         if hasattr(getAllValues, 'product_dimensions'):
-            product_dimensions = [ child_row.images for child_row in getAllValues.product_dimensions]    
+            product_dimensions = []
+            for child_row in getAllValues.product_dimensions:
+                inner_diameter_1_mm = child_row.inner_diameter_1_mm
+                inner_diameter_2_mm = child_row.inner_diameter_2_mm
+                thickness = child_row.thickness
+                length = child_row.length
+                product_dimensions.append({
+                    'inner_diameter_1_mm': inner_diameter_1_mm,
+                    'inner_diameter_2_mm': inner_diameter_2_mm,
+                    'thickness': thickness,
+                    'length': length
+                    })
+            print(product_dimensions)    
     image_html_content = """ 
                     <div>
                         <p style="text-align: center; font-size: 20px;">{{getAllValues.part_no}}</p>
@@ -38,113 +50,108 @@ def get_image_ai_details(part_no, scores=None):
                         <a href="#" class="prev" title="Previous">&#10094;</a>
                         <a href="#" class="next" title="Next">&#10095;</a>
                     </div>
-                    <table class="table table-bordered">
-                        <caption class="captions-image">Generic Details</caption>
-                        <tbody>
-                            <tr>
-                                <td scope="row">Part No.</td>
-                                <td>{{getAllValues.part_no}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Customer</td>
-                                <td>{{getAllValues.customer}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Cross Ref.Part No 1</td>
-                                <td>{{getAllValues.cross_refpart_no_1}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Cross Ref.Part No 2</td>
-                                <td>{{getAllValues.cross_refpart_no_2}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Hose Type</td>
-                                <td>{{getAllValues.hose_type}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Development status</td>
-                                <td>{{getAllValues.development_status}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Export / Domestic AAM</td>
-                                <td>{{getAllValues.export__domestic_aam}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Product SAP Code</td>
-                                <td>{{getAllValues.product_sap_code}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">EAN</td>
-                                <td>{{getAllValues.ean}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">UPC</td>
-                                <td>{{getAllValues.upc}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-    
-                    <table class="table table-bordered">
-                        <caption class="captions-image">Application/Performance</caption>
-                        <tbody>
-                            <tr>
-                                <td scope="row">Vehicle Manufacturer</td>
-                                <td>{{getAllValues.vehicle_manufacturer}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Vehicle Model</td>
-                                <td>{{getAllValues.vehicle_model}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Vehicle Make Year</td>
-                                <td>{{getAllValues.vehicle_make_year}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Hose Application</td>
-                                <td>{{getAllValues.hose_application}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Sub Application </td>
-                                <td>{{getAllValues.sub_application}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-    
-                    <table class="table table-bordered">
-                        <caption class="captions-image">Dimensions</caption>
-                        <tbody>
-                            <tr>
-                                <td scope="row">Inner Diameter A (MM)</td>
-                                { % for product_dimension in product_dimensions %}
-                                <td>{{ product_dimension }}</td>
-                                { % endfor % }
-                            </tr>
-                            <tr>
-                                <td scope="row">Inner Diameter B (MM)</td>
-                                <td>{{getAllValues.inner_diameter_b_mm}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Thickness  </td>
-                                <td>{{getAllValues.thickness}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Outer Diameter A (mm)</td>
-                                <td>{{getAllValues.outer_diameter_a_mm}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Outer Diameter B (mm) </td>
-                                <td>{{getAllValues.outer_diameter_b_mm}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Central axis length (mm)</td>
-                                <td>{{getAllValues.central_axis_length_mm}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Product weight (grams) </td>
-                                <td>{{getAllValues.product_weight_grams}}</td>
-                            </tr> 
-                        </tbody>
-                    </table>"""
+                    <div class="row">
+                        <div class="col-md-4">
+                            <table class="table table-bordered">
+                                <caption class="captions-image">Generic Details</caption>
+                                <tbody>
+                                    <tr>
+                                        <td scope="row">Part No.</td>
+                                        <td>{{getAllValues.part_no}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Customer</td>
+                                        <td>{{getAllValues.customer}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Cross Ref.Part No 1</td>
+                                        <td>{{getAllValues.cross_ref_part_no_1}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Cross Ref.Part No 2</td>
+                                        <td>{{getAllValues.cross_ref_part_no_2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Hose Type</td>
+                                        <td>{{getAllValues.hose_type}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Development status</td>
+                                        <td>{{getAllValues.development_status}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Export / Domestic AAM</td>
+                                        <td>{{getAllValues.export__domestic_aam}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Product SAP Code</td>
+                                        <td>{{getAllValues.product_sap_code}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">EAN</td>
+                                        <td>{{getAllValues.ean_no}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">UPC</td>
+                                        <td>{{getAllValues.upc_no}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-4">
+                            <table class="table table-bordered">
+                                <caption class="captions-image">Product Application</caption>
+                                <tbody>
+                                    <tr>
+                                        <td scope="row">Vehicle Manufacturer</td>
+                                        <td>{{getAllValues.vehicle_manufacturer}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Vehicle Model</td>
+                                        <td>{{getAllValues.vehicle_model}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Vehicle Make Year</td>
+                                        <td>{{getAllValues.vehicle_make_year}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Hose Application</td>
+                                        <td>{{getAllValues.hose_application}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Sub Application </td>
+                                        <td>{{getAllValues.sub_application}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-4">
+                            <table class="table table-bordered">
+                                <caption class="captions-image">Product Dimensions</caption>
+                                <tbody>
+                                {% for product_dimension in product_dimensions %}
+                                    <tr>
+                                        <td scope="row">ID A1 (mm)</td>
+                                        <td>{{ product_dimension.inner_diameter_1_mm }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">ID A2 (mm)</td>
+                                        <td>{{ product_dimension.inner_diameter_2_mm }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Thickness </td>
+                                        <td>{{ product_dimension.thickness }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Length (mm)</td>
+                                        <td>{{ product_dimension.length }}</td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                 """
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(image_html_content)
     rendered_content = template.render(part_no=part_no, image_paths=image_paths, product_dimensions=product_dimensions, getAllValues=getAllValues, scores=scores)
@@ -163,17 +170,47 @@ def generate_internal_pdf(part_no, scores=None):
     
         if hasattr(getAllValues, 'multiple_image_upload'):
             image_paths = [urljoin(site_url, child_row.images) for child_row in getAllValues.multiple_image_upload]
-        # return image_paths
-    html_content_internal = '''
-                            <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex;">
-                            <!-- Rest of your HTML content -->
-                            <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
-                        </div>
-                        <hr>
+        
+        if hasattr(getAllValues, 'product_dimensions'):
+            product_dimensions = []
+            for child_row in getAllValues.product_dimensions:
+                inner_diameter_1_mm = child_row.inner_diameter_1_mm
+                inner_diameter_2_mm = child_row.inner_diameter_2_mm
+                thickness = child_row.thickness
+                length = child_row.length
+                product_dimensions.append({
+                    'inner_diameter_1_mm': inner_diameter_1_mm,
+                    'inner_diameter_2_mm': inner_diameter_2_mm,
+                    'thickness': thickness,
+                    'length': length
+                    })
+    html_content_internal = ''' 
+                        <style>
+                                .table-bordered {
+                                    border-collapse: collapse;
+                                    width:80%;
+                                    margin-left:20px;
+                                    margin-bottom:20px;
+                                }
+                                .table-bordered th,
+                                .table-bordered td {
+                                    border: 2px solid #dddddd;
+                                    padding: 8px;
+                                    text-align: left;
+                                    border-right-color: #dddddd;
+                                    border-right-width: medium;
+                                }
+                                .table-bordered th {
+                                    background-color: #f2f2f2;
+                                }
+                            </style>   
+                            <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex; margin-top:-10px;bottom:10px;margin-bottom:10px">
+                                <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
+                            </div> 
+                            <hr>                        
                         {% for image_path in image_paths %}
                         <div >
-                            <h5 id="slider-value" style="font-size:18px; text-align:center" class="card-title-viewimage">Matching Percentage: {{scores}}%</h5>
-                            <img id="slider-image" style="width:70%;margin-left:90px" src="{{ image_path }}" alt="Image 1">
+                            <img id="slider-image" style="width:25%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ image_path }}" alt="Image 1">
                         </div>
                         {% endfor %}
                     <table class="table table-bordered" 
@@ -182,7 +219,6 @@ def generate_internal_pdf(part_no, scores=None):
                             overflow: hidden;
                             text-overflow: ellipsis;
                             font-size: inherit;
-                            margin: 0px 0px;
                             border-collapse: collapse;
                             ">
                         <caption class="captions-image"
@@ -203,48 +239,44 @@ def generate_internal_pdf(part_no, scores=None):
                         </caption>
                         <tbody>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Domestic / Export</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.domestic__export}}</td>
+                                <td " scope="row">Part No.</td>
+                                <td ">{{getAllValues.part_no}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Part No.</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.part_no}}</td>
+                                <td " scope="row">Customer</td>
+                                <td ">{{getAllValues.customer}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Part Description</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.part_description}}</td>
+                                <td " scope="row">Cross Ref.Part No 1</td>
+                                <td ">{{getAllValues.cross_ref_part_no_1}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">SAP Asset Code</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.sap_asset_code}}</td>
+                                <td " scope="row">Cross Ref.Part No 2</td>
+                                <td ">{{getAllValues.cross_ref_part_no_2}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Type of Hose</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.type_of_hose}}</td>
+                                <td " scope="row">Hose Type</td>
+                                <td ">{{getAllValues.hose_type}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Toolings Created on</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.toolings_created_on}}</td>
+                                <td " scope="row">Development status</td>
+                                <td ">{{getAllValues.development_status}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">EAN</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.ean}}</td>
+                                <td " scope="row">Export / Domestic AAM</td>
+                                <td ">{{getAllValues.export__domestic_aam}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">UPC</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.upc}}</td>
+                                <td " scope="row">Product SAP Code</td>
+                                <td ">{{getAllValues.product_sap_code}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Customer 1 (Cross Ref)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.customer_1_cross_ref}}</td>
+                                <td " scope="row">EAN</td>
+                                <td ">{{getAllValues.ean_no}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Customer 2 (Cross Ref)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.customer_2_cross_ref}}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Customer 3,4,5 (Cross Ref)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.customer_345_cross_ref}}</td>
+                                <td " scope="row">UPC</td>
+                                <td ">{{getAllValues.upc_no}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -254,7 +286,6 @@ def generate_internal_pdf(part_no, scores=None):
                             overflow: hidden;
                             text-overflow: ellipsis;
                             font-size: inherit;
-                            margin: 20px 0px;
                             border-collapse: collapse;">
                         <caption class="captions-image"
                           style="
@@ -269,28 +300,28 @@ def generate_internal_pdf(part_no, scores=None):
                             border-top-right-radius: 10px !important;
                             caption-side: top !important;
                             border-collapse: collapse;">
-                            Application/Performance
+                           Product Application
                             </caption>
                         <tbody>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Vehicle Model	</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.vehicle_model}}</td>
+                                <td  scope="row">Vehicle Manufacturer	</td>
+                                <td >{{getAllValues.vehicle_manufacturer}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Application (Radiator / Heater )</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.application_radiator__heater_}}</td>
+                                <td  scope="row">Vehicle Model</td>
+                                <td >{{getAllValues.vehicle_model}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Vehicle manufacturer</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.vehicle_manufacturer}}</td>
+                                <td  scope="row">Vehicle Make Year	</td>
+                                <td >{{getAllValues.vehicle_make_year}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Vehicle Make/Year	</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.vehicle_makeyear}}</td>
+                                <td  scope="row">Hose Application</td>
+                                <td >{{getAllValues.hose_application}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Sub Application</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.sub_application}}</td>
+                                <td  scope="row">Sub Application</td>
+                                <td >{{getAllValues.sub_application}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -300,9 +331,8 @@ def generate_internal_pdf(part_no, scores=None):
                             overflow: hidden;
                             text-overflow: ellipsis;
                             font-size: inherit;
-                            margin: 20px 0px;
                             border-collapse: collapse;
-                            margin-top:10px">
+                            ">
                         <caption class="captions-image"
                           style="
                             color: #ffffff !important;
@@ -317,43 +347,33 @@ def generate_internal_pdf(part_no, scores=None):
                             caption-side: top !important;
                             border-collapse: collapse;" 
                         >
-                            Dimensions
+                         Product Dimensions
                         </caption>
                         <tbody>
+                        {% for product_dimension in product_dimensions %}
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Inner Diameter A (MM)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.inner_diameter_a_mm}}</td>
+                                <td  scope="row">ID A1 (mm)</td>
+                                <td >{{ product_dimension.inner_diameter_1_mm }}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Inner Diameter B (MM)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.inner_diameter_b_mm}}</td>
+                                <td  scope="row">ID A2 (mm)</td>
+                                <td >{{ product_dimension.inner_diameter_2_mm }}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Thickness</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.thickness}}</td>
+                                <td  scope="row">Thickness</td>
+                                <td >{{ product_dimension.thickness }}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Outer Diameter A (mm)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.outer_diameter_a_mm}}</td>
+                                <td  scope="row">Length (mm)</td>
+                                <td >{{ product_dimension.length }}</td>
                             </tr>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Outer Diameter B (mm)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.outer_diameter_b_mm}}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Central axis length (mm)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.central_axis_length_mm}}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Product weight (grams)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.product_weight_grams}}</td>
-                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 '''
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(html_content_internal)
-    rendered_content = template.render(part_no=part_no, image_paths=image_paths, getAllValues=getAllValues, site_url=site_url, scores=scores)
+    rendered_content = template.render(part_no=part_no, image_paths=image_paths,product_dimensions=product_dimensions, getAllValues=getAllValues, site_url=site_url, scores=scores)
 
     # file = open("/tmp/jkfenner.html", "w")
     # file.write(rendered_content)
@@ -441,17 +461,47 @@ def generate_client_pdf(part_no, scores=None):
     
         if hasattr(getAllValues, 'multiple_image_upload'):
             image_paths = [urljoin(site_url, child_row.images) for child_row in getAllValues.multiple_image_upload]
-        # return image_paths
-    html_content_client = '''<div class="layout-main-section" id="element-to-print">
-                            <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex;">
-                            <!-- Rest of your HTML content -->
-                            <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
-                        </div>
-                         <hr>
+        
+        if hasattr(getAllValues, 'product_dimensions'):
+            product_dimensions = []
+            for child_row in getAllValues.product_dimensions:
+                inner_diameter_1_mm = child_row.inner_diameter_1_mm
+                inner_diameter_2_mm = child_row.inner_diameter_2_mm
+                thickness = child_row.thickness
+                length = child_row.length
+                product_dimensions.append({
+                    'inner_diameter_1_mm': inner_diameter_1_mm,
+                    'inner_diameter_2_mm': inner_diameter_2_mm,
+                    'thickness': thickness,
+                    'length': length
+                    })
+    html_content_client = '''
+    <style>
+                                .table-bordered {
+                                    border-collapse: collapse;
+                                    width:80%;
+                                    margin-left:20px;
+                                    margin-bottom:20px;
+                                }
+                                .table-bordered th,
+                                .table-bordered td {
+                                    border: 2px solid #dddddd;
+                                    padding: 8px;
+                                    text-align: left;
+                                    border-right-color: #dddddd;
+                                    border-right-width: medium;
+                                }
+                                .table-bordered th {
+                                    background-color: #f2f2f2;
+                                }
+                            </style>
+                         <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex; margin-top:-10px;bottom:10px;margin-bottom:10px">
+                                <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
+                            </div> 
+                            <hr>                        
                         {% for image_path in image_paths %}
-                        <div>
-                            <h5 id="slider-value" style="font-size:18px; text-align:center" class="card-title-viewimage">Matching Percentage: {{scores}}%</h5>
-                            <img id="slider-image" style="width:70%;margin-left:90px"    src="{{ image_path }}" alt="Image 1">
+                        <div >
+                            <img id="slider-image" style="width:25%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ image_path }}" alt="Image 1">
                         </div>
                         {% endfor %}
                     <table class="table table-bordered" 
@@ -460,9 +510,7 @@ def generate_client_pdf(part_no, scores=None):
                             overflow: hidden;
                             text-overflow: ellipsis;
                             font-size: inherit;
-                            margin: 0px 0px;
                             border-collapse: collapse;
-                            
                             ">
                         <caption class="captions-image"
                           style="
@@ -482,28 +530,28 @@ def generate_client_pdf(part_no, scores=None):
                         </caption>
                         <tbody>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Domestic / Export</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.domestic__export}}</td>
-                            </tr>
-                            <tr>
                                 <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Part No.</td>
                                 <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.part_no}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Part Description</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.part_description}}</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Customer</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.customer}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">SAP Asset Code</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.sap_asset_code}}</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Hose Type</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.hose_type}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Type of Hose</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.type_of_hose}}</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Development status</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.development_status}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Toolings Created on</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.toolings_created_on}}</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Export / Domestic AAM</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.export__domestic_aam}}</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Product SAP Code</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.product_sap_code}}</td>
                             </tr>
                             
                         </tbody>
@@ -514,7 +562,6 @@ def generate_client_pdf(part_no, scores=None):
                             overflow: hidden;
                             text-overflow: ellipsis;
                             font-size: inherit;
-                            margin: 20px 0px;
                             border-collapse: collapse;">
                         <caption class="captions-image"
                           style="
@@ -529,24 +576,24 @@ def generate_client_pdf(part_no, scores=None):
                             border-top-right-radius: 10px !important;
                             caption-side: top !important;
                             border-collapse: collapse;">
-                            Application/Performance
+                            Product Application
                             </caption>
                         <tbody>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Vehicle Model	</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.vehicle_model}}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Application (Radiator / Heater )</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.application_radiator__heater_}}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Vehicle manufacturer</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Vehicle Manufacturer	</td>
                                 <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.vehicle_manufacturer}}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Vehicle Make/Year	</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.vehicle_makeyear}}</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Vehicle Model</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.vehicle_model}}</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Vehicle Make Year	</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.vehicle_make_year}}</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Hose Application</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.hose_application}}</td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Sub Application</td>
@@ -560,7 +607,6 @@ def generate_client_pdf(part_no, scores=None):
                             overflow: hidden;
                             text-overflow: ellipsis;
                             font-size: inherit;
-                            margin: 20px 0px;
                             border-collapse: collapse;
                             margin-top:10px">
                         <caption class="captions-image"
@@ -577,44 +623,34 @@ def generate_client_pdf(part_no, scores=None):
                             caption-side: top !important;
                             border-collapse: collapse;" 
                         >
-                            Dimensions
+                          Product  Dimensions
                         </caption>
                         <tbody>
+                            {% for product_dimension in product_dimensions %}
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Inner Diameter A (MM)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.inner_diameter_a_mm}}</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">ID A1 (mm)</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{ product_dimension.inner_diameter_1_mm }}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Inner Diameter B (MM)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.inner_diameter_b_mm}}</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">ID A2 (mm)</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{ product_dimension.inner_diameter_2_mm }}</td>
                             </tr>
                             <tr>
                                 <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Thickness</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.thickness}}</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{ product_dimension.thickness }}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Outer Diameter A (mm)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.outer_diameter_a_mm}}</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Length (mm)</td>
+                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{ product_dimension.length }}</td>
                             </tr>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Outer Diameter B (mm)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.outer_diameter_b_mm}}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Central axis length (mm)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.central_axis_length_mm}}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Product weight (grams)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.product_weight_grams}}</td>
-                            </tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                     
                 </div>'''
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(html_content_client)
-    rendered_content = template.render(part_no=part_no, image_paths=image_paths, getAllValues=getAllValues, site_url=site_url, scores=scores)
+    rendered_content = template.render(part_no=part_no, image_paths=image_paths,product_dimensions=product_dimensions, getAllValues=getAllValues, site_url=site_url, scores=scores)
 
     # file = open("/tmp/jkfenner.html", "w")
     # file.write(rendered_content)
@@ -637,7 +673,7 @@ def generate_client_pdf(part_no, scores=None):
 
 def add_watermark_client(pdf_buffer_client, part_no, image_paths, getAllValues,html_content_client):
     watermark_text_client = "Confidential"
-    watermark_font_size = 94
+    watermark_font_size = 100
     watermark_opacity = 0.1
 
     # Create a PDF reader

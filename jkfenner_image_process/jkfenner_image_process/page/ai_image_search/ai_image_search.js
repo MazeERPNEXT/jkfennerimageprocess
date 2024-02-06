@@ -153,6 +153,14 @@
                 let scores = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image',{
                     image : fileResponse.name
                 });
+                // Check if scores is undefined
+                if (!fileInput) {
+                    // Handle the case where scores is undefined, e.g., show an error message
+                    frappe.msgprint('Please upload SKU part.');
+                    this.hideLoader();
+                    return;
+                    }
+
                 // let imageName = scores.images[0];
                 let imageGrid = "";
                 let imageFileName = (image) =>{
@@ -169,7 +177,7 @@
                     let innerDiameter1 = scores.docs && scores.docs[_index] ? scores.docs[_index].product_dimensions[0].inner_diameter_1_mm : '0';
                     let innerDiameter2 = scores.docs && scores.docs[_index] ? scores.docs[_index].product_dimensions[0].inner_diameter_2_mm : '0';
                     let length = scores.docs && scores.docs[_index] ? scores.docs[_index].product_dimensions[0].length : '0';
-                    let thickness = scores.docs && scores.docs[_index] ? scores.docs[_index].product_dimensions[0].thickness : '0'; 'WIP';
+                    let thickness = scores.docs && scores.docs[_index] ? scores.docs[_index].product_dimensions[0].thickness : '0';
                     console.log(innerDiameter1,);
                     imageGrid += `<div class="col-4">
                     <div class="card-image">
@@ -179,9 +187,8 @@
                         <img style="height: 221px;object-fit: scale-down;" class="matchingimage w-100" id="matchingImage"  src="${image}" alt="Matching Image">
                         <p  style="text-align:center">${!!image ? currentImageFileName : "No Image"}</p> 
                         </div>
-                        <p>Struct dim Similarty Score: WIP</p>
                         <p>Image Similarty Score: ${(scores.scores[_index]*100)} </p>
-                       <p>ID A1: ${innerDiameter1}, ID A2: ${innerDiameter2}, Length: ${length}, Thickness: ${thickness}</p>
+                        <p>ID A1: ${innerDiameter1}, ID A2: ${innerDiameter2}, Length: ${length}, Thickness: ${thickness}</p>
                         <button class="btn btn-primary btn-sm primary-action-image navigate-details" data-image-name="${currentImageFileName}" data-image-percentage="${Math.round(scores.scores[_index] * 100, 2)}">View Details</button> 
                     </div>
                     </div>
