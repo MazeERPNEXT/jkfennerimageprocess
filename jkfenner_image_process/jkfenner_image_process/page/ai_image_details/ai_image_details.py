@@ -41,12 +41,12 @@ def get_image_ai_details(part_no, scores=None, image=""):
                         <p style="text-align: center; font-size: 20px;">{{getAllValues.part_no}}</p>
                     </div>
                     <div class="slide-container">
-                             {% for image_path in image_paths %}
+                          
                                 <div class="slide fade">
                                     <h5 id="slider-value" class="card-title-viewimage">Matching Percentage: {{scores}}%</h5>
                                     <img class="details-image" id="slider-image" src="{{ image }}" alt="Image 1">
                                 </div>
-                            {% endfor %}
+                            
                         <a href="#" class="prev" title="Previous">&#10094;</a>
                         <a href="#" class="next" title="Next">&#10095;</a>
                     </div>
