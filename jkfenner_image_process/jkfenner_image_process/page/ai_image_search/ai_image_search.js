@@ -153,6 +153,14 @@
                 let scores = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image',{
                     image : fileResponse.name
                 });
+                // Check if scores is undefined
+                if (!fileInput) {
+                    // Handle the case where scores is undefined, e.g., show an error message
+                    frappe.msgprint('Please upload SKU part.');
+                    this.hideLoader();
+                    return;
+                    }
+
                 // let imageName = scores.images[0];
                 let imageGrid = "";
                 let imageFileName = (image) =>{
