@@ -208,11 +208,9 @@ def generate_internal_pdf(part_no, scores=None, image=""):
                                 <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
                             </div> 
                             <hr>                        
-                        {% for image_path in image_paths %}
                         <div >
                             <img id="slider-image" style="width:25%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ image }}" alt="Image 1">
                         </div>
-                        {% endfor %}
                     <table class="table table-bordered" 
                             style="border: 1px solid #1819194f;
                             white-space: nowrap;
@@ -499,11 +497,9 @@ def generate_client_pdf(part_no, scores=None, image=""):
                                 <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
                             </div> 
                             <hr>                        
-                        {% for image_path in image_paths %}
                         <div >
                             <img id="slider-image" style="width:25%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ image }}" alt="Image 1">
                         </div>
-                        {% endfor %}
                     <table class="table table-bordered" 
                             style="border: 1px solid #1819194f;
                             white-space: nowrap;
