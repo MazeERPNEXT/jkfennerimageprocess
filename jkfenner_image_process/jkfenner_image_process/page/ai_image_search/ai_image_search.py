@@ -32,7 +32,7 @@ def guess_image(image):
     #         "0.7229657"
     #     ]
     # }
-    ai_responses = []
+    ai_responses = {}
     config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
     _file = frappe.get_doc("File", {'name': image})
     img_path = _file.get_full_path()
