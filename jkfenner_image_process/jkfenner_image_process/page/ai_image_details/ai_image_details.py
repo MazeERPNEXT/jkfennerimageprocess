@@ -209,7 +209,7 @@ def generate_internal_pdf(part_no, scores=None, image=""):
                             </div> 
                             <hr>                        
                         <div class="slide fade">
-                                    <img class="details-image" id="slider-image" src="{{ image }}" alt="Image 1">
+                          <img class="details-image" id="slider-image" src="{{ image }}" alt="Image 1">
                         </div>
                     <table class="table table-bordered" 
                             style="border: 1px solid #1819194f;
