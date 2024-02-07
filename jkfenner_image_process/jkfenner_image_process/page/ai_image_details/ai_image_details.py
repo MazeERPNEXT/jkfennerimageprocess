@@ -13,6 +13,7 @@ def get_image_ai_details(part_no, scores=None, image=""):
     part_no =  frappe.form_dict.get('part_no')
     result = frappe.get_all('JKFenner Image AI', filters={'part_no': part_no})
     image_paths = []
+    product_dimensions = []
    
 
     getAllValues = None
@@ -21,9 +22,11 @@ def get_image_ai_details(part_no, scores=None, image=""):
         getAllValues = frappe.get_doc('JKFenner Image AI', x)
         if hasattr(getAllValues, 'multiple_image_upload'):
             image_paths = [ child_row.images for child_row in getAllValues.multiple_image_upload]
-
+        
+        
+        
         if hasattr(getAllValues, 'product_dimensions'):
-            product_dimensions = []
+            
             for child_row in getAllValues.product_dimensions:
                 inner_diameter_1_mm = child_row.inner_diameter_1_mm
                 inner_diameter_2_mm = child_row.inner_diameter_2_mm
@@ -41,12 +44,10 @@ def get_image_ai_details(part_no, scores=None, image=""):
                         <p style="text-align: center; font-size: 20px;">{{getAllValues.part_no}}</p>
                     </div>
                     <div class="slide-container">
-                          
                                 <div class="slide fade">
                                     <h5 id="slider-value" class="card-title-viewimage">Matching Percentage: {{scores}}%</h5>
                                     <img class="details-image" id="slider-image" src="{{ image }}" alt="Image 1">
                                 </div>
-                            
                         <a href="#" class="prev" title="Previous">&#10094;</a>
                         <a href="#" class="next" title="Next">&#10095;</a>
                     </div>
@@ -164,15 +165,19 @@ def generate_internal_pdf(part_no, scores=None, image=""):
     result = frappe.get_all('JKFenner Image AI', filters={'part_no': part_no})
     image_paths = []
     site_url = get_url()
+    product_dimensions = []
+    getAllValues = None
+    
     if result:
         x = result[0].name
         getAllValues = frappe.get_doc('JKFenner Image AI', x)
     
-        if hasattr(getAllValues, 'multiple_image_upload'):
-            image_paths = [urljoin(site_url, child_row.images) for child_row in getAllValues.multiple_image_upload]
+        # if hasattr(getAllValues, 'multiple_image_upload'):
+        #     image_paths = [urljoin(site_url, child_row.images) for child_row in getAllValues.multiple_image_upload]
+        image_paths = [urljoin(site_url, image)]
+        
         
         if hasattr(getAllValues, 'product_dimensions'):
-            product_dimensions = []
             for child_row in getAllValues.product_dimensions:
                 inner_diameter_1_mm = child_row.inner_diameter_1_mm
                 inner_diameter_2_mm = child_row.inner_diameter_2_mm
@@ -207,10 +212,12 @@ def generate_internal_pdf(part_no, scores=None, image=""):
                             <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex; margin-top:-10px;bottom:10px;margin-bottom:10px">
                                 <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
                             </div> 
-                            <hr>                        
-                        <div class="slide fade">
-                          <img class="details-image" id="slider-image" src="{{ image }}" alt="Image 1">
-                        </div>
+                            <hr>   
+                            {% for image_path in image_paths %}                      
+                                <div >
+                                    <img id="slider-image" style="width:25%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ image_path }}" alt="Image 1">
+                                </div>
+                            {% endfor %} 
                     <table class="table table-bordered" 
                             style="border: 1px solid #1819194f;
                             white-space: nowrap;
@@ -453,15 +460,18 @@ def generate_client_pdf(part_no, scores=None, image=""):
     result = frappe.get_all('JKFenner Image AI', filters={'part_no': part_no})
     image_paths = []
     site_url = get_url()
+    product_dimensions = []
+    getAllValues = None
+    
     if result:
         x = result[0].name
         getAllValues = frappe.get_doc('JKFenner Image AI', x)
     
-        if hasattr(getAllValues, 'multiple_image_upload'):
-            image_paths = [urljoin(site_url, child_row.images) for child_row in getAllValues.multiple_image_upload]
+        # if hasattr(getAllValues, 'multiple_image_upload'):
+        #     image_paths = [urljoin(site_url, child_row.images) for child_row in getAllValues.multiple_image_upload]
+        image_paths = [urljoin(site_url, image)]
         
         if hasattr(getAllValues, 'product_dimensions'):
-            product_dimensions = []
             for child_row in getAllValues.product_dimensions:
                 inner_diameter_1_mm = child_row.inner_diameter_1_mm
                 inner_diameter_2_mm = child_row.inner_diameter_2_mm
@@ -496,10 +506,12 @@ def generate_client_pdf(part_no, scores=None, image=""):
                          <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex; margin-top:-10px;bottom:10px;margin-bottom:10px">
                                 <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
                             </div> 
-                            <hr>                        
-                        <div >
-                            <img id="slider-image" style="width:25%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ image }}" alt="Image 1">
-                        </div>
+                            <hr>  
+                            {% for image_path in image_paths %}                      
+                                <div >
+                                    <img id="slider-image" style="width:25%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ image_path }}" alt="Image 1">
+                                </div>
+                            {% endfor %}  
                     <table class="table table-bordered" 
                             style="border: 1px solid #1819194f;
                             white-space: nowrap;
