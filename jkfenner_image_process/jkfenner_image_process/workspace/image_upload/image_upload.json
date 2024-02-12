@@ -12,7 +12,7 @@
  "is_hidden": 0,
  "label": "Image Upload",
  "links": [],
- "modified": "2024-02-07 00:55:34.832471",
+ "modified": "2024-02-09 16:46:53.338386",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "Image Upload",
@@ -32,6 +32,14 @@
    "url": "http://jkfennerai.local.com:8000/app/users"
   },
   {
+   "color": "Green",
+   "doc_view": "List",
+   "label": "New SKU Upload",
+   "link_to": "JKFenner Image AI",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
    "color": "Grey",
    "doc_view": "List",
    "label": "Image Search",
@@ -44,13 +52,6 @@
    "label": "Logs",
    "type": "URL",
    "url": "http://jkfennerimageprocess.localhost.com:8000/app/logs"
-  },
-  {
-   "color": "Green",
-   "doc_view": "List",
-   "label": "New SKU Upload",
-   "link_to": "JKFenner Image AI",
-   "type": "DocType"
   }
  ],
  "title": "Image Upload"

@@ -2,6 +2,8 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 	var partNo = frappe.utils.get_url_arg('part_no');
 	var scores = frappe.utils.get_url_arg('scores');
 	var image = frappe.utils.get_url_arg('image');
+	
+
 	console.log("🚀 ~ scores:", scores)
 	
 	var page = frappe.ui.make_app_page({
@@ -9,8 +11,6 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 		title: 'View Image Details',
 		single_column: true
 	});
-	
-	
 	
 	page.set_title('Result Details')
 	let $btn = page.set_primary_action('Back To Search Image', function() {
@@ -23,6 +23,45 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
     // let $btnExport = page.set_secondary_action(__('Export PDF For Internal '), function() {
    	// 	method : window.open("/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_internal_pdf" , '_blank');
     // });
+
+///////////////////////////////////////////////////////////////////////////////////////
+		// let slideIndex = 0;
+		// let scoresArray = [];; // Array to store scores for each slide
+
+		// function showSlides() {
+		// 	const slides = document.getElementsByClassName("slide");
+		// 	for (let i = 0; i < slides.length; i++) {
+		// 		slides[i].style.display = "none";
+		// 	}
+		// 	slideIndex++;
+		// 	if (slideIndex > slides.length) {
+		// 		slideIndex = 1;
+		// 	}
+		// 	slides[slideIndex - 1].style.display = "block";
+		// 	// Update the scores value for the current slide
+		// 	$('.card-title-viewimage').text(`Matching Percentage: ${scores[slideIndex - 1]}%`);
+		// 	setTimeout(showSlides, 8000); // Change slide every 8 seconds (adjust as needed)
+		// }
+		// document.addEventListener('DOMContentLoaded', function() {
+		// 	document.querySelector('.prev').addEventListener('click', function() {
+		// 		slideIndex--;
+		// 		if (slideIndex < 1) {
+		// 			slideIndex = slides.length;
+		// 		}
+		// 		showSlides();
+		// 	});
+	
+		// 	document.querySelector('.next').addEventListener('click', function() {
+		// 		slideIndex++;
+		// 		if (slideIndex > slides.length) {
+		// 			slideIndex = 1;
+		// 		}
+		// 		showSlides();
+		// 	});		
+		// });
+		
+
+	//////////////////////////////////////////////////////////////////////////////////////////
 
 	page.add_action_item('Export PDF For Internal', () => {
 		window.open(`/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_internal_pdf?part_no=${partNo}&scores=${scores}&image=${image}`, '_blank');
@@ -48,46 +87,15 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 			callback: function(response) {
 				// console.log(response.message)
 				if (response) {
-					// Access server-side data in the response
 					var serverHtml = response.message;
-					$('.layout-main-section').html('<div>'+serverHtml+"</div>")
-					  
-					// Add the slideshow script dynamically to the DOM
-					var script = document.createElement('script');
-					script.innerHTML = `
-						var slideIndex = 0;
-						showSlides();
-		
-						function showSlides() {
-							var slides = document.getElementsByClassName("slide");
-							for (var i = 0; i < slides.length; i++) {
-								slides[i].style.display = "none";
-							}
-							slideIndex++;
-							if (slideIndex > slides.length) {
-								slideIndex = 1;
-							}
-							slides[slideIndex - 1].style.display = "block";
-							setTimeout(showSlides, 8000); // Change slide every 8 seconds (adjust as needed)
-						}
-		
-						document.querySelector('.prev').addEventListener('click', function() {
-							slideIndex--;
-							if (slideIndex < 1) {
-								slideIndex = slides.length;
-							}
-							showSlides();
-						});
-		
-						document.querySelector('.next').addEventListener('click', function() {
-							slideIndex++;
-							if (slideIndex > slides.length) {
-								slideIndex = 1;
-							}
-							showSlides();
-						});
-					`;
-					document.head.appendChild(script);
+					$('.layout-main-section').html('<div>' + serverHtml + "</div>");
+					if ($('.table-bordered tbody tr').length === 0) {
+						$('.table-bordered tbody').html('<tr><td colspan="2">None</td></tr>');
+					}
+					// Update the scores array with the received scores
+					scoresArray = response.scores || [];
+					// Initialize the slideshow
+					showSlides();
 				}
 			}
 		});

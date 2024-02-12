@@ -179,20 +179,22 @@
                     let length = scores.docs && scores.docs[_index] && scores.docs[_index].product_dimensions[0] ? scores.docs[_index].product_dimensions[0].length : '0';
                     let thickness = scores.docs && scores.docs[_index] && scores.docs[_index].product_dimensions[0] ? scores.docs[_index].product_dimensions[0].thickness ?? 0 : '0';
                     console.log(innerDiameter1,);
-                    imageGrid += `<div class="col-4">
-                    <div class="card-image">
-                    <div id="image-details" class="card-body-image" style="height: 464px;">
-                        <h5 class="card-title-image">Matching Percentage: ${Math.round(scores.scores[_index]*100,2)}%</h5>
-                        <div class="card-image-search"> 
-                        <img style="height: 221px;object-fit: scale-down;" class="matchingimage w-100" id="matchingImage"  src="${image}" alt="Matching Image">
-                        <p  style="text-align:center">${!!image ? currentImageFileName : "No Image"}</p> 
-                        </div>
-                        <p>Image Similarty Score: ${(scores.scores[_index]*100)} </p>
-                        <p>ID A1: ${innerDiameter1}, ID A2: ${innerDiameter2}, Length: ${length}, Thickness: ${thickness}</p>
-                        <button class="btn btn-primary btn-sm primary-action-image navigate-details" data-image-name="${currentImageFileName}" data-image-path="${image}" data-image-percentage="${Math.round(scores.scores[_index] * 100, 2)}">View Details</button> 
-                    </div>
-                    </div>
-                </div>`;
+                    imageGrid += `<div class="col">
+                            <div class="card-image">
+                                <div id="image-details" class="card-body-image">
+                                    <h5 class="card-title-image">Matching Percentage: ${Math.round(scores.scores[_index]*100,2)}%</h5>
+                                        <div class="card-image-search"> 
+                                            <img style="height: 221px;object-fit: scale-down;" class="matchingimage w-100" id="matchingImage"  src="${image}" alt="Matching Image">
+                                            <p  style="text-align:center">${!!image ? currentImageFileName : "No Image"}</p> 
+                                        </div>
+                                        <div class="card-content">
+                                            <p>Image Similarty Score: ${(scores.scores[_index]*100)} </p>
+                                            <p>ID A1: ${innerDiameter1}, ID A2: ${innerDiameter2}, Length: ${length}, Thickness: ${thickness}</p>
+                                            <button class="btn btn-primary btn-sm primary-action-image navigate-details" data-image-name="${currentImageFileName}" data-image-path="${image}" data-image-percentage="${Math.round(scores.scores[_index] * 100, 2)}">View Details</button> 
+                                        </div> 
+                                </div>
+                            </div>
+                        </div>`;
                 })
                 
                 $('.preview-section').removeClass('hide');

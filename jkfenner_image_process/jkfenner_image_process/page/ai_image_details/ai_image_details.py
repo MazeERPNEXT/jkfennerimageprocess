@@ -41,18 +41,21 @@ def get_image_ai_details(part_no, scores=None, image=""):
             print(product_dimensions)    
     image_html_content = """ 
                     <div>
-                        <p style="text-align: center; font-size: 20px;">{{getAllValues.part_no}}</p>
+                       
                     </div>
-                    <div class="slide-container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p style="text-align: center; font-size: 20px;">{{getAllValues.part_no}}</p>
+                            <div class="slide-container">
                                 <div class="slide fade">
                                     <h5 id="slider-value" class="card-title-viewimage">Matching Percentage: {{scores}}%</h5>
                                     <img class="details-image" id="slider-image" src="{{ image }}" alt="Image 1">
                                 </div>
-                        <a href="#" class="prev" title="Previous">&#10094;</a>
-                        <a href="#" class="next" title="Next">&#10095;</a>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
+                                <a href="#" class="prev" title="Previous">&#10094;</a>
+                                <a href="#" class="next" title="Next">&#10095;</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
                             <table class="table table-bordered">
                                 <caption class="captions-image">Generic Details</caption>
                                 <tbody>
@@ -99,7 +102,10 @@ def get_image_ai_details(part_no, scores=None, image=""):
                                 </tbody>
                             </table>
                         </div>
-                        <div class="col-md-4">
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
                             <table class="table table-bordered">
                                 <caption class="captions-image">Product Application</caption>
                                 <tbody>
@@ -126,7 +132,7 @@ def get_image_ai_details(part_no, scores=None, image=""):
                                 </tbody>
                             </table>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <table class="table table-bordered">
                                 <caption class="captions-image">Product Dimensions</caption>
                                 <tbody>

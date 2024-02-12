@@ -8,9 +8,9 @@ frappe.ui.form.on('JKFenner Image AI', {
 			);
 		}	
 	},
-	
-	get_image: function (frm) {
 
+	// Function to get images
+	get_image: function (frm) {
 		if(!!frm.preview_image_area){
 			let new_image_div = frm.doc.multiple_image_upload.map((file)=> {
 				return `<div class="card col-2 ml-3 mr-3" style="box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s; width: 100%;border: 2px solid darkgray;border-top-left-radius: 10px;border-top-right-radius: 10px;height: 284px;" >   
@@ -23,20 +23,6 @@ frappe.ui.form.on('JKFenner Image AI', {
 			$(frm.preview_image_area).html(new_image_div);
 		}
 
-		// if (frm.doc.multiple_image_upload.length >= 1) {
-		// 	frm.doc.multiple_image_upload.forEach(function (item) {
-				
-		// 		 `<img src="/assets/jkfenner_image_process/images/E70657-2.jpg " style="width: 95%; position: relative; left: 10px; top: 10px;"/>`
-				
-		// 		 frm.set_value(`<img src="/assets/jkfenner_image_process/images/E70657-2.jpg " style="width: 95%; position: relative; left: 10px; top: 10px;" />`)
-		// 	});
-
-		// 	frm.set_value(`<img src="/assets/jkfenner_image_process/images/E70657-2.jpg " style="width: 95%; position: relative; left: 10px; top: 10px;" />`);
-		// } else {
-		// 	frm.set_value(`<img src="/assets/jkfenner_image_process/images/sku_no_img.png " style="width: 95%; position: relative; left: 10px; top: 10px;" />`);
-		// }
-
-
 	},
 	after_save: function (frm) {
 		// Your custom logic when a row is removed from the payment_entry_child table
@@ -46,10 +32,87 @@ frappe.ui.form.on('JKFenner Image AI', {
 	},
 	refresh: function (frm) {
 		frm.trigger('get_image');
-		$("textarea[data-fieldname='customer']").css({'height':'10px !important'});
-	},
+		frm.trigger('hide_add_row');
+    },
+
+	
+
 });
 
+// frappe.ui.form.on('Product Dimensions', {
+//     product_dimensions_add: function(frm, cdt, cdn) {
+//         var selfTraining = locals[cdt][cdn];
+//         let add_row = {
+//             1: "HOSE A",
+//             2: "HOSE B",
+//             3: "HOSE C",
+//             4: "HOSE D",
+//             5: "HOSE E"
+//         };
+
+//         // Set value of "hoses"
+//         frappe.model.set_value(cdt, cdn, "hoses", add_row[selfTraining.idx]);
+// 		// frm.fields_dict['product_dimensions'].grid.cannot_add_rows = true;
+//         // Trigger hide_add_row function after setting "hoses"
+// 		var add_row_length = Object.keys(selfTraining).length;
+// 		console.log(selfTraining);
+//         var max_allowed_rows = 5; // You can change this value as needed
+//         if (add_row_length >= max_allowed_rows) {
+//             frm.fields_dict['product_dimensions'].grid.cannot_add_rows = true;
+//         } else {
+//             frm.fields_dict['product_dimensions'].grid.cannot_add_rows = false;
+//         }
+//         frm.trigger('hide_add_row');
+//     },
+
+//     hide_add_row: function(frm) {
+//         var add_row_length = Object.keys(selfTraining).length;
+// 		console.log(add_row_length);
+//         var max_allowed_rows = 5; // You can change this value as needed
+//         if (add_row_length >= max_allowed_rows) {
+//             frm.fields_dict['product_dimensions'].grid.cannot_add_rows = true;
+//         } else {
+//             frm.fields_dict['product_dimensions'].grid.cannot_add_rows = false;
+//         }
+//     },
+// });
+
+
+frappe.ui.form.on('Product Dimensions', {
+    product_dimensions_add: function(frm, cdt, cdn) {
+        var selfTraining = locals[cdt][cdn];
+        let add_row = {
+            1: "HOSE A",
+            2: "HOSE B",
+            3: "HOSE C",
+            4: "HOSE D",
+            5: "HOSE E",
+			6: "HOSE F",
+        };
+        frappe.model.set_value(cdt, cdn, "hoses", add_row[selfTraining.idx]);
+        if (add_row[selfTraining.idx] === "HOSE E") {
+            frm.fields_dict['product_dimensions'].grid.cannot_add_rows = true;
+        }
+    },
+
+    refresh: function(frm) {
+        frm.trigger('hide_add_row');
+    },
+
+    hide_add_row: function(frm) {
+        if (frm.doc.product_dimensions_add == '') {
+            frm.fields_dict['product_dimensions'].grid.cannot_add_rows = true;
+        } else {
+            frm.fields_dict['product_dimensions'].grid.cannot_add_rows = false;
+        }
+    },
+});
+
+// frappe.ui.form.on('Product Dimensions', {
+// 	multiple_hoses_add : function(frm){
+// 		frm.trigger('hoses');
+// 	}
+// });
 
 frappe.ui.form.on('Multiple Image Upload', {
 	multiple_image_upload_remove : function(frm){
@@ -59,3 +122,19 @@ frappe.ui.form.on('Multiple Image Upload', {
 		frm.trigger('get_image');
 	}
 });
+
+// Trigger 'add_units_to_field' function when inner_diameter_1 field changes
+frappe.ui.form.on('Product Dimensions', {
+    inner_diameter_1: function(frm, cdt, cdn) {
+        add_units_to_field(frm, cdt, cdn);
+    }
+});
+
+// Function to add units (mm) to the input field
+function add_units_to_field(frm, cdt, cdn) {
+    let child_row = locals[cdt][cdn];
+    if (child_row.inner_diameter_1) {
+        // Add units (mm) to the input field
+        frappe.model.set_value(cdt, cdn, 'inner_diameter_1_with_units', child_row.inner_diameter_1 + ' mm');
+    }
+}
