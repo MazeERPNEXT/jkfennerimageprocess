@@ -164,35 +164,65 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
     if hasattr(getAllValues, 'multiple_image_upload'):
         image_paths = [ child_row.images for child_row in getAllValues.multiple_image_upload]
     html_content_internal = ''' 
+                    <head>
                         <style>
-                                
-                                .table-bordered {
-                                    border-collapse: collapse;
-                                    width:80%;
-                                    margin-left:20px;
-                                    margin-bottom:20px;
-                                }
-                                .table-bordered th,
-                                .table-bordered td {
-                                    border: 2px solid #dddddd;
-                                    padding: 8px;
-                                    text-align: left;
-                                    border-right-color: #dddddd;
-                                    border-right-width: medium;
-                                }
-                                .table-bordered th {
-                                    background-color: #f2f2f2;
-                                }
-                            </style>   
-                            <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex; margin-top:-10px;bottom:10px;margin-bottom:10px">
+                            .table-bordered {
+                                border-collapse: collapse;
+                                width: 80%;
+                                margin-left: 20px;
+                            }
+                            .table-bordered th,
+                            .table-bordered td {
+                                border: 2px solid #dddddd;
+                                padding: 8px;
+                                text-align: left;
+                                border-right-color: #dddddd;
+                                border-right-width: medium;
+                            }
+                            .table-bordered th {
+                                background-color: #f2f2f2;
+                            }
+                            .print-format .table-bordered td {
+                                padding: 3px !important;
+                            }
+                            .header {
+                                position: relative;
+                                width: 100%;
+                                height: 4cm;
+                                background: #eee;
+                                display: flex;
+                                margin-top: -10px;
+                                bottom: 10px;
+                                margin-bottom: 10px;
+                            }
+                            #slider-image {
+                                width: 41%;
+                                margin-left: 200px;
+                                z-index: 200;
+                                margin-top: 0px;
+                                margin-bottom: 0px;
+                                position: relative;
+                                height: 240px;
+                            }
+                            
+                            .gird-container {
+                                display: grid;
+                                grid-template-columns:auto auto;
+                            }
+                        </style>
+                        </head>
+                        <html>
+                        <body>
+                        <div class="header">
                                 <img style="width: 33%; height:150px;justify-content:center;" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
                             </div> 
                             <hr>  
                                 <div>
                                     <img id="slider-image" style="width:41%;margin-left:200px;z-index:200; margin-top:0px;margin-bottom:20px;position:relative; bottom:20px height:240px" src="{{ upload_image_doc.image_url }}" alt="Image 1">
                                 </div>
-                               <div style="display: flex;">
-                                 <table class="table table-bordered" style="width:35%">
+                               <div class="gird-container">
+                                <div class="generic">
+                                 <table class="table table-bordered">
                                 <caption class="captions-image"
                                 style="
                                     color: #ffffff !important;
@@ -252,7 +282,9 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
                                     </tr>
                                 </tbody>
                             </table>
-                                 <table class="table table-bordered" style="width:50%">
+                            </div>
+                                 <div class="product">
+                                    <table class="table table-bordered">
                                         <caption class="captions-image"
                                         style="
                                             color: #ffffff !important;
@@ -292,7 +324,7 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
                                         </tbody>
                                     </table>
                                 </div>  
-
+                            </div>
                              <table class="table table-bordered">
                                 <caption class="captions-image"
                                 style="
@@ -328,7 +360,9 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
                                         <td>{{ upload_image_doc.length }}</td>
                                     </tr>
                                 </tbody>
-                            </table>  
+                            </table> 
+                        </body>
+                        </html>     
                 '''
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(html_content_internal)
@@ -421,25 +455,55 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
         image_paths = [ child_row.images for child_row in getAllValues.multiple_image_upload]
 
     html_content_client = '''
-                             <style>
-                                .table-bordered {
-                                    border-collapse: collapse;
-                                    width:80%;
-                                    margin-left:20px;
-                                    margin-bottom:20px;
-                                }
-                                .table-bordered th,
-                                .table-bordered td {
-                                    border: 2px solid #dddddd;
-                                    padding: 8px;
-                                    text-align: left;
-                                    border-right-color: #dddddd;
-                                    border-right-width: medium;
-                                }
-                                .table-bordered th {
-                                    background-color: #f2f2f2;
-                                }
-                            </style>
+                             <head>
+                        <style>
+                            .table-bordered {
+                                border-collapse: collapse;
+                                width: 80%;
+                                margin-left: 20px;
+                            }
+                            .table-bordered th,
+                            .table-bordered td {
+                                border: 2px solid #dddddd;
+                                padding: 8px;
+                                text-align: left;
+                                border-right-color: #dddddd;
+                                border-right-width: medium;
+                            }
+                            .table-bordered th {
+                                background-color: #f2f2f2;
+                            }
+                            .print-format .table-bordered td {
+                                padding: 3px !important;
+                            }
+                            .header {
+                                position: relative;
+                                width: 100%;
+                                height: 4cm;
+                                background: #eee;
+                                display: flex;
+                                margin-top: -10px;
+                                bottom: 10px;
+                                margin-bottom: 10px;
+                            }
+                            #slider-image {
+                                width: 41%;
+                                margin-left: 200px;
+                                z-index: 200;
+                                margin-top: 0px;
+                                margin-bottom: 0px;
+                                position: relative;
+                                height: 240px;
+                            }
+                            
+                            .gird-container {
+                                display: grid;
+                                grid-template-columns:auto auto;
+                            }
+                        </style>
+                        </head>
+                        <html>
+                        <body>
                          <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex; margin-top:-10px;bottom:10px;margin-bottom:10px">
                                 <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
                             </div> 
@@ -447,8 +511,9 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
                                 <div >
                                     <img id="slider-image" style="width:41%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ upload_image_doc.image_url }}" alt="Image 1">
                                 </div>
-                            <div style="display: flex;>
-                                <table class="table table-bordered" style="width:35%">
+                            <div class="gird-container">
+                                <div class="generic">
+                                 <table class="table table-bordered">
                                 <caption class="captions-image"
                                 style="
                                     color: #ffffff !important;
@@ -493,7 +558,9 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
                                     
                                 </tbody>
                             </table>
-                            <table class="table table-bordered" style="width:50%">
+                            </div>
+                            <div class="product">
+                                <table class="table table-bordered">
                                 <caption class="captions-image"
                                 style="
                                     color: #ffffff !important;
@@ -532,7 +599,8 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
                                     </tr>
                                 </tbody>
                             </table>
-                            </div>
+                        </div>  
+                    </div>
                     <table class="table table-bordered" >
                         <caption class="captions-image"
                           style="
@@ -568,8 +636,9 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
                                 <td>{{ upload_image_doc.length }}</td>
                             </tr>
                         </tbody>
-                    </table>    
-                </div>'''
+                   </table> 
+                        </body>
+                        </html> '''
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(html_content_client)
     rendered_content = template.render(getAllValues=getAllValues, site_url=site_url,upload_image_doc = upload_image_doc,)
