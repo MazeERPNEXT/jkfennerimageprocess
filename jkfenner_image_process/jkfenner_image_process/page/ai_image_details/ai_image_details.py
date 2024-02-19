@@ -154,29 +154,18 @@ def get_image_ai_details(parent_ref=None, child_ref=None):
 
 @frappe.whitelist(allow_guest=True)
 def generate_internal_pdf(parent_ref=None, child_ref=None):
-    part_no = frappe.form_dict.get('part_no')
-    result = frappe.get_all('JKFenner Image AI', filters={'part_no': part_no})
-    upload_image_doc = frappe.get_doc('JKFenner Image Details Stored', child_ref)
     image_paths = []
+    matching_find_images = []
     site_url = get_url()
-    product_dimensions = []
-    getAllValues = None
-    
-    if result:
-        x = result[0].name
-        getAllValues = frappe.get_doc('JKFenner Image AI', x)
-    
-        # if hasattr(getAllValues, 'multiple_image_upload'):
-        #     image_paths = [urljoin(site_url, child_row.images) for child_row in getAllValues.multiple_image_upload]
-        image_paths = [urljoin(site_url, image)]
+    upload_image_doc = frappe.get_doc('JKFenner Image Details Stored', child_ref)
         
-        
-        getAllValues = frappe.get_doc('JKFenner Image AI', upload_image_doc.part_no)
+    getAllValues = frappe.get_doc('JKFenner Image AI', upload_image_doc.part_no)
     
     if hasattr(getAllValues, 'multiple_image_upload'):
         image_paths = [ child_row.images for child_row in getAllValues.multiple_image_upload]
     html_content_internal = ''' 
                         <style>
+                                
                                 .table-bordered {
                                     border-collapse: collapse;
                                     width:80%;
@@ -196,91 +185,74 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
                                 }
                             </style>   
                             <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex; margin-top:-10px;bottom:10px;margin-bottom:10px">
-                                <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
+                                <img style="width: 33%; height:150px;justify-content:center;" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
                             </div> 
                             <hr>  
-                             
-                                <div >
-                                    <img id="slider-image" style="width:45%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ upload_image_doc.image_url }}" alt="Image 1">
+                                <div>
+                                    <img id="slider-image" style="width:41%;margin-left:200px;z-index:200; margin-top:0px;margin-bottom:20px;position:relative; bottom:20px height:240px" src="{{ upload_image_doc.image_url }}" alt="Image 1">
                                 </div>
-                               <div class="row">
-                                <div class="col">
-                                 <table class="table table-bordered" 
-                            style="border: 1px solid #1819194f;
-                            white-space: nowrap;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                            font-size: inherit;
-                            border-collapse: collapse;
-                            ">
-                        <caption class="captions-image"
-                          style="
-                            color: #ffffff !important;
-                            text-align: left !important;
-                            /* text-align: center; */
-                            background: #008174 !important;
-                            padding: 10px !important;
-                            font-weight: 700 !important;
-                            font-size: 20px !important;
-                            border-top-left-radius: 10px !important;
-                            border-top-right-radius: 10px !important;
-                            caption-side: top !important;
-                            border-collapse: collapse;" 
-                        >
-                            Generic Details
-                        </caption>
-                        <tbody>
-                            <tr>
-                                <td " scope="row">Part No.</td>
-                                <td ">{{getAllValues.part_no}}</td>
-                            </tr>
-                            <tr>
-                                <td " scope="row">Customer</td>
-                                <td ">{{getAllValues.customer}}</td>
-                            </tr>
-                            <tr>
-                                <td " scope="row">Cross Ref.Part No 1</td>
-                                <td ">{{getAllValues.cross_ref_part_no_1}}</td>
-                            </tr>
-                            <tr>
-                                <td " scope="row">Cross Ref.Part No 2</td>
-                                <td ">{{getAllValues.cross_ref_part_no_2}}</td>
-                            </tr>
-                            <tr>
-                                <td " scope="row">Hose Type</td>
-                                <td ">{{getAllValues.hose_type}}</td>
-                            </tr>
-                            <tr>
-                                <td " scope="row">Development status</td>
-                                <td ">{{getAllValues.development_status}}</td>
-                            </tr>
-                            <tr>
-                                <td " scope="row">Export / Domestic AAM</td>
-                                <td ">{{getAllValues.export__domestic_aam}}</td>
-                            </tr>
-                            <tr>
-                                <td " scope="row">Product SAP Code</td>
-                                <td ">{{getAllValues.product_sap_code}}</td>
-                            </tr>
-                            <tr>
-                                <td " scope="row">EAN</td>
-                                <td ">{{getAllValues.ean_no}}</td>
-                            </tr>
-                            <tr>
-                                <td " scope="row">UPC</td>
-                                <td ">{{getAllValues.upc_no}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                                </div>
-                                <div class="col">
-                                 <table class="table table-bordered" 
-                                            style="border: 1px solid #1819194f;
-                                            white-space: nowrap;
-                                            overflow: hidden;
-                                            text-overflow: ellipsis;
-                                            font-size: inherit;
-                                            border-collapse: collapse;">
+                               <div style="display: flex;">
+                                 <table class="table table-bordered" style="width:35%">
+                                <caption class="captions-image"
+                                style="
+                                    color: #ffffff !important;
+                                    text-align: left !important;
+                                    /* text-align: center; */
+                                    background: #008174 !important;
+                                    padding: 10px !important;
+                                    font-weight: 700 !important;
+                                    font-size: 20px !important;
+                                    border-top-left-radius: 10px !important;
+                                    border-top-right-radius: 10px !important;
+                                    caption-side: top !important;
+                                    border-collapse: collapse;" 
+                                >
+                                    Generic Details
+                                </caption>
+                                <tbody>
+                                    <tr>
+                                        <td>Part No.</td>
+                                        <td>{{getAllValues.part_no}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Customer</td>
+                                        <td>{{getAllValues.customer}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cross Ref.Part No 1</td>
+                                        <td>{{getAllValues.cross_ref_part_no_1}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td >Cross Ref.Part No 2</td>
+                                        <td>{{getAllValues.cross_ref_part_no_2}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hose Type</td>
+                                        <td>{{getAllValues.hose_type}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Development status</td>
+                                        <td>{{getAllValues.development_status}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Export / Domestic AAM</td>
+                                        <td>{{getAllValues.export__domestic_aam}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Product SAP Code</td>
+                                        <td>{{getAllValues.product_sap_code}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>EAN</td>
+                                        <td>{{getAllValues.ean_no}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>UPC</td>
+                                        <td>{{getAllValues.upc_no}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                                 <table class="table table-bordered" style="width:50%">
                                         <caption class="captions-image"
                                         style="
                                             color: #ffffff !important;
@@ -319,65 +291,48 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
                                             </tr>
                                         </tbody>
                                     </table>
-                                </div>
-                                </div>
-                               
-                               
-                                
-                               
-                               
-                               
-                               
-                    
-                    
-                    <table class="table table-bordered" 
-                            style="border: 1px solid #1819194f;
-                            white-space: nowrap;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                            font-size: inherit;
-                            border-collapse: collapse;
-                            ">
-                        <caption class="captions-image"
-                          style="
-                            color: #ffffff !important;
-                            text-align: left !important;
-                            /* text-align: center; */
-                            background: #008174 !important;
-                            padding: 10px !important;
-                            font-weight: 700 !important;
-                            font-size: 20px !important;
-                            border-top-left-radius: 10px !important;
-                            border-top-right-radius: 10px !important;
-                            caption-side: top !important;
-                            border-collapse: collapse;" 
-                        >
-                         Product Dimensions
-                        </caption>
-                        <tbody>
-                            <tr>
-                                <td scope="row">ID A1 (mm)</td>
-                                <td>{{ upload_image_doc.id_a1 }}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">ID A2 (mm)</td>
-                                <td>{{ upload_image_doc.id_a2 }}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Thickness </td>
-                                <td>{{ upload_image_doc.thickness }}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row">Length (mm)</td>
-                                <td>{{ upload_image_doc.length }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                   
+                                </div>  
+
+                             <table class="table table-bordered">
+                                <caption class="captions-image"
+                                style="
+                                    color: #ffffff !important;
+                                    text-align: left !important;
+                                    /* text-align: center; */
+                                    background: #008174 !important;
+                                    padding: 10px !important;
+                                    font-weight: 700 !important;
+                                    font-size: 20px !important;
+                                    border-top-left-radius: 10px !important;
+                                    border-top-right-radius: 10px !important;
+                                    caption-side: top !important;
+                                    border-collapse: collapse;" 
+                                >
+                                Product Dimensions
+                                </caption>
+                                <tbody>
+                                    <tr>
+                                        <td scope="row">ID A1 (mm)</td>
+                                        <td>{{ upload_image_doc.id_a1 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">ID A2 (mm)</td>
+                                        <td>{{ upload_image_doc.id_a2 }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Thickness </td>
+                                        <td>{{ upload_image_doc.thickness }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td scope="row">Length (mm)</td>
+                                        <td>{{ upload_image_doc.length }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>  
                 '''
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(html_content_internal)
-    rendered_content = template.render(image_paths=image_paths,product_dimensions=product_dimensions, getAllValues=getAllValues, site_url=site_url,upload_image_doc = upload_image_doc,)
+    rendered_content = template.render(getAllValues=getAllValues, site_url=site_url,upload_image_doc = upload_image_doc,)
 
     # file = open("/tmp/jkfenner.html", "w")
     # file.write(rendered_content)
@@ -387,7 +342,7 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
     pdf_buffer = get_pdf(rendered_content)
 
     # Add watermark to the PDF
-    pdf_with_watermark = add_watermark(pdf_buffer, part_no, image_paths, getAllValues, html_content_internal)
+    pdf_with_watermark = add_watermark(pdf_buffer, getAllValues,site_url,upload_image_doc, html_content_internal)
 
         # Set response properties for downloading the PDF
     frappe.response.filename = "test_with_watermark.pdf"
@@ -455,24 +410,15 @@ def add_watermark(pdf_buffer, part_no, image_paths, getAllValues,html_content_in
 
 @frappe.whitelist(allow_guest=True)
 def generate_client_pdf(parent_ref=None, child_ref=None):
-    part_no = frappe.form_dict.get('part_no')
-    result = frappe.get_all('JKFenner Image AI', filters={'part_no': part_no})
-    upload_image_doc = frappe.get_doc('JKFenner Image Details Stored', child_ref)
     image_paths = []
+    matching_find_images = []
     site_url = get_url()
-    product_dimensions = []
-    getAllValues = None
-    
-    if result:
-        x = result[0].name
-        getAllValues = frappe.get_doc('JKFenner Image AI', x)
-    
-        # if hasattr(getAllValues, 'multiple_image_upload'):
-        #     image_paths = [urljoin(site_url, child_row.images) for child_row in getAllValues.multiple_image_upload]
-        image_paths = [urljoin(site_url, image)]
+    upload_image_doc = frappe.get_doc('JKFenner Image Details Stored', child_ref)
         
-        if hasattr(getAllValues, 'multiple_image_upload'):
-            image_paths = [ child_row.images for child_row in getAllValues.multiple_image_upload]
+    getAllValues = frappe.get_doc('JKFenner Image AI', upload_image_doc.part_no)
+    
+    if hasattr(getAllValues, 'multiple_image_upload'):
+        image_paths = [ child_row.images for child_row in getAllValues.multiple_image_upload]
 
     html_content_client = '''
                              <style>
@@ -499,113 +445,95 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
                             </div> 
                             <hr>  
                                 <div >
-                                    <img id="slider-image" style="width:45%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ upload_image_doc.image_url }}" alt="Image 1">
+                                    <img id="slider-image" style="width:41%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ upload_image_doc.image_url }}" alt="Image 1">
                                 </div>
-                    <table class="table table-bordered" 
-                            style="border: 1px solid #1819194f;
-                            white-space: nowrap;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                            font-size: inherit;
-                            border-collapse: collapse;
-                            ">
-                        <caption class="captions-image"
-                          style="
-                            color: #ffffff !important;
-                            text-align: left !important;
-                            /* text-align: center; */
-                            background: #008174 !important;
-                            padding: 10px !important;
-                            font-weight: 700 !important;
-                            font-size: 20px !important;
-                            border-top-left-radius: 10px !important;
-                            border-top-right-radius: 10px !important;
-                            caption-side: top !important;
-                            border-collapse: collapse;" 
-                        >
-                            Generic Details
-                        </caption>
-                        <tbody>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Part No.</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.part_no}}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Customer</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.customer}}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Hose Type</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.hose_type}}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Development status</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.development_status}}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Export / Domestic AAM</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.export__domestic_aam}}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Product SAP Code</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.product_sap_code}}</td>
-                            </tr>
-                            
-                        </tbody>
-                    </table>
-                    <table class="table table-bordered" 
-                            style="border: 1px solid #1819194f;
-                            white-space: nowrap;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                            font-size: inherit;
-                            border-collapse: collapse;">
-                        <caption class="captions-image"
-                          style="
-                            color: #ffffff !important;
-                            text-align: left !important;
-                            /* text-align: center; */
-                            background: #008174 !important;
-                            padding: 10px !important;
-                            font-weight: 700 !important;
-                            font-size: 20px !important;
-                            border-top-left-radius: 10px !important;
-                            border-top-right-radius: 10px !important;
-                            caption-side: top !important;
-                            border-collapse: collapse;">
-                            Product Application
-                            </caption>
-                        <tbody>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Vehicle Manufacturer	</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.vehicle_manufacturer}}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Vehicle Model</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.vehicle_model}}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Vehicle Make Year	</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.vehicle_make_year}}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Hose Application</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.hose_application}}</td>
-                            </tr>
-                            <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Sub Application</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{getAllValues.sub_application}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="table table-bordered" 
-                            style="border: 1px solid #1819194f;
-                            white-space: nowrap;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                            font-size: inherit;
-                            border-collapse: collapse;
-                            margin-top:10px">
+                            <div style="display: flex;>
+                                <table class="table table-bordered" style="width:35%">
+                                <caption class="captions-image"
+                                style="
+                                    color: #ffffff !important;
+                                    text-align: left !important;
+                                    /* text-align: center; */
+                                    background: #008174 !important;
+                                    padding: 10px !important;
+                                    font-weight: 700 !important;
+                                    font-size: 20px !important;
+                                    border-top-left-radius: 10px !important;
+                                    border-top-right-radius: 10px !important;
+                                    caption-side: top !important;
+                                    border-collapse: collapse;" 
+                                >
+                                    Generic Details
+                                </caption>
+                                <tbody>
+                                    <tr>
+                                        <td>Part No.</td>
+                                        <td>{{getAllValues.part_no}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Customer</td>
+                                        <td>{{getAllValues.customer}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hose Type</td>
+                                        <td>{{getAllValues.hose_type}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Development status</td>
+                                        <td>{{getAllValues.development_status}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Export / Domestic AAM</td>
+                                        <td>{{getAllValues.export__domestic_aam}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Product SAP Code</td>
+                                        <td>{{getAllValues.product_sap_code}}</td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                            <table class="table table-bordered" style="width:50%">
+                                <caption class="captions-image"
+                                style="
+                                    color: #ffffff !important;
+                                    text-align: left !important;
+                                    /* text-align: center; */
+                                    background: #008174 !important;
+                                    padding: 10px !important;
+                                    font-weight: 700 !important;
+                                    font-size: 20px !important;
+                                    border-top-left-radius: 10px !important;
+                                    border-top-right-radius: 10px !important;
+                                    caption-side: top !important;
+                                    border-collapse: collapse;">
+                                    Product Application
+                                    </caption>
+                                <tbody>
+                                    <tr>
+                                        <td>Vehicle Manufacturer	</td>
+                                        <td>{{getAllValues.vehicle_manufacturer}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Vehicle Model</td>
+                                        <td>{{getAllValues.vehicle_model}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Vehicle Make Year	</td>
+                                        <td>{{getAllValues.vehicle_make_year}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hose Application</td>
+                                        <td>{{getAllValues.hose_application}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sub Application</td>
+                                        <td>{{getAllValues.sub_application}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            </div>
+                    <table class="table table-bordered" >
                         <caption class="captions-image"
                           style="
                             color: #ffffff !important;
@@ -624,28 +552,27 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
                         </caption>
                         <tbody>
                             <tr>
-                                <td scope="row">ID A1 (mm)</td>
+                                <td>ID A1 (mm)</td>
                                 <td>{{ upload_image_doc.id_a1 }}</td>
                             </tr>
                             <tr>
-                                <td scope="row">ID A2 (mm)</td>
+                                <td>ID A2 (mm)</td>
                                 <td>{{ upload_image_doc.id_a2 }}</td>
                             </tr>
                             <tr>
-                                <td scope="row">Thickness </td>
+                                <td>Thickness </td>
                                 <td>{{ upload_image_doc.thickness }}</td>
                             </tr>
                             <tr>
-                                <td scope="row">Length (mm)</td>
+                                <td>Length (mm)</td>
                                 <td>{{ upload_image_doc.length }}</td>
                             </tr>
                         </tbody>
-                    </table>
-                    
+                    </table>    
                 </div>'''
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(html_content_client)
-    rendered_content = template.render(image_paths=image_paths,product_dimensions=product_dimensions, getAllValues=getAllValues, site_url=site_url,upload_image_doc = upload_image_doc,)
+    rendered_content = template.render(getAllValues=getAllValues, site_url=site_url,upload_image_doc = upload_image_doc,)
 
     # file = open("/tmp/jkfenner.html", "w")
     # file.write(rendered_content)
@@ -655,7 +582,7 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
     pdf_buffer_client = get_pdf(rendered_content)
 
         # Add watermark to the PDF
-    pdf_with_watermark = add_watermark_client(pdf_buffer_client, part_no, image_paths, getAllValues, html_content_client)
+    pdf_with_watermark = add_watermark_client(pdf_buffer_client, getAllValues,site_url,upload_image_doc, html_content_client)
 
         # Set response properties for downloading the PDF
     frappe.response.filename = "test_with_watermark.pdf"
