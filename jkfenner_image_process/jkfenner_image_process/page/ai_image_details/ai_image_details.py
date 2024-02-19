@@ -353,7 +353,7 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
         # Render the HTML content (not being used in the current code)
     # print(rendered_content)
 
-def add_watermark(pdf_buffer):
+def add_watermark(pdf_buffer,getAllValues,site_url,upload_image_doc,html_content_internal):
     watermark_text = "Confidential - Internal Use Only"
     watermark_font_size = 57
     watermark_opacity = 0.1
@@ -593,7 +593,7 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
         # Render the HTML content (not being used in the current code)
     # print(rendered_content)
 
-def add_watermark_client(pdf_buffer_client):
+def add_watermark_client(pdf_buffer_client, getAllValues, site_url, upload_image_doc,html_content_client):
     watermark_text_client = "Confidential"
     watermark_font_size = 100
     watermark_opacity = 0.1
