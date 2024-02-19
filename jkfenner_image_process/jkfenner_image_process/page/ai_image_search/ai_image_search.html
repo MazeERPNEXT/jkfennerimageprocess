@@ -7,10 +7,23 @@
                 <label for="finput" class="image_upload"  id="inputLabel">Click Here to upload image</label>
                     <input type="file" multiple="false" class="previewImage" accept="image/*" id="finput">
                     <div id="preview-image">
-                        <img class="preview_search_image" id="uploaded-image" src="https://avatars.mds.yandex.net/i?id=ac9425f0536b1cc38165d187ca0db7fcfce1f2f6-9181395-images-thumbs&n=13" />
+                        <img class="preview_search_image" id="uploaded-image" src="/assets/jkfenner_image_process/images/upload_image.png" />
                     </div>
                     <canvas id="canv1" style="display: none;"></canvas> 
             </div>
+            <div class="row" style="margin-top: 22px;font-size: 19px;">
+                <div class="col-md-4 form-check form-check-inline" style="margin-right: 5rem;"></div>
+                <div class="col-md-2 form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" style="height:17px;min-width: 17px;">
+                    <label class="form-check-label" for="inlineCheckbox1">Branched</label>
+                </div>
+                <div class="col-md-2 form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" style="height:17px;min-width: 17px;">
+                    <label class="form-check-label" for="inlineCheckbox2">UnBranched</label>
+                </div>
+                <div class="col-md-4 form-check form-check-inline"></div>
+            </div>
+        
             <div class="btn-image-search">
                     <button id="matchingImageButton" class="btn btn-primary btn-sm-image primary-action navigate-button" data-label="Pick the matching image">
                         Pick the matching image

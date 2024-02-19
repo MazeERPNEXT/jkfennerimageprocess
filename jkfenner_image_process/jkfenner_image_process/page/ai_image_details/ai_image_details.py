@@ -9,36 +9,25 @@ from urllib.parse import urljoin
 from frappe.utils import get_url
 
 @frappe.whitelist(allow_guest=True)
-def get_image_ai_details(part_no, scores=None, image=""):
-    part_no =  frappe.form_dict.get('part_no')
-    result = frappe.get_all('JKFenner Image AI', filters={'part_no': part_no})
+def get_image_ai_details(parent_ref=None, child_ref=None):
     image_paths = []
-    product_dimensions = []
-   
-
-    getAllValues = None
-    if result:
-        x = result[0].name 
-        getAllValues = frappe.get_doc('JKFenner Image AI', x)
-        if hasattr(getAllValues, 'multiple_image_upload'):
-            image_paths = [ child_row.images for child_row in getAllValues.multiple_image_upload]
-        
-        
-        
-        if hasattr(getAllValues, 'product_dimensions'):
-            
-            for child_row in getAllValues.product_dimensions:
-                inner_diameter_1_mm = child_row.inner_diameter_1_mm
-                inner_diameter_2_mm = child_row.inner_diameter_2_mm
-                thickness = child_row.thickness
-                length = child_row.length
-                product_dimensions.append({
-                    'inner_diameter_1_mm': inner_diameter_1_mm,
-                    'inner_diameter_2_mm': inner_diameter_2_mm,
-                    'thickness': thickness,
-                    'length': length
-                    })
-            print(product_dimensions)    
+    matching_find_images = []
+    site_url = get_url() 
+    upload_image_doc = frappe.get_doc('JKFenner Image Details Stored', child_ref)
+    next_image_doc = None
+    previous_image_doc = None
+    try:
+        previous_image_doc = frappe.get_last_doc('JKFenner Image Details Stored',filters=[['idx','=',upload_image_doc.idx-1], ["parent","=",parent_ref], ['idx','<',4]], order_by="idx asc")
+    except frappe.DoesNotExistError:
+        pass
+    try:
+        next_image_doc = frappe.get_last_doc('JKFenner Image Details Stored',filters=[['idx','=',upload_image_doc.idx+1], ["parent","=",parent_ref], ['idx','<',4]], order_by="idx asc")
+    except frappe.DoesNotExistError:
+        pass
+    getAllValues = frappe.get_doc('JKFenner Image AI', upload_image_doc.part_no)
+    
+    if hasattr(getAllValues, 'multiple_image_upload'):
+        image_paths = [ child_row.images for child_row in getAllValues.multiple_image_upload]
     image_html_content = """ 
                     <div>
                        
@@ -48,11 +37,11 @@ def get_image_ai_details(part_no, scores=None, image=""):
                             <p style="text-align: center; font-size: 20px;">{{getAllValues.part_no}}</p>
                             <div class="slide-container">
                                 <div class="slide fade">
-                                    <h5 id="slider-value" class="card-title-viewimage">Matching Percentage: {{scores}}%</h5>
-                                    <img class="details-image" id="slider-image" src="{{ image }}" alt="Image 1">
+                                    <h5 id="slider-value" class="card-title-viewimage">Matching Percentage: {{upload_image_doc.matching_percentage}}%</h5>
+                                    <img class="details-image" id="slider-image" src="{{ upload_image_doc.image_url }}" alt="Image 1">
                                 </div>
-                                <a href="#" class="prev" title="Previous">&#10094;</a>
-                                <a href="#" class="next" title="Next">&#10095;</a>
+                                <a href="#" data-href="{{ site_url +'/app/ai-image-details?child_table='+ previous_image_doc.name + "&parent_table="+ previous_image_doc.parent if previous_image_doc else "#" }}" class="prev navigation-button" title="Previous">&#10094;</a><button>
+                                <a href="#" data-href="{{ site_url + '/app/ai-image-details?child_table='+ next_image_doc.name + "&parent_table="+ next_image_doc.parent if next_image_doc else "#" }}" class="next navigation-button" title="Next">&#10095;</a>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -136,24 +125,22 @@ def get_image_ai_details(part_no, scores=None, image=""):
                             <table class="table table-bordered">
                                 <caption class="captions-image">Product Dimensions</caption>
                                 <tbody>
-                                {% for product_dimension in product_dimensions %}
                                     <tr>
                                         <td scope="row">ID A1 (mm)</td>
-                                        <td>{{ product_dimension.inner_diameter_1_mm }}</td>
+                                        <td>{{ upload_image_doc.id_a1 }}</td>
                                     </tr>
                                     <tr>
                                         <td scope="row">ID A2 (mm)</td>
-                                        <td>{{ product_dimension.inner_diameter_2_mm }}</td>
+                                        <td>{{ upload_image_doc.id_a2 }}</td>
                                     </tr>
                                     <tr>
                                         <td scope="row">Thickness </td>
-                                        <td>{{ product_dimension.thickness }}</td>
+                                        <td>{{ upload_image_doc.thickness }}</td>
                                     </tr>
                                     <tr>
                                         <td scope="row">Length (mm)</td>
-                                        <td>{{ product_dimension.length }}</td>
+                                        <td>{{ upload_image_doc.length }}</td>
                                     </tr>
-                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -161,14 +148,15 @@ def get_image_ai_details(part_no, scores=None, image=""):
                  """
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(image_html_content)
-    rendered_content = template.render(part_no=part_no, image_paths=image_paths, product_dimensions=product_dimensions, getAllValues=getAllValues, scores=scores,image=image)
-    print(image_paths,product_dimensions)
+    rendered_content = template.render(getAllValues=getAllValues, previous_image_doc=previous_image_doc, next_image_doc = next_image_doc, upload_image_doc = upload_image_doc, site_url=site_url)
+    print(image_paths,matching_find_images)
     return rendered_content
 
 @frappe.whitelist(allow_guest=True)
-def generate_internal_pdf(part_no, scores=None, image=""):
+def generate_internal_pdf(parent_ref=None, child_ref=None):
     part_no = frappe.form_dict.get('part_no')
     result = frappe.get_all('JKFenner Image AI', filters={'part_no': part_no})
+    upload_image_doc = frappe.get_doc('JKFenner Image Details Stored', child_ref)
     image_paths = []
     site_url = get_url()
     product_dimensions = []
@@ -183,18 +171,10 @@ def generate_internal_pdf(part_no, scores=None, image=""):
         image_paths = [urljoin(site_url, image)]
         
         
-        if hasattr(getAllValues, 'product_dimensions'):
-            for child_row in getAllValues.product_dimensions:
-                inner_diameter_1_mm = child_row.inner_diameter_1_mm
-                inner_diameter_2_mm = child_row.inner_diameter_2_mm
-                thickness = child_row.thickness
-                length = child_row.length
-                product_dimensions.append({
-                    'inner_diameter_1_mm': inner_diameter_1_mm,
-                    'inner_diameter_2_mm': inner_diameter_2_mm,
-                    'thickness': thickness,
-                    'length': length
-                    })
+        getAllValues = frappe.get_doc('JKFenner Image AI', upload_image_doc.part_no)
+    
+    if hasattr(getAllValues, 'multiple_image_upload'):
+        image_paths = [ child_row.images for child_row in getAllValues.multiple_image_upload]
     html_content_internal = ''' 
                         <style>
                                 .table-bordered {
@@ -218,13 +198,14 @@ def generate_internal_pdf(part_no, scores=None, image=""):
                             <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex; margin-top:-10px;bottom:10px;margin-bottom:10px">
                                 <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
                             </div> 
-                            <hr>   
-                            {% for image_path in image_paths %}                      
+                            <hr>  
+                             
                                 <div >
-                                    <img id="slider-image" style="width:25%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ image_path }}" alt="Image 1">
+                                    <img id="slider-image" style="width:45%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ upload_image_doc.image_url }}" alt="Image 1">
                                 </div>
-                            {% endfor %} 
-                    <table class="table table-bordered" 
+                               <div class="row">
+                                <div class="col">
+                                 <table class="table table-bordered" 
                             style="border: 1px solid #1819194f;
                             white-space: nowrap;
                             overflow: hidden;
@@ -291,51 +272,64 @@ def generate_internal_pdf(part_no, scores=None, image=""):
                             </tr>
                         </tbody>
                     </table>
-                    <table class="table table-bordered" 
-                            style="border: 1px solid #1819194f;
-                            white-space: nowrap;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                            font-size: inherit;
-                            border-collapse: collapse;">
-                        <caption class="captions-image"
-                          style="
-                            color: #ffffff !important;
-                            text-align: left !important;
-                            /* text-align: center; */
-                            background: #008174 !important;
-                            padding: 10px !important;
-                            font-weight: 700 !important;
-                            font-size: 20px !important;
-                            border-top-left-radius: 10px !important;
-                            border-top-right-radius: 10px !important;
-                            caption-side: top !important;
-                            border-collapse: collapse;">
-                           Product Application
-                            </caption>
-                        <tbody>
-                            <tr>
-                                <td  scope="row">Vehicle Manufacturer	</td>
-                                <td >{{getAllValues.vehicle_manufacturer}}</td>
-                            </tr>
-                            <tr>
-                                <td  scope="row">Vehicle Model</td>
-                                <td >{{getAllValues.vehicle_model}}</td>
-                            </tr>
-                            <tr>
-                                <td  scope="row">Vehicle Make Year	</td>
-                                <td >{{getAllValues.vehicle_make_year}}</td>
-                            </tr>
-                            <tr>
-                                <td  scope="row">Hose Application</td>
-                                <td >{{getAllValues.hose_application}}</td>
-                            </tr>
-                            <tr>
-                                <td  scope="row">Sub Application</td>
-                                <td >{{getAllValues.sub_application}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                </div>
+                                <div class="col">
+                                 <table class="table table-bordered" 
+                                            style="border: 1px solid #1819194f;
+                                            white-space: nowrap;
+                                            overflow: hidden;
+                                            text-overflow: ellipsis;
+                                            font-size: inherit;
+                                            border-collapse: collapse;">
+                                        <caption class="captions-image"
+                                        style="
+                                            color: #ffffff !important;
+                                            text-align: left !important;
+                                            /* text-align: center; */
+                                            background: #008174 !important;
+                                            padding: 10px !important;
+                                            font-weight: 700 !important;
+                                            font-size: 20px !important;
+                                            border-top-left-radius: 10px !important;
+                                            border-top-right-radius: 10px !important;
+                                            caption-side: top !important;
+                                            border-collapse: collapse;">
+                                        Product Application
+                                            </caption>
+                                        <tbody>
+                                            <tr>
+                                                <td  scope="row">Vehicle Manufacturer	</td>
+                                                <td >{{getAllValues.vehicle_manufacturer}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td  scope="row">Vehicle Model</td>
+                                                <td >{{getAllValues.vehicle_model}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td  scope="row">Vehicle Make Year	</td>
+                                                <td >{{getAllValues.vehicle_make_year}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td  scope="row">Hose Application</td>
+                                                <td >{{getAllValues.hose_application}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td  scope="row">Sub Application</td>
+                                                <td >{{getAllValues.sub_application}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                </div>
+                               
+                               
+                                
+                               
+                               
+                               
+                               
+                    
+                    
                     <table class="table table-bordered" 
                             style="border: 1px solid #1819194f;
                             white-space: nowrap;
@@ -361,30 +355,29 @@ def generate_internal_pdf(part_no, scores=None, image=""):
                          Product Dimensions
                         </caption>
                         <tbody>
-                        {% for product_dimension in product_dimensions %}
                             <tr>
-                                <td  scope="row">ID A1 (mm)</td>
-                                <td >{{ product_dimension.inner_diameter_1_mm }}</td>
+                                <td scope="row">ID A1 (mm)</td>
+                                <td>{{ upload_image_doc.id_a1 }}</td>
                             </tr>
                             <tr>
-                                <td  scope="row">ID A2 (mm)</td>
-                                <td >{{ product_dimension.inner_diameter_2_mm }}</td>
+                                <td scope="row">ID A2 (mm)</td>
+                                <td>{{ upload_image_doc.id_a2 }}</td>
                             </tr>
                             <tr>
-                                <td  scope="row">Thickness</td>
-                                <td >{{ product_dimension.thickness }}</td>
+                                <td scope="row">Thickness </td>
+                                <td>{{ upload_image_doc.thickness }}</td>
                             </tr>
                             <tr>
-                                <td  scope="row">Length (mm)</td>
-                                <td >{{ product_dimension.length }}</td>
+                                <td scope="row">Length (mm)</td>
+                                <td>{{ upload_image_doc.length }}</td>
                             </tr>
-                            {% endfor %}
                         </tbody>
                     </table>
+                   
                 '''
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(html_content_internal)
-    rendered_content = template.render(part_no=part_no, image_paths=image_paths,product_dimensions=product_dimensions, getAllValues=getAllValues, site_url=site_url, scores=scores, image=image)
+    rendered_content = template.render(image_paths=image_paths,product_dimensions=product_dimensions, getAllValues=getAllValues, site_url=site_url,upload_image_doc = upload_image_doc,)
 
     # file = open("/tmp/jkfenner.html", "w")
     # file.write(rendered_content)
@@ -461,9 +454,10 @@ def add_watermark(pdf_buffer, part_no, image_paths, getAllValues,html_content_in
 
 
 @frappe.whitelist(allow_guest=True)
-def generate_client_pdf(part_no, scores=None, image=""):
+def generate_client_pdf(parent_ref=None, child_ref=None):
     part_no = frappe.form_dict.get('part_no')
     result = frappe.get_all('JKFenner Image AI', filters={'part_no': part_no})
+    upload_image_doc = frappe.get_doc('JKFenner Image Details Stored', child_ref)
     image_paths = []
     site_url = get_url()
     product_dimensions = []
@@ -477,20 +471,11 @@ def generate_client_pdf(part_no, scores=None, image=""):
         #     image_paths = [urljoin(site_url, child_row.images) for child_row in getAllValues.multiple_image_upload]
         image_paths = [urljoin(site_url, image)]
         
-        if hasattr(getAllValues, 'product_dimensions'):
-            for child_row in getAllValues.product_dimensions:
-                inner_diameter_1_mm = child_row.inner_diameter_1_mm
-                inner_diameter_2_mm = child_row.inner_diameter_2_mm
-                thickness = child_row.thickness
-                length = child_row.length
-                product_dimensions.append({
-                    'inner_diameter_1_mm': inner_diameter_1_mm,
-                    'inner_diameter_2_mm': inner_diameter_2_mm,
-                    'thickness': thickness,
-                    'length': length
-                    })
+        if hasattr(getAllValues, 'multiple_image_upload'):
+            image_paths = [ child_row.images for child_row in getAllValues.multiple_image_upload]
+
     html_content_client = '''
-    <style>
+                             <style>
                                 .table-bordered {
                                     border-collapse: collapse;
                                     width:80%;
@@ -513,11 +498,9 @@ def generate_client_pdf(part_no, scores=None, image=""):
                                 <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
                             </div> 
                             <hr>  
-                            {% for image_path in image_paths %}                      
                                 <div >
-                                    <img id="slider-image" style="width:25%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ image_path }}" alt="Image 1">
+                                    <img id="slider-image" style="width:45%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ upload_image_doc.image_url }}" alt="Image 1">
                                 </div>
-                            {% endfor %}  
                     <table class="table table-bordered" 
                             style="border: 1px solid #1819194f;
                             white-space: nowrap;
@@ -640,31 +623,29 @@ def generate_client_pdf(part_no, scores=None, image=""):
                           Product  Dimensions
                         </caption>
                         <tbody>
-                            {% for product_dimension in product_dimensions %}
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">ID A1 (mm)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{ product_dimension.inner_diameter_1_mm }}</td>
+                                <td scope="row">ID A1 (mm)</td>
+                                <td>{{ upload_image_doc.id_a1 }}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">ID A2 (mm)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{ product_dimension.inner_diameter_2_mm }}</td>
+                                <td scope="row">ID A2 (mm)</td>
+                                <td>{{ upload_image_doc.id_a2 }}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Thickness</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{ product_dimension.thickness }}</td>
+                                <td scope="row">Thickness </td>
+                                <td>{{ upload_image_doc.thickness }}</td>
                             </tr>
                             <tr>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;" scope="row">Length (mm)</td>
-                                <td style="border: 1px solid #23232457;width: 33%;padding: 0.5rem;border-collapse: collapse;">{{ product_dimension.length }}</td>
+                                <td scope="row">Length (mm)</td>
+                                <td>{{ upload_image_doc.length }}</td>
                             </tr>
-                            {% endfor %}
                         </tbody>
                     </table>
                     
                 </div>'''
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(html_content_client)
-    rendered_content = template.render(part_no=part_no, image_paths=image_paths,product_dimensions=product_dimensions, getAllValues=getAllValues, site_url=site_url, scores=scores, image=image)
+    rendered_content = template.render(image_paths=image_paths,product_dimensions=product_dimensions, getAllValues=getAllValues, site_url=site_url,upload_image_doc = upload_image_doc,)
 
     # file = open("/tmp/jkfenner.html", "w")
     # file.write(rendered_content)

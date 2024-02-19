@@ -1,7 +1,14 @@
 frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 	var partNo = frappe.utils.get_url_arg('part_no');
-	var scores = frappe.utils.get_url_arg('scores');
-	var image = frappe.utils.get_url_arg('image');
+	var scores = frappe.utils.get_url_arg('matching_percentage');
+	var image = frappe.utils.get_url_arg('image_url');
+	var parent_ref = frappe.utils.get_url_arg('parent_table');
+	var child_ref = frappe.utils.get_url_arg('child_table');
+
+	$(document).on('click','.navigation-button',(e)=> {
+		if($(e.currentTarget).data('href') != "#")
+			window.location.href = $(e.currentTarget).data('href')
+	})
 	
 
 	console.log("🚀 ~ scores:", scores)
@@ -64,10 +71,10 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 	//////////////////////////////////////////////////////////////////////////////////////////
 
 	page.add_action_item('Export PDF For Internal', () => {
-		window.open(`/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_internal_pdf?part_no=${partNo}&scores=${scores}&image=${image}`, '_blank');
+		window.open(`/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_internal_pdf?child_ref=${child_ref}&parent_ref=${parent_ref}`, '_blank');
 	});
 	page.add_action_item('Export PDF For Client', () => {
-		window.open(`/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_client_pdf?part_no=${partNo}&scores=${scores}&image=${image}`, '_blank');
+		window.open(`/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_client_pdf?child_ref=${child_ref}&parent_ref=${parent_ref}`, '_blank');
 	});
 	
 
@@ -77,11 +84,9 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 	
 		frappe.call({
 			method: 'jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.get_image_ai_details',
-			args: {
-				'part_no': partNo,  // Pass the actual part_no here
-				'scores': scores,
-				'image':image,
-				
+			args: {			
+				'parent_ref':parent_ref,
+				'child_ref':child_ref,				
 			},
 		
 			callback: function(response) {
@@ -95,7 +100,7 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 					// Update the scores array with the received scores
 					scoresArray = response.scores || [];
 					// Initialize the slideshow
-					showSlides();
+					//showSlides();
 				}
 			}
 		});
@@ -122,82 +127,49 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 				dots[n].classList.add("active");
 			};
 	
-			frappe.dom.ready(() => {
-				init(currentSlide);
-	
-				const next = () => {
-					currentSlide >= slides.length - 1 ? currentSlide = 0 : currentSlide++;
-					init(currentSlide);
-				};
-	
-				const prev = () => {
-					currentSlide <= 0 ? currentSlide = slides.length - 1 : currentSlide--;
-					init(currentSlide);
-				};
-	
-				frappe.ui.add_button(__("Next"), () => {
-					next();
-				});
-	
-				frappe.ui.add_button(__("Prev"), () => {
-					prev();
-				});
-	
-				setInterval(() => {
-					next();
-				}, 5000);
-	
-				dots.forEach((dot, i) => {
-					dot.addEventListener("click", () => {
-						// console.log(currentSlide);
-						init(i);
-						currentSlide = i;
-					});
-				});
-			});
 		}
 	});	
 
-	$(document).ready(function() {
-		var $sliderValue = $('#slider-value');
-		var $imageElement = $('#slider-image');
-		var $prevButton = $('.prev');
-		var $nextButton = $('.next');
+	// $(document).ready(function() {
+	// 	var $sliderValue = $('#slider-value');
+	// 	var $imageElement = $('#slider-image');
+	// 	var $prevButton = $('.prev');
+	// 	var $nextButton = $('.next');
   
-		var images = [
-		  { url: "/assets/jkfenner_image_process/images/E70657-1.jpg", percentage: 90 },
-		  { url: "/assets/jkfenner_image_process/images/R7404808 W.jpg", percentage: 20 },
-		  { url: "/assets/jkfenner_image_process/images/R7404809 W.jpg", percentage: 30 },
-		  { url: "/assets/jkfenner_image_process/images/E70657-6.jpg", percentage: 40 },
-		  { url: "/assets/jkfenner_image_process/images/E70657-5.jpg", percentage: 50 },
-		  { url: "/assets/jkfenner_image_process/images/E70657-4.jpg", percentage: 60 },
-		  { url: "/assets/jkfenner_image_process/images/E70657-2.jpg", percentage: 70 },
-		  { url: "/assets/jkfenner_image_process/images/E70657-3.jpg", percentage: 80 },
+	// 	var images = [
+	// 	  { url: "/assets/jkfenner_image_process/images/E70657-1.jpg", percentage: 90 },
+	// 	  { url: "/assets/jkfenner_image_process/images/R7404808 W.jpg", percentage: 20 },
+	// 	  { url: "/assets/jkfenner_image_process/images/R7404809 W.jpg", percentage: 30 },
+	// 	  { url: "/assets/jkfenner_image_process/images/E70657-6.jpg", percentage: 40 },
+	// 	  { url: "/assets/jkfenner_image_process/images/E70657-5.jpg", percentage: 50 },
+	// 	  { url: "/assets/jkfenner_image_process/images/E70657-4.jpg", percentage: 60 },
+	// 	  { url: "/assets/jkfenner_image_process/images/E70657-2.jpg", percentage: 70 },
+	// 	  { url: "/assets/jkfenner_image_process/images/E70657-3.jpg", percentage: 80 },
 		  
-		  // Add more image URLs and percentages as needed
-		];
+	// 	  // Add more image URLs and percentages as needed
+	// 	];
   
-		var currentIndex = 0;
+	// 	var currentIndex = 0;
   
-		function updateSliderValue() {
-		  var currentImage = images[currentIndex];
-		  $sliderValue.text('Matching Percentage: ' + currentImage.percentage + '%');
-		  $imageElement.attr('src', currentImage.url);
-		}
+	// 	function updateSliderValue() {
+	// 	  var currentImage = images[currentIndex];
+	// 	  $sliderValue.text('Matching Percentage: ' + currentImage.percentage + '%');
+	// 	  $imageElement.attr('src', currentImage.url);
+	// 	}
   
-		// Set initial value
-		updateSliderValue();
+	// 	// Set initial value
+	// 	updateSliderValue();
   
-		$prevButton.on('click', function() {
-		  currentIndex = (currentIndex - 1 + images.length) % images.length;
-		  updateSliderValue();
-		});
+	// 	$prevButton.on('click', function() {
+	// 	  currentIndex = (currentIndex - 1 + images.length) % images.length;
+	// 	  updateSliderValue();
+	// 	});
   
-		$nextButton.on('click', function() {
-		  currentIndex = (currentIndex + 1) % images.length;
-		  updateSliderValue();
-		});
-	  });
+	// 	$nextButton.on('click', function() {
+	// 	  currentIndex = (currentIndex + 1) % images.length;
+	// 	  updateSliderValue();
+	// 	});
+	//   });
 
 
 }

@@ -23,18 +23,20 @@
                 this.navigateToAiImageDetails(imageName,imagePercentage);
             });
             $('.previewImage').on('change', (e) => this.previewImage(e)); // Use arrow function to retain 'this' context
-            $('.navigate-button').on('click', () => {
-                this.pickMatchingImage()
+            $('.navigate-button').on('click', async() => {
+                await this.pickMatchingImage()
             });
+            
         // Add loader to the page
         this.loader = $('<div id="loader" class="loader"></div>').appendTo(this.page.body);
         }
-
-        navigateToAiImageDetails(partNo,Score,Image) {
-            typeof(partNo)
-            let jsonString = JSON.stringify(Score,Image);
-            console.log(jsonString)
-            window.open(`/app/ai-image-details?part_no=${partNo}&scores=${Score}&image=${Image}`, '_blank');
+        
+        navigateToAiImageDetails(part_no,Score,Image,childTable, parentTable) {
+            const jsonString = JSON.stringify(Score, Image);
+            console.log(childTable);
+            const url = `/app/ai-image-details?part_no=${part_no}&matching_percentage=${Score}&image_url=${Image}&child_table=${childTable}&parent_table=${parentTable}`;
+            console.log(url)
+            window.open(url, '_blank');
         }
         
 
@@ -150,70 +152,86 @@
             this.showLoader();
             let fileInput = $('.previewImage').prop('files')[0];
             const getScore = async (fileResponse) => {
-                let scores = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image',{
-                    image : fileResponse.name
+                const inner_diameter_1 = 10; // Example value, replace with actual value
+                const inner_diameter_2 = 20; // Example value, replace with actual value
+                const length = 30; // Example value, replace with actual value
+                const thickness = 5; // Example value, replace with actual value
+  
+                const response = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image', {
+                    image: fileResponse.name,
+                    inner_diameter_1: inner_diameter_1,
+                    inner_diameter_2: inner_diameter_2,
+                    length: length,
+                    thickness: thickness,
                 });
+                 console.log("response",response)
                 // Check if scores is undefined
                 if (!fileInput) {
                     // Handle the case where scores is undefined, e.g., show an error message
-                    frappe.msgprint('Please upload SKU part.');
+                    frappe.msgprint('Please Upload SKU Part.');
                     this.hideLoader();
                     return;
                     }
 
                 // let imageName = scores.images[0];
-                let imageGrid = "";
-                let imageFileName = (image) =>{
-                    let filenameWithExtension = image.split('/').slice(-2).shift();
-                    let filenameWithoutExtension = filenameWithExtension.split('.')[0];
-                    return filenameWithoutExtension;
-                }
-                let imagePath = "/assets/jkfenner_image_process/images/machine_learning/augment_images/E72068/E72068-16.jpg";
-                let result = imageFileName(imagePath);
-                
-                console.log(result);
-                scores.images.slice(0,3).forEach((image,_index) => {
-                    let currentImageFileName = imageFileName(image);
-                    let innerDiameter1 = scores.docs && scores.docs[_index] && scores.docs[_index].product_dimensions[0]  ? scores.docs[_index].product_dimensions[0].inner_diameter_1_mm : '0';
-                    let innerDiameter2 = scores.docs && scores.docs[_index] && scores.docs[_index].product_dimensions[0] ? scores.docs[_index].product_dimensions[0].inner_diameter_2_mm : '0';
-                    let length = scores.docs && scores.docs[_index] && scores.docs[_index].product_dimensions[0] ? scores.docs[_index].product_dimensions[0].length : '0';
-                    let thickness = scores.docs && scores.docs[_index] && scores.docs[_index].product_dimensions[0] ? scores.docs[_index].product_dimensions[0].thickness ?? 0 : '0';
-                    console.log(innerDiameter1,);
-                    imageGrid += `<div class="col">
-                            <div class="card-image">
-                                <div id="image-details" class="card-body-image">
-                                    <h5 class="card-title-image">Matching Percentage: ${Math.round(scores.scores[_index]*100,2)}%</h5>
-                                        <div class="card-image-search"> 
-                                            <img style="height: 221px;object-fit: scale-down;" class="matchingimage w-100" id="matchingImage"  src="${image}" alt="Matching Image">
-                                            <p  style="text-align:center">${!!image ? currentImageFileName : "No Image"}</p> 
+                    
+                    let imageGrid = "";
+                    response.matching_find_images.slice(0, 3).forEach((image, _index) => {
+                        // Extract data from the response
+                        let part_no = image.part_no && image.part_no ? image.part_no.name : '';
+                        let score = image.matching_percentage;
+                        const roundedPercentage = Math.round(image.matching_percentage);
+                        const roundedPercentageString = `Matching Percentage: ${roundedPercentage}%`;
+
+
+                        // let innerDiameter1 = response.docs && response.docs[_index] && response.docs[_index].product_dimensions[0] ? response.docs[_index].product_dimensions[0].inner_diameter_1_mm : '0';
+                        // let innerDiameter2 = response.docs && response.docs[_index] && response.docs[_index].product_dimensions[0] ? response.docs[_index].product_dimensions[0].inner_diameter_2_mm : '0';
+                        // let length = response.docs && response.docs[_index] && response.docs[_index].product_dimensions[0] ? response.docs[_index].product_dimensions[0].length : '0';
+                        // let thickness = response.docs && response.docs[_index] && response.docs[_index].product_dimensions[0] ? response.docs[_index].product_dimensions[0].thickness ?? 0 : '0';
+        
+                        // Construct HTML for each image
+                        imageGrid += `<div class="col">
+                                        <div class="card-image">
+                                            <div id="image-details" class="card-body-image">
+                                            <h5 class="card-title-image"> ${roundedPercentageString}</h5>
+                                                <div class="card-image-search"> 
+                                                <img style="height: 221px; object-fit: scale-down;" class="matchingimage w-100" id="matchingImage"  src="${image.image_url}" alt="Matching Image">
+                                                <p  style="text-align:center">${!!image ? image.part_no : "No Image"}</p> 
+                                            </div>
+                                            <div class="card-content">
+                                                <p>Image Similarty Score: ${image.matching_percentage}</p>
+                                                <p>ID A1: ${image.id_a1}, ID A2: ${image.id_a2}, Length: ${image.length}, Thickness: ${image.thickness}</p>
+                                                <button class="btn btn-primary btn-sm primary-action-image navigate-details" 
+                                                    data-image-name="${image.part_no}" 
+                                                    data-image-path="${image.image_url}" 
+                                                    data-image-percentage="${roundedPercentage}" 
+                                                    data-child-name="${image.name}"
+                                                    data-parent-name="${response.name}">View Details</button>
+                                            </div>
+                                            </div>
                                         </div>
-                                        <div class="card-content">
-                                            <p>Image Similarty Score: ${(scores.scores[_index]*100)} </p>
-                                            <p>ID A1: ${innerDiameter1}, ID A2: ${innerDiameter2}, Length: ${length}, Thickness: ${thickness}</p>
-                                            <button class="btn btn-primary btn-sm primary-action-image navigate-details" data-image-name="${currentImageFileName}" data-image-path="${image}" data-image-percentage="${Math.round(scores.scores[_index] * 100, 2)}">View Details</button> 
-                                        </div> 
-                                </div>
-                            </div>
-                        </div>`;
-                })
-                
-                $('.preview-section').removeClass('hide');
-                $('.preview-section').html('<div class="row">'+imageGrid+"</div>")
-                $('.navigate-details').on('click', (event) => {
-                    const imageName = $(event.target).data('image-name');
-                    const imagePercentage = $(event.target).data('image-percentage');
-                    const imagesPath = $(event.target).data('image-path');
-                    // Now you can use imageName, imagePercentage, and partNo in your function
-                    this.navigateToAiImageDetails(imageName, imagePercentage,imagesPath);
-                });
-                
-               
-                // this.navigateToAiImageDetails(imageName);  
-                this.hideLoader();
-                
-            };
-            this.upload_file({'file_obj': fileInput, 'name':"TestImg.png","file_name":"TestImg.png"},getScore)
-        }
+                                    </div>`;
+                    });
+        
+                    // Display the constructed HTML
+                    $('.preview-section').removeClass('hide');
+                    $('.preview-section').html('<div class="row">' + imageGrid + "</div>");
+        
+                    // Attach event listener for details button
+                    $('.navigate-details').on('click', (event) => {
+                        const imageName = $(event.target).data('image-name');
+                        const imagePercentage = $(event.target).data('image-percentage');
+                        const imagesPath = $(event.target).data('image-path');
+                        const childTable = $(event.target).data('child-name');
+                        const parentTable = $(event.target).data('parent-name');
+                        console.log(childTable) 
+                        this.navigateToAiImageDetails(imageName, imagePercentage, imagesPath, childTable, parentTable);
+                    });
+                    this.hideLoader();                
+                };
+               this.upload_file({'file_obj': fileInput, 'name':"TestImg.png","file_name":"TestImg.png"},getScore)
+            }
+
         showLoader() {
             this.loader.show();
         }
@@ -260,3 +278,5 @@
         // Initialize your page
         frappe.pages['ai-image-search'].on_page_load();
     });
+
+    
