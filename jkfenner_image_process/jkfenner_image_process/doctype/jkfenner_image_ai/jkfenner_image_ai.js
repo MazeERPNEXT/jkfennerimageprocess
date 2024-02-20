@@ -42,6 +42,9 @@ get_image: function (frm) {
 	refresh: function (frm) {
 		frm.trigger('get_image');
 		frm.trigger('hide_add_row');
+        frm.add_custom_button(__('Insert New Records'), function(){
+			location.href="/app/data-import/new-data-import-1?reference_doctype=JKFenner Image AI&import_type=Insert New Records&enable_autosave=true"
+		}, __("Data Import"));
     },
 
 	
@@ -67,6 +70,8 @@ frappe.ui.form.on('Multiple Image Upload', {
 
     refresh: function(frm) {
         frm.trigger('hide_add_row');
+        
+
     },
 
     hide_add_row: function(frm) {
