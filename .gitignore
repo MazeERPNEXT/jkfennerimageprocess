@@ -8,3 +8,5 @@ node_modules/
 *.feather
 *.pth
 jkfenner_image_process/public/dist/
+jkfenner_image_process/public/images/machine_learning/augment_images/
+jkfenner_image_process/machine_learning/segment_image_mask/
