@@ -39,12 +39,16 @@ def guess_image(image, inner_diameter_1, inner_diameter_2, length, thickness):
     config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
     img_path = _file.get_full_path()
     predictor = predict(config_file_path)
-    similarity_scores, similarity_images, pad_img = predictor.run(img_path)
+    similarity_scores = []
+    similarity_images, original_image = predictor.run(img_path)
+    print(similarity_scores, similarity_images)
     similarity_images_with_path = []
-    for similarity_image in similarity_images:
+    for similarity_image, score in similarity_images.items():
         imagefolder = str(similarity_image).split('-')[0]
         similarity_images_with_path.append("/assets/jkfenner_image_process/images/machine_learning/augment_images/{}/{}".format(imagefolder, similarity_image))
+        similarity_scores.append(score)
     similarity_scores = [str(similarity_score) for similarity_score in similarity_scores]
+
     ai_responses["images"] = similarity_images_with_path
     ai_responses["scores"] = similarity_scores
     
