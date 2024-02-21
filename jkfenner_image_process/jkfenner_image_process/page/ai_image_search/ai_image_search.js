@@ -176,7 +176,8 @@
                 // let imageName = scores.images[0];
                     
                     let imageGrid = "";
-                    response.matching_find_images.slice(0, 3).forEach((image, _index) => {
+                    //.slice(0, 3)
+                    response.matching_find_images.forEach((image, _index) => {
                         // Extract data from the response
                         let part_no = image.part_no && image.part_no ? image.part_no.name : '';
                         let score = image.matching_percentage;
