@@ -191,7 +191,7 @@
                         // let thickness = response.docs && response.docs[_index] && response.docs[_index].product_dimensions[0] ? response.docs[_index].product_dimensions[0].thickness ?? 0 : '0';
         
                         // Construct HTML for each image
-                        imageGrid += `<div class="col">
+                        imageGrid += `<div class="col-4">
                                         <div class="card-image">
                                             <div id="image-details" class="card-body-image">
                                             <h5 class="card-title-image"> ${roundedPercentageString}</h5>
@@ -201,7 +201,7 @@
                                             </div>
                                             <div class="card-content">
                                                 <p>Image Similarty Score: ${image.matching_percentage}</p>
-                                                <p>ID A1: ${image.id_a1}, ID A2: ${image.id_a2}, Length: ${image.length}, Thickness: ${image.thickness}</p>
+                                                <p>ID A1: ${image.id_a1}, ID A2: ${image.id_a2 || 0 }, Length: ${image.length || 0 }, Thickness: ${image.thickness || 0 }</p>
                                                 <button class="btn btn-primary btn-sm primary-action-image navigate-details" 
                                                     data-image-name="${image.part_no}" 
                                                     data-image-path="${image.image_url}" 
