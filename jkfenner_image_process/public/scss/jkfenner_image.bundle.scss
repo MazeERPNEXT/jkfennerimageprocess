@@ -141,7 +141,7 @@ body{
 .shortcut-widget-box{
     // position: relative;
     /* background: #7fffd4de; */
-    padding: 15px !important;
+    padding: 18px !important;
     display: grid;
     justify-content: center;
     opacity: 1;
@@ -153,6 +153,19 @@ body{
 }
 .widget-title{
     color: white !important;
+    font-size: 17px !important;
+}
+.indicator-pill.green{
+    background: var(--bg-green);
+    color: var(--text-on-green);
+    font-size: 14px;
+    border-radius: 5px;
+}
+.dropdown-help{
+    display: none !important;
+}
+.sidebar-toggle-btn{
+    display: none !important;
 }
 .widget-title:hover{
     color: aliceblue;
@@ -226,6 +239,24 @@ body{
 .data-pill{
     background-color: #009081b3 !important;
 }
+.custom-actions{
+    display: none !important;
+}
+// #page-Workspaces .standard-actions{
+//     display: none !important;
+// }
+#page-List\/JKFenner\ Image\ AI\/List .icon-btn {
+    display: none !important;
+}
+// #navbar-search{
+//     display: none !important;
+// }
+.search-icon{
+    display: none !important;
+}
+// .btn-sm{
+//     display: none !important;
+// }
 
 // .ce-block__content > div{
 //     padding: 20px;

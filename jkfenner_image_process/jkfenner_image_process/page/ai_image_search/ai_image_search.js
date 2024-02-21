@@ -241,7 +241,7 @@
         }
 
         previewImage(event) {
-            // this.showLoader();
+            this.showLoader();
             var input = event.target;
             var reader = new FileReader();
             var canvas = document.getElementById('canv1');
@@ -269,7 +269,7 @@
                 };
                 img.src = reader.result;
             };
-            // this.hideLoader();   
+            this.hideLoader();   
             // Read the selected file as a data URL
             reader.readAsDataURL(input.files[0]);
         }

@@ -1,6 +1,7 @@
 import frappe
 from frappe.utils.pdf import get_pdf
 from reportlab.pdfgen import canvas 
+from reportlab.lib.pagesizes import letter
 from PyPDF2 import PdfReader, PdfWriter, PageObject
 import io  
 from jinja2 import Environment, FileSystemLoader
@@ -164,65 +165,46 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
     if hasattr(getAllValues, 'multiple_image_upload'):
         image_paths = [ child_row.images for child_row in getAllValues.multiple_image_upload]
     html_content_internal = ''' 
-                    <head>
                         <style>
-                            .table-bordered {
-                                border-collapse: collapse;
-                                width: 80%;
-                                margin-left: 20px;
-                            }
-                            .table-bordered th,
-                            .table-bordered td {
-                                border: 2px solid #dddddd;
-                                padding: 8px;
-                                text-align: left;
-                                border-right-color: #dddddd;
-                                border-right-width: medium;
-                            }
-                            .table-bordered th {
-                                background-color: #f2f2f2;
-                            }
-                            .print-format .table-bordered td {
-                                padding: 3px !important;
-                            }
-                            .header {
-                                position: relative;
-                                width: 100%;
-                                height: 4cm;
-                                background: #eee;
-                                display: flex;
-                                margin-top: -10px;
-                                bottom: 10px;
-                                margin-bottom: 10px;
-                            }
-                            #slider-image {
-                                width: 41%;
-                                margin-left: 200px;
-                                z-index: 200;
-                                margin-top: 0px;
-                                margin-bottom: 0px;
-                                position: relative;
-                                height: 240px;
-                            }
-                            
-                            .gird-container {
-                                display: grid;
-                                grid-template-columns:auto auto;
-                            }
-                        </style>
-                        </head>
-                        <html>
-                        <body>
-                        <div class="header">
+                                
+                                .table-bordered {
+                                    border-collapse: collapse;
+                                    width:95%;
+                                    margin-left:20px;
+                                    margin-bottom:20px;
+                                }
+                                .table-bordered th,
+                                .table-bordered td {
+                                    border: 2px solid #dddddd;
+                                    padding: 8px;
+                                    text-align: left;
+                                    border-right-color: #dddddd;
+                                    border-right-width: medium;
+                                }
+                                .table-bordered th {
+                                    background-color: #f2f2f2;
+                                }
+                                .grid-container{
+                                    display: flex;
+                                    column-gap:0px;
+                                    grid-template-columns: auto auto;
+                                    width:100%
+                                }
+                                .grid-item{
+                                    padding: 10px;
+                                    width:100%;
+                                }
+                            </style>   
+                            <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex; margin-top:-10px;bottom:10px;margin-bottom:10px">
                                 <img style="width: 33%; height:150px;justify-content:center;" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
                             </div> 
                             <hr>  
                                 <div>
                                     <img id="slider-image" style="width:41%;margin-left:200px;z-index:200; margin-top:0px;margin-bottom:20px;position:relative; bottom:20px height:240px" src="{{ upload_image_doc.image_url }}" alt="Image 1">
                                 </div>
-                               <div class="gird-container">
-                                <div class="generic">
-                                 <table class="table table-bordered">
+                               <div class="grid-container">
+                               <div class="grid-item">
+                                <table class="table table-bordered">
                                 <caption class="captions-image"
                                 style="
                                     color: #ffffff !important;
@@ -282,9 +264,9 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
                                     </tr>
                                 </tbody>
                             </table>
-                            </div>
-                                 <div class="product">
-                                    <table class="table table-bordered">
+                               </div>
+                               <div class="grid-item">
+                               <table class="table table-bordered grid-item" style="width:50% !importent">
                                         <caption class="captions-image"
                                         style="
                                             color: #ffffff !important;
@@ -323,8 +305,9 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
                                             </tr>
                                         </tbody>
                                     </table>
+                                 </div>
                                 </div>  
-                            </div>
+
                              <table class="table table-bordered">
                                 <caption class="captions-image"
                                 style="
@@ -360,9 +343,7 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
                                         <td>{{ upload_image_doc.length }}</td>
                                     </tr>
                                 </tbody>
-                            </table> 
-                        </body>
-                        </html>     
+                            </table>  
                 '''
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(html_content_internal)
@@ -387,11 +368,11 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
         # Render the HTML content (not being used in the current code)
     # print(rendered_content)
 
-def add_watermark(pdf_buffer,getAllValues,site_url,upload_image_doc,html_content_internal):
+def add_watermark(pdf_buffer,getAllValues,site_url,upload_image_doc,html_content_internal,):
     watermark_text = "Confidential - Internal Use Only"
     watermark_font_size = 57
     watermark_opacity = 0.1
-
+    page_layout =[]
     # Create a PDF reader
     pdf_reader = PdfReader(io.BytesIO(pdf_buffer))
 
@@ -405,25 +386,28 @@ def add_watermark(pdf_buffer,getAllValues,site_url,upload_image_doc,html_content
         output_buffer = io.BytesIO()
 
         # Create a PDF canvas for the modified page
-        pdf_canvas = canvas.Canvas(output_buffer, pagesize=(page.mediaBox.getWidth(), page.mediaBox.getHeight()))
+        pdf_canvas = canvas.Canvas(output_buffer, pagesize=letter)
 
-        # Set font and size
-        pdf_canvas.setFont("Helvetica", watermark_font_size)
-        pdf_canvas.rotate(55)
-        pdf_canvas.setFillAlpha(watermark_opacity)
+        if page_layout == '/TwoColumn':
+     
 
-        # Calculate center coordinates of the page
-        center_x = page.mediaBox.getLowerRight_x() / 1.2
-        center_y = page.mediaBox.getLowerRight_y() / 2
+            # Set font and size
+            pdf_canvas.setFont("Helvetica", watermark_font_size)
+            pdf_canvas.rotate(55)
+            pdf_canvas.setFillAlpha(watermark_opacity)
 
-        # Draw the watermark text on the center of the page
-        pdf_canvas.drawCentredString(center_x, center_y, watermark_text)
+            # Calculate center coordinates of the page
+            center_x = page.mediaBox.getLowerRight_x() / 1.2
+            center_y = page.mediaBox.getLowerRight_y() / 2
 
-        # Save the canvas content to the buffer
-        pdf_canvas.save()
+            # Draw the watermark text on the center of the page
+            pdf_canvas.drawCentredString(center_x, center_y, watermark_text)
 
-        # Merge the original page with the modified page
-        page.mergePage(PdfReader(io.BytesIO(output_buffer.getvalue())).getPage(0))
+            # Save the canvas content to the buffer
+            pdf_canvas.save()
+
+            # Merge the original page with the modified page
+            page.mergePage(PdfReader(io.BytesIO(output_buffer.getvalue())).getPage(0))
 
         # Add the modified page to the PDF writer
         pdf_writer.addPage(page)
@@ -455,55 +439,36 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
         image_paths = [ child_row.images for child_row in getAllValues.multiple_image_upload]
 
     html_content_client = '''
-                             <head>
-                        <style>
-                            .table-bordered {
-                                border-collapse: collapse;
-                                width: 80%;
-                                margin-left: 20px;
-                            }
-                            .table-bordered th,
-                            .table-bordered td {
-                                border: 2px solid #dddddd;
-                                padding: 8px;
-                                text-align: left;
-                                border-right-color: #dddddd;
-                                border-right-width: medium;
-                            }
-                            .table-bordered th {
-                                background-color: #f2f2f2;
-                            }
-                            .print-format .table-bordered td {
-                                padding: 3px !important;
-                            }
-                            .header {
-                                position: relative;
-                                width: 100%;
-                                height: 4cm;
-                                background: #eee;
-                                display: flex;
-                                margin-top: -10px;
-                                bottom: 10px;
-                                margin-bottom: 10px;
-                            }
-                            #slider-image {
-                                width: 41%;
-                                margin-left: 200px;
-                                z-index: 200;
-                                margin-top: 0px;
-                                margin-bottom: 0px;
-                                position: relative;
-                                height: 240px;
-                            }
-                            
-                            .gird-container {
-                                display: grid;
-                                grid-template-columns:auto auto;
-                            }
-                        </style>
-                        </head>
-                        <html>
-                        <body>
+                             <style>
+                                
+                                .table-bordered {
+                                    border-collapse: collapse;
+                                    width:95%;
+                                    margin-left:20px;
+                                    margin-bottom:20px;
+                                }
+                                .table-bordered th,
+                                .table-bordered td {
+                                    border: 2px solid #dddddd;
+                                    padding: 8px;
+                                    text-align: left;
+                                    border-right-color: #dddddd;
+                                    border-right-width: medium;
+                                }
+                                .table-bordered th {
+                                    background-color: #f2f2f2;
+                                }
+                                .grid-container{
+                                    display: flex;
+                                    column-gap:0px;
+                                    grid-template-columns: auto auto;
+                                    width:100%
+                                }
+                                .grid-item{
+                                    padding: 10px;
+                                    width:100%;
+                                }
+                            </style>
                          <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex; margin-top:-10px;bottom:10px;margin-bottom:10px">
                                 <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
                             </div> 
@@ -511,9 +476,9 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
                                 <div >
                                     <img id="slider-image" style="width:41%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ upload_image_doc.image_url }}" alt="Image 1">
                                 </div>
-                            <div class="gird-container">
-                                <div class="generic">
-                                 <table class="table table-bordered">
+                            <div class="grid-container">
+                               <div class="grid-item">
+                                <table class="table table-bordered">
                                 <caption class="captions-image"
                                 style="
                                     color: #ffffff !important;
@@ -559,8 +524,8 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
                                 </tbody>
                             </table>
                             </div>
-                            <div class="product">
-                                <table class="table table-bordered">
+                               <div class="grid-item">
+                               <table class="table table-bordered grid-item" style="width:50% !importent">
                                 <caption class="captions-image"
                                 style="
                                     color: #ffffff !important;
@@ -599,8 +564,8 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>  
-                    </div>
+                           </div>
+                                </div> 
                     <table class="table table-bordered" >
                         <caption class="captions-image"
                           style="
@@ -636,9 +601,7 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
                                 <td>{{ upload_image_doc.length }}</td>
                             </tr>
                         </tbody>
-                   </table> 
-                        </body>
-                        </html> '''
+                    </table> '''
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(html_content_client)
     rendered_content = template.render(getAllValues=getAllValues, site_url=site_url,upload_image_doc = upload_image_doc,)
