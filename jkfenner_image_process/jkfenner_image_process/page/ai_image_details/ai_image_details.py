@@ -440,9 +440,10 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
 
     html_content_client = '''
                              <style>
+                                
                                 .table-bordered {
                                     border-collapse: collapse;
-                                    width:80%;
+                                    width:95%;
                                     margin-left:20px;
                                     margin-bottom:20px;
                                 }
@@ -457,6 +458,16 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
                                 .table-bordered th {
                                     background-color: #f2f2f2;
                                 }
+                                .grid-container{
+                                    display: flex;
+                                    column-gap:0px;
+                                    grid-template-columns: auto auto;
+                                    width:100%
+                                }
+                                .grid-item{
+                                    padding: 10px;
+                                    width:100%;
+                                }
                             </style>
                          <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex; margin-top:-10px;bottom:10px;margin-bottom:10px">
                                 <img style="width: 33%; height:150px;justify-content:center" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
@@ -465,8 +476,9 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
                                 <div >
                                     <img id="slider-image" style="width:41%;margin-left:200px;z-index:200; margin-top:0px;position:relative; bottom:20px height:240px" src="{{ upload_image_doc.image_url }}" alt="Image 1">
                                 </div>
-                            <div style="display: flex;>
-                                <table class="table table-bordered" style="width:35%">
+                            <div class="grid-container">
+                               <div class="grid-item">
+                                <table class="table table-bordered">
                                 <caption class="captions-image"
                                 style="
                                     color: #ffffff !important;
@@ -511,7 +523,9 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
                                     
                                 </tbody>
                             </table>
-                            <table class="table table-bordered" style="width:50%">
+                            </div>
+                               <div class="grid-item">
+                               <table class="table table-bordered grid-item" style="width:50% !importent">
                                 <caption class="captions-image"
                                 style="
                                     color: #ffffff !important;
@@ -550,7 +564,8 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
                                     </tr>
                                 </tbody>
                             </table>
-                            </div>
+                           </div>
+                                </div> 
                     <table class="table table-bordered" >
                         <caption class="captions-image"
                           style="
@@ -586,8 +601,7 @@ def generate_client_pdf(parent_ref=None, child_ref=None):
                                 <td>{{ upload_image_doc.length }}</td>
                             </tr>
                         </tbody>
-                    </table>    
-                </div>'''
+                    </table> '''
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(html_content_client)
     rendered_content = template.render(getAllValues=getAllValues, site_url=site_url,upload_image_doc = upload_image_doc,)
