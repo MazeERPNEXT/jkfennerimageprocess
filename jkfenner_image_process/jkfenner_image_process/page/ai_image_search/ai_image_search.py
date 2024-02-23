@@ -40,7 +40,7 @@ def guess_image(image):
     img_path = _file.get_full_path()
     predictor = predict(config_file_path)
     similarity_scores = []
-    similarity_images, original_image = predictor.run(img_path)
+    similarity_images, original_image = predictor.run(img_path,36, 35.5, 365)
     print(similarity_scores, similarity_images)
     similarity_images_with_path = []
     for similarity_image, score in similarity_images.items():
