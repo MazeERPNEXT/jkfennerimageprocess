@@ -1,6 +1,7 @@
 import frappe
 import os
 from jkfennerai.inference import predict
+from collections import OrderedDict
 
 
 
@@ -41,6 +42,7 @@ def guess_image(image):
     predictor = predict(config_file_path)
     similarity_scores = []
     similarity_images, original_image = predictor.run(img_path,36, 35.5, 365)
+    similarity_images = OrderedDict(similarity_images)
     print(similarity_scores, similarity_images)
     similarity_images_with_path = []
     for similarity_image, score in similarity_images.items():
