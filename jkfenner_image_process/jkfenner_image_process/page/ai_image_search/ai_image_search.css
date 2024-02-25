@@ -360,6 +360,19 @@ body {
   color: white;
   letter-spacing: 2px;
   border: 1px solid #57b6ac;
+  font-size: 20px;
+}
+.pulse-text {
+  animation: pulse 1s infinite alternate;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
 }
 #inputLabel::after {
   content: "";
@@ -370,7 +383,7 @@ body {
   height: 0;
   width: 0;
   position: absolute;
-  top: 5px;
+  top: 0px;
 }
 #inputLabel::before {
   content: "";
@@ -381,7 +394,7 @@ body {
   height: 0;
   width: 0;
   position: absolute;
-  top: 24px;
+  top: 27px;
 }
 #finput {
   display: none;
@@ -393,48 +406,7 @@ body {
 canvas {
   height: auto;
   width:100%;
-/*   border-style: solid; */
-/*   border-width: 1px; */
-/*   border-color: black; */
 }
-/* #finput{
-  height: 100px;
-  width: 600px;
-  background: #0b2447;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border-radius: 10px 10px 0 0;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: white;
-  letter-spacing: 2px;
-  border: 1px solid black;
-}
-#finput::after{
-   content: "";
-  border-top: 25px solid white;
-  border-right: 25px solid transparent;
-  border-left: 25px solid transparent;
-  border-bottom: 25px solid transparent;
-  height: 0;
-  width: 0;
-  position: absolute;
-  top: 5px;
-}
-#finput::before{
-  content: "";
-  border-top: 25px solid transparent;
-  border-right: 25px solid transparent;
-  border-left: 25px solid transparent;
-  border-bottom: 25px solid white;
-  height: 0;
-  width: 0;
-  position: absolute;
-  top: 45px;
-} */
 
 .card-title-image{
   text-align: center;
@@ -498,6 +470,10 @@ canvas {
 .btn.btn-primary{
   background-color: #159085 !important;
 }
+.row layout-main{
+  margin-top: -50px;
+}
+
 
 
 

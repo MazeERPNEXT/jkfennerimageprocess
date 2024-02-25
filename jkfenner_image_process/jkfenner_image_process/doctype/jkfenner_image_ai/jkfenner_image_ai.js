@@ -34,7 +34,6 @@ get_image: function (frm) {
     }
 },
 	after_save: function (frm) {
-		// Your custom logic when a row is removed from the payment_entry_child table
 		console.log('removed');
 		// Example: Update the image preview when a row is removed
 		frm.trigger('get_image');
@@ -46,9 +45,17 @@ get_image: function (frm) {
 			location.href="/app/data-import/new-data-import-1?reference_doctype=JKFenner Image AI&import_type=Insert New Records&enable_autosave=true"
 		}, __("Data Import"));
     },
+   // Function to validate image size before upload
+   validate_image_size: function(frm, cdt, cdn) {
+    var child = locals[cdt][cdn];
+    var file = child.image;
 
-	
-
+    // Check if file size exceeds the limit (1 MB)
+    if (file.size > 1000000) {
+        frappe.msgprint(__("Please upload images less than 1 MB in size."));
+        frappe.model.set_value(cdt, cdn, "images", ""); // Clear the file input
+    }
+}	
 });
 
 frappe.ui.form.on('Multiple Image Upload', {
@@ -81,6 +88,11 @@ frappe.ui.form.on('Multiple Image Upload', {
             frm.fields_dict['multiple_image_upload'].grid.cannot_add_rows = false;
         }
     },
+    // Trigger image size validation before upload
+    image: function(frm, cdt, cdn) {
+        frm.events.validate_image_size(frm, cdt, cdn);
+    }
+    
 });
 
 
@@ -114,27 +126,11 @@ frappe.ui.form.on('Product Dimensions', {
     },
 });
 
-frappe.ui.form.on('Multiple Image Upload', {
-	multiple_image_upload_remove : function(frm){
-		frm.trigger('get_image');		
-	},
-	multiple_image_upload_add : function(frm){
-		frm.trigger('get_image');
-	}
+
+
+// Set default value for inner_diameter_1_mm with " mm"
+frappe.ui.form.on('Product Dimensions', {
+    onload: function(frm) {
+        frm.set_value('inner_diameter_1_mm', ' mm');
+    }
 });
-
-// // Trigger 'add_units_to_field' function when inner_diameter_1 field changes
-// frappe.ui.form.on('Product Dimensions', {
-//     inner_diameter_1_mm: function(frm, cdt, cdn) {
-//         add_units_to_field(frm, cdt, cdn);
-//     }
-// });
-
-// // Function to add units (mm) to the input field
-// function add_units_to_field(frm, cdt, cdn) {
-//     let child_row = locals[cdt][cdn];
-//     if (child_row.inner_diameter_1_mm) {
-//         // Add units (mm) to the input field
-//         frappe.model.set_value(cdt, cdn, 'inner_diameter_1_with_units', child_row.inner_diameter_1_mm + ' mm');
-//     }
-// }

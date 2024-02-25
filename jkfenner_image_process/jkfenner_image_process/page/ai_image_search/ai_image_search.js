@@ -230,6 +230,13 @@
                     this.hideLoader();                
                 };
                this.upload_file({'file_obj': fileInput, 'name':"TestImg.png","file_name":"TestImg.png"},getScore)
+                // // After the image grid is generated, scroll to the .preview-section
+                // const previewSectionElement = $('.preview-section');
+                // if (previewSectionElement.length) {
+                //     $('html, body').animate({
+                //         scrollTop: previewSectionElement.offset().top
+                //     }, 1000);
+                //  }
             }
 
         showLoader() {

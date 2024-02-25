@@ -20,7 +20,8 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "ID 1 (mm)",
-   "reqd": 1
+   "reqd": 1,
+   "default": " mm"
   },
   {
    "fieldname": "hoses",
@@ -34,26 +35,30 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "ID 2 (mm)",
-   "reqd": 1
+   "reqd": 1,
+   "default": " mm"
   },
   {
    "fieldname": "length",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Length (m)",
-   "reqd": 1
+   "reqd": 1,
+   "default": " mm"
   },
   {
    "fieldname": "thickness",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Thickness (mm)"
+   "label": "Thickness (mm)",
+   "default": " mm"
   },
   {
    "fieldname": "overall_product_weight_without_childpart",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Overall product weight without childpart (grams)"
+   "label": "Overall product weight without childpart (grams)",
+   "default": " Grams"
   }
  ],
  "index_web_pages_for_search": 1,

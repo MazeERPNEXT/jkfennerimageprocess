@@ -153,7 +153,7 @@ body{
 }
 .widget-title{
     color: white !important;
-    font-size: 17px !important;
+    font-size: 19px !important;
 }
 .indicator-pill.green{
     background: var(--bg-green);
@@ -170,9 +170,9 @@ body{
 .widget-title:hover{
     color: aliceblue;
 }
-@media (min-width: 992px){
+@media (min-width: 993px) and (max-width: 1400px){
     .col-lg-3 {
-        max-width: 15%;
+        max-width: 28%;
     }
 }
 
@@ -248,6 +248,7 @@ body{
 #page-List\/JKFenner\ Image\ AI\/List .icon-btn {
     display: none !important;
 }
+
 // #navbar-search{
 //     display: none !important;
 // }

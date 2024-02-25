@@ -196,7 +196,7 @@
   },
   {
    "fieldname": "no_of_mandrel_available",
-   "fieldtype": "Float",
+   "fieldtype": "Data",
    "label": "No. of mandrel available"
   },
   {
@@ -225,18 +225,20 @@
    "label": "Rubber compound code"
   },
   {
+   "default": " IRHD",
    "fieldname": "compound_hardness",
    "fieldtype": "Data",
-   "label": "Compound Hardness"
+   "label": "Compound Hardness (IRHD)"
   },
   {
    "fieldname": "column_break_hzic",
    "fieldtype": "Column Break"
   },
   {
+   "default": " Grams",
    "fieldname": "compound_weight",
    "fieldtype": "Data",
-   "label": "Compound weight"
+   "label": "Compound weight( Grams)"
   },
   {
    "fieldname": "yarn_type",
@@ -253,19 +255,22 @@
    "fieldtype": "Column Break"
   },
   {
+    "default": " Grams",
    "fieldname": "yarn_weight",
    "fieldtype": "Data",
-   "label": "Yarn weight"
+   "label": "Yarn weight (Grams)"
   },
   {
+    "default": " Bar",
    "fieldname": "hose_burst_pressure",
    "fieldtype": "Data",
-   "label": "Hose Burst pressure"
+   "label": "Hose Burst pressure (Bar)"
   },
   {
+    "default": " N/Min",
    "fieldname": "adhesion",
    "fieldtype": "Data",
-   "label": "Adhesion"
+   "label": "Adhesion (N/Min)"
   },
   {
    "fieldname": "product_application_section",
@@ -309,6 +314,7 @@
   {
    "fieldname": "multiple_image_upload",
    "fieldtype": "Table",
+   "label": "Image size should be less than 1 MB",
    "options": "Multiple Image Upload"
   },
   {
@@ -329,7 +335,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-02-06 16:13:53.896809",
+ "modified": "2024-02-23 19:57:47.498369",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "JKFenner Image AI",
