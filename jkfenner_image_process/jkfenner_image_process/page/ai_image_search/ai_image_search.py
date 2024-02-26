@@ -1,6 +1,7 @@
 import frappe
 import os
-# from jkfennerai.inference import predict
+from jkfennerai.inference import predict
+from collections import OrderedDict
 
 
 
@@ -34,19 +35,21 @@ def guess_image(image):
         ]
     }
 
-    # ai_responses = {}
-    # config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
-    # img_path = _file.get_full_path()
-    # predictor = predict(config_file_path)
-    # similarity_scores = []
-    # similarity_images, original_image = predictor.run(img_path,36, 35.5, 365)
-    # print(similarity_scores, similarity_images)
-    # similarity_images_with_path = []
-    # for similarity_image, score in similarity_images.items():
-    #     imagefolder = str(similarity_image).split('-')[0]
-    #     similarity_images_with_path.append("/assets/jkfenner_image_process/images/machine_learning/augment_images/{}/{}".format(imagefolder, similarity_image))
-    #     similarity_scores.append(score)
-    # similarity_scores = [str(similarity_score) for similarity_score in similarity_scores]
+    
+    ai_responses = {}
+    config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
+    img_path = _file.get_full_path()
+    predictor = predict(config_file_path)
+    similarity_scores = []
+    similarity_images, original_image = predictor.run(img_path,36, 35.5, 365)
+    similarity_images = OrderedDict(similarity_images)
+    print(similarity_scores, similarity_images)
+    similarity_images_with_path = []
+    for similarity_image, score in similarity_images.items():
+        imagefolder = str(similarity_image).split('-')[0]
+        similarity_images_with_path.append("/assets/jkfenner_image_process/images/machine_learning/augment_images/{}/{}".format(imagefolder, similarity_image))
+        similarity_scores.append(score)
+    similarity_scores = [str(similarity_score) for similarity_score in similarity_scores]
 
     # ai_responses["images"] = similarity_images_with_path
     # ai_responses["scores"] = similarity_scores
