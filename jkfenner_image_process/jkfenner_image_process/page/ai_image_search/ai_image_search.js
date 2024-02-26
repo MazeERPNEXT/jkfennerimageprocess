@@ -151,6 +151,7 @@
         async pickMatchingImage(){
             this.showLoader();
             let fileInput = $('.previewImage').prop('files')[0];
+            // const imageName = fileInput.name.split('.')[0].split('-')[0];
             const getScore = async (fileResponse) => {
                 const inner_diameter_1 = 10; // Example value, replace with actual value
                 const inner_diameter_2 = 20; // Example value, replace with actual value
@@ -230,7 +231,7 @@
                     });
                     this.hideLoader();                
                 };
-               this.upload_file({'file_obj': fileInput, 'name':"TestImg.png","file_name":"TestImg.png"},getScore)
+                this.upload_file({'file_obj': fileInput, 'name': "TestImg.png", "file_name": "TestImg.png"}, getScore);
                 // // After the image grid is generated, scroll to the .preview-section
                 // const previewSectionElement = $('.preview-section');
                 // if (previewSectionElement.length) {
