@@ -10,9 +10,6 @@ def guess_image(images,inner_diameter_1,inner_diameter_2,length,branched,dark_ba
     images = images.split('~')
     _files = frappe.get_list("File", filters = {'name':["in", images]}, fields=["name"], pluck="name")
     is_branched_hose = True if branched == 'true' else False
-    inner_diameter_1 = float(inner_diameter_1) if inner_diameter_1 else 0
-    inner_diameter_2 = float(inner_diameter_2) if inner_diameter_2 else 0
-    length = int(length) if length else 0
     # ai_responses = {
     #     "images": [
     #         "/assets/jkfenner_image_process/images/machine_learning/augment_images/E72068/E72068-16.jpg",
@@ -43,21 +40,14 @@ def guess_image(images,inner_diameter_1,inner_diameter_2,length,branched,dark_ba
     
     ai_responses = {}
     if not is_branched_hose:
-        if inner_diameter_1 and inner_diameter_2 and length:
-            config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig_with_struct.cfg"
-        else:
-            config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
+        config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
     else:
-        if inner_diameter_1 and inner_diameter_2 and length:
-            config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig_branch_with_struct.cfg"
-        else:
-            config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig_branch.cfg"
-    print(config_file_path)
+        config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig_branch.cfg"
     imgs = [frappe.get_doc('File', _file) for _file in _files]
     img_paths = [file.get_full_path() for file in imgs]
     predictor = predict(config_file_path)
     similarity_scores = []
-    similarity_images = predictor.run(img_paths,inner_diameter_1, inner_diameter_2, length)
+    similarity_images, original_image = predictor.run(img_paths,inner_diameter_1, inner_diameter_2, length)
     similarity_images = OrderedDict(similarity_images)
     print(similarity_scores, similarity_images)
     similarity_images_with_path = []

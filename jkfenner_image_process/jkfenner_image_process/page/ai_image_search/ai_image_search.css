@@ -447,9 +447,9 @@ canvas {
   }
 } */
 .preview_search_image{
-  max-height: 583px;
+  max-height: 400px;
   object-fit: initial;
-  width: 62%;
+  width: 56%;
 }
 
 
@@ -495,7 +495,7 @@ canvas {
 }
 @media (min-width:375px) and (max-width:768px){
   #inputLabel{
-    width: 335px !important;
+    /* width: 335px !important; */
   }
 }
 /* @media (max-width:768px){
@@ -593,12 +593,12 @@ canvas {
 }
 @media (min-width:375px) and (max-width:768px){
   #inputLabelDimensions{
-    width: 335px !important;
+    /* width: 335px !important; */
   }
 }
 
-input[type=radio]:checked::before{
-  background-color: #44bcb1;
+.input[type=checkbox]:checked{
+  background-color: #44bcb1 !important;
 }
 .input-max-width{
   font-size: 17px;
