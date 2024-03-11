@@ -44,14 +44,14 @@ def guess_image(images,inner_diameter_1,inner_diameter_2,length,branched,dark_ba
     ai_responses = {}
     if not is_branched_hose:
         if inner_diameter_1 and inner_diameter_2 and length:
-            config_file_path = "/home/mazeworks/frappe-bench-lms/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig_with_struct.cfg"
+            config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig_with_struct.cfg"
         else:
-            config_file_path = "/home/mazeworks/frappe-bench-lms/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
+            config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
     else:
         if inner_diameter_1 and inner_diameter_2 and length:
-            config_file_path = "/home/mazeworks/frappe-bench-lms/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig_branch_with_struct.cfg"
+            config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig_branch_with_struct.cfg"
         else:
-            config_file_path = "/home/mazeworks/frappe-bench-lms/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig_branch.cfg"
+            config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig_branch.cfg"
     print(config_file_path)
     imgs = [frappe.get_doc('File', _file) for _file in _files]
     img_paths = [file.get_full_path() for file in imgs]
