@@ -23,7 +23,7 @@
             $('.previewImage').on('change', (e) => this.previewImage(e)); 
             
             $('.navigate-button').on('click', async() => {
-                await this.pickMatchingImage();
+                await this.pickMatchingImage($(this).data('action'));
                 // await this.getStoredData();
             });
 
@@ -192,7 +192,7 @@
         //         this.upload_file({'file_obj': fileInput, 'name': "TestImg.png", "file_name": "TestImg.png"}, getScore);
         //     }
        
-        async pickMatchingImage(){
+        async pickMatchingImage(action){
             this.showLoader();
             let fileInputs = $('.previewImage').prop('files');
             fileInputs = Array.from(fileInputs);
@@ -208,9 +208,9 @@
                 const response = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image', {
                     // images: JSON.stringify([fileResponse.name]), 
                     images : fileResponses.map(fr => fr.name).join('~'),
-                    inner_diameter_1: innerDiameter1Input ? parseFloat(innerDiameter1Input) : '',
-                    inner_diameter_2: innerDiameter2Input ? parseFloat(innerDiameter2Input) : '',
-                    length: lengthInput ? parseFloat(lengthInput) : '',
+                    inner_diameter_1: innerDiameter1Input && action != 'without_struct' ? parseFloat(innerDiameter1Input) : '',
+                    inner_diameter_2: innerDiameter2Input && action != 'without_struct' ? parseFloat(innerDiameter2Input) : '',
+                    length: lengthInput && action != 'without_struct' ? parseFloat(lengthInput) : '',
                     branched: bracnchedInput,
                     dark_background: darkBackgroundInput,
                     with_connector: withConnectorInput,
