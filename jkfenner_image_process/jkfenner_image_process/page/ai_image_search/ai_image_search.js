@@ -15,32 +15,51 @@
             // Render the template and append it to the page body
             $(frappe.render_template("ai_image_search", {})).appendTo(this.page.body);
 
-            // Attach the function to the button click event using the class
-            // $('.navigate-details').on('click', () => this.navigateToAiImageDetails());
             $('.navigate-details').on('click', (event) => {
                 const imageName = $(event.target).data('image-name');
                 const imagePercentage = $(event.target).data('image-percentage');
                 this.navigateToAiImageDetails(imageName,imagePercentage);
             });
-            $('.previewImage').on('change', (e) => this.previewImage(e)); // Use arrow function to retain 'this' context
-            $('.navigate-button').on('click', async() => {
-                await this.pickMatchingImage()
-            });
+            $('.previewImage').on('change', (e) => this.previewImage(e)); 
             
+            $('.navigate-button').on('click', async() => {
+                await this.pickMatchingImage();
+                // await this.getStoredData();
+            });
+
+            // $('.stored-dimensions').on('click', async() => {
+            //     await this.getStoredData()
+            // });
+            $(document).ready(function() {
+                $('.preview_search_image_aug').on('click', function() {
+                    var clickedImageSrc = $(this).attr('src');
+                    $('#uploaded-image').attr('src', clickedImageSrc);
+                });
+            });
+            $(document).ready(function() {
+                $('.remove-icon').on('click', function() {
+                    // Find the parent container of the remove icon
+                    var parentContainer = $(this).closest('.image-container');
+                    
+                    // Set the src attribute of the image to the path of the default image
+                    parentContainer.find('img').attr('src', '/assets/jkfenner_image_process/images/upload_image.png');
+                });
+            });
         // Add loader to the page
         this.loader = $('<div id="loader" class="loader"></div>').appendTo(this.page.body);
+    
         }
-        
+        // Hide the loader after some time (for example, 3 seconds)
+        // Adjust the time as needed
         navigateToAiImageDetails(part_no,Score,Image,childTable, parentTable) {
             const jsonString = JSON.stringify(Score, Image);
             console.log(childTable);
             const url = `/app/ai-image-details?part_no=${part_no}&matching_percentage=${Score}&image_url=${Image}&child_table=${childTable}&parent_table=${parentTable}`;
-            console.log(url)
             window.open(url, '_blank');
         }
         
 
-        upload_file(file, callback) {
+        upload_file(file) {
         
             return new Promise((resolve, reject) => {
                 let xhr = new XMLHttpRequest();
@@ -55,7 +74,6 @@
                 });
                 xhr.upload.addEventListener("load", (e) => {
                     file.uploading = false;
-                    resolve();
                 });
                 xhr.addEventListener("error", (e) => {
                     file.failed = true;
@@ -77,7 +95,7 @@
                             }
         
                             file.doc = file_doc;
-                            callback(file_doc)
+                            resolve(file_doc);
                             //Handle Success
                         } else if (xhr.status === 403) {
                             file.failed = true;
@@ -95,9 +113,11 @@
                             } catch (e) {
                                 console.warning("Failed to parse server message", e);
                             }
+                            reject(403)
                         } else if (xhr.status === 413) {
                             file.failed = true;
                             file.error_message = "Size exceeds the maximum allowed file size.";
+                            reject(413)
                         } else {
                             file.failed = true;
                             file.error_message =
@@ -111,6 +131,7 @@
                             } catch (e) {
                                 // pass
                             }
+                            reject(error)
                             frappe.request.cleanup({}, error);
                         }
                     }
@@ -147,32 +168,61 @@
                 return res;
             });
         }
-
+        
+        
+        // async getStoredData(){
+        //     this.showLoader();
+        //     let fileInput = $('.previewImage').prop('files')[0];
+        //     const getScore = async (fileResponse) => {
+        //         const innerDiameter1 = parseFloat($('#innerDiameter1Input').val());
+        //         const innerDiameter2 = parseFloat($('#innerDiameter2Input').val());
+        //         const length = parseFloat($('#lengthInput').val());
+        //         const thickness = 5;
+  
+        //         const response = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image', {
+        //             image: fileResponse.name,
+        //             inner_diameter_1: innerDiameter1,
+        //             inner_diameter_2: innerDiameter2,
+        //             length: length,
+        //             thickness: thickness,
+        //         });
+        //          console.log("response",response)
+        //             this.hideLoader();                
+        //         };
+        //         this.upload_file({'file_obj': fileInput, 'name': "TestImg.png", "file_name": "TestImg.png"}, getScore);
+        //     }
+       
         async pickMatchingImage(){
             this.showLoader();
-            let fileInput = $('.previewImage').prop('files')[0];
-            // const imageName = fileInput.name.split('.')[0].split('-')[0];
-            const getScore = async (fileResponse) => {
-                const inner_diameter_1 = 10; // Example value, replace with actual value
-                const inner_diameter_2 = 20; // Example value, replace with actual value
-                const length = 30; // Example value, replace with actual value
-                const thickness = 5; // Example value, replace with actual value
+            let fileInputs = $('.previewImage').prop('files');
+            fileInputs = Array.from(fileInputs);
+            const getScore = async (fileResponses) => {
+                const innerDiameter1Input = $('#innerDiameter1Input').val();
+                const innerDiameter2Input = $('#innerDiameter2Input').val();
+                const lengthInput = $('#lengthInput').val();
+                const bracnchedInput = $('#bracnchedInput').prop('checked');
+                const darkBackgroundInput = $('#darkBackgroundInput').prop('checked');
+                const withConnectorInput = $('#withConnectorInput').prop('checked');        
+                const thickness = 5;
   
                 const response = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image', {
-                    image: fileResponse.name,
-                    inner_diameter_1: inner_diameter_1,
-                    inner_diameter_2: inner_diameter_2,
-                    length: length,
+                    // images: JSON.stringify([fileResponse.name]), 
+                    images : fileResponses.map(fr => fr.name).join('~'),
+                    inner_diameter_1: innerDiameter1Input ? parseFloat(innerDiameter1Input) : '',
+                    inner_diameter_2: innerDiameter2Input ? parseFloat(innerDiameter2Input) : '',
+                    length: lengthInput ? parseFloat(lengthInput) : '',
+                    branched: bracnchedInput,
+                    dark_background: darkBackgroundInput,
+                    with_connector: withConnectorInput,
                     thickness: thickness,
                 });
-                 console.log("response",response)
                 // Check if scores is undefined
-                if (!fileInput) {
+                if (!fileInputs) {
                     // Handle the case where scores is undefined, e.g., show an error message
                     frappe.msgprint('Please Upload SKU Part.');
                     this.hideLoader();
                     return;
-                    }
+                }
 
                 // let imageName = scores.images[0];
                     
@@ -185,14 +235,9 @@
                         const roundedPercentage = Math.round(image.matching_percentage);
                         const roundedPercentageString = `Matching Percentage: ${roundedPercentage}%`;
 
-
-                        // let innerDiameter1 = response.docs && response.docs[_index] && response.docs[_index].product_dimensions[0] ? response.docs[_index].product_dimensions[0].inner_diameter_1_mm : '0';
-                        // let innerDiameter2 = response.docs && response.docs[_index] && response.docs[_index].product_dimensions[0] ? response.docs[_index].product_dimensions[0].inner_diameter_2_mm : '0';
-                        // let length = response.docs && response.docs[_index] && response.docs[_index].product_dimensions[0] ? response.docs[_index].product_dimensions[0].length : '0';
-                        // let thickness = response.docs && response.docs[_index] && response.docs[_index].product_dimensions[0] ? response.docs[_index].product_dimensions[0].thickness ?? 0 : '0';
-        
                         // Construct HTML for each image
-                        imageGrid += `<div class="col-4">
+                        imageGrid += `
+                                    <div class="col-lg-4 col-md-6 col-sm-6 mb-3">
                                         <div class="card-image">
                                             <div id="image-details" class="card-body-image">
                                             <h5 class="card-title-image"> ${roundedPercentageString}</h5>
@@ -231,14 +276,14 @@
                     });
                     this.hideLoader();                
                 };
-                this.upload_file({'file_obj': fileInput, 'name': "TestImg.png", "file_name": "TestImg.png"}, getScore);
-                // // After the image grid is generated, scroll to the .preview-section
-                // const previewSectionElement = $('.preview-section');
-                // if (previewSectionElement.length) {
-                //     $('html, body').animate({
-                //         scrollTop: previewSectionElement.offset().top
-                //     }, 1000);
-                //  }
+                let fileResponses = []
+                let filePromises = []
+                fileInputs.forEach(fileInput =>{
+                    const imageName = fileInput.name.split('.')[0];
+                    filePromises.push(this.upload_file({'file_obj': fileInput, 'name': "TestImg.png", "file_name": imageName}));
+                });
+                fileResponses = await Promise.all(filePromises);
+                getScore(fileResponses);
             }
 
         showLoader() {
@@ -251,37 +296,31 @@
         previewImage(event) {
             this.showLoader();
             var input = event.target;
-            var reader = new FileReader();
-            var canvas = document.getElementById('canv1');
-            var context = canvas.getContext('2d');
-
-            reader.onload = function () {
-                var img = new Image();
-                img.onload = function () {
-                    // Clear the canvas
-                    context.clearRect(0, 0, canvas.width, canvas.height);
-
-                    // Set canvas dimensions to match the image
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-
-                    // Draw the image on the canvas
-                    context.drawImage(img, 0, 0);
-
-                    // Convert the canvas content to an image data URL
-                    var imageDataURL = canvas.toDataURL();
-
-                    // Replace the content of the image tag with the data URL
-                    $('#uploaded-image').attr('src', imageDataURL);
-                    
-                };
-                img.src = reader.result;
-            };
-            this.hideLoader();   
-            // Read the selected file as a data URL
-            reader.readAsDataURL(input.files[0]);
-        }
+            var files = input.files;
+            var previewImageIds = ['uploaded-image_1', 'uploaded-image_2', 'uploaded-image_3']; // IDs of preview image elements
         
+            for (let i = 0; i < files.length; i++) {
+                var file = files[i];
+                var reader = new FileReader(); // FileReader object to read the file
+        
+                reader.onload = (function (index) {
+                    return function (event) {
+                        var img = new Image();
+                        img.onload = function () {
+                            // Set the src attribute of the corresponding img tag
+                            document.getElementById(previewImageIds[index]).src = event.target.result;
+                             // Remove the image icon
+                            document.getElementById(previewImageIds[index]).classList.remove('icon-image');
+                        };
+                        img.src = event.target.result;
+                    };
+                })(i);
+                // Read the selected file as a data URL
+                reader.readAsDataURL(file);
+            }
+        
+            this.hideLoader();
+        }
     }
     $(document).ready(function () {
         // Initialize your page

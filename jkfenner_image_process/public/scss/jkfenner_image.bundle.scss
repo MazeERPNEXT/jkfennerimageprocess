@@ -240,7 +240,7 @@ body{
     background-color: #009081b3 !important;
 }
 .custom-actions{
-    display: none !important;
+    // display: none !important;
 }
 // #page-Workspaces .standard-actions{
 //     display: none !important;
@@ -349,3 +349,7 @@ body{
 // .dropdown-help{
 //     visibility: hidden;
 // }
+
+.frappe-control[data-fieldtype="Attach Image"] .attached-file .btn{
+    padding: 6px 8px;
+}

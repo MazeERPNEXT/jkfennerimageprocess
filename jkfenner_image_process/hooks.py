@@ -129,13 +129,13 @@ app_include_js = "jkfenner.bundle.js"
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
+scheduler_events = {
 #	"all": [
 #		"jkfenner_image_process.tasks.all"
 #	],
-#	"daily": [
-#		"jkfenner_image_process.tasks.daily"
-#	],
+	# "daily": [
+	# 	"jkfenner_image_process.tasks.daily"
+	# ],
 #	"hourly": [
 #		"jkfenner_image_process.tasks.hourly"
 #	],
@@ -145,7 +145,10 @@ app_include_js = "jkfenner.bundle.js"
 #	"monthly": [
 #		"jkfenner_image_process.tasks.monthly"
 #	],
-# }
+    "daily": [
+        "jkfenner_image_process.scheduler.delete_expired_data"
+    ]
+}
 
 # Testing
 # -------

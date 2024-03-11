@@ -1,25 +1,17 @@
 # Copyright (c) 2024, muthukumarmazeworks and contributors
 # For license information, please see license.txt
 
-# import frappe
+import frappe
 from frappe.model.document import Document
+from datetime import datetime, timedelta
 
 
 class JKFennerUploadImageStored(Document):
 	pass
-
-
-# @frappe.whitelist()
-# def store_image(image_url):
-#     try:
-#         image_doc = frappe.get_doc({
-#             'doctype': 'JKFenner Upload Image Stored',
-#             'upload_image': image_url,
-#             'current_datetime': frappe.utils.now_datetime()
-#         })
-#         image_doc.insert(ignore_permissions=True)
-#         frappe.db.commit()
-#         return "Image stored successfully."
-#     except Exception as e:
-#         print(frappe.get_traceback(), "Error storing image")
-#         return "Failed to store image: {0}".format(str(e))
+def delete_expired_data():
+    # Define the date 2 days ago
+    two_days_ago = datetime.now() - timedelta(days=2)
+    
+    # Query and delete the stored data older than two days
+    frappe.db.sql("""DELETE FROM `tabJKFenner Upload Image Stored`
+                     WHERE creation < %s""", two_days_ago)

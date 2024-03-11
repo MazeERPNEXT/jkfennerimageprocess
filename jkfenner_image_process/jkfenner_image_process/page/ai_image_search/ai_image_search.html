@@ -1,47 +1,126 @@
 
-<div class="row layout-main">
-    <div class="col-md-12 layout-main-section-wrapper">
-        <div class="layout-main-section">
-            <div class="page-form row hide"></div>
+<div class="row form-section" >
+    <div class="section-body">
+        <!-- <div class="form-column col-sm-3"></div> -->
+        <div class="form-column col order-first">
+            <div class="search-image-section_aug">
+                <div>
+                    <span class="image-container">
+                        <img class="preview_search_image_aug" id="uploaded-image_1" src="/assets/jkfenner_image_process/images/upload_image.png"/>
+                        <i class="fa fa-remove remove-icon"></i>
+                    </span>
+                </div>
+                <div>
+                    <span class="image-container">
+                        <img class="preview_search_image_aug" id="uploaded-image_2" src="/assets/jkfenner_image_process/images/upload_image.png"/>
+                        <i class="fa fa-remove remove-icon"></i>
+                    </span>
+                </div>
+                <div>
+                    <span class="image-container"><img class="preview_search_image_aug" id="uploaded-image_3" src="/assets/jkfenner_image_process/images/upload_image.png"/>
+                        <i class="fa fa-remove remove-icon"></i>
+                    </span>
+                </div>
+        </div>
+    </div>
+
+    <div class="form-column col">
             <div class="search-image-section">
-                    <label for="finput" class="image_upload"  id="inputLabel">
-                        <span class="pulse-text">Click Here to upload image</span>
-                    </label>
-                    <input type="file" multiple="false" class="previewImage" accept="image/*" id="finput">
-                    <div id="preview-image">
-                        <img class="preview_search_image" id="uploaded-image" src="/assets/jkfenner_image_process/images/upload_image.png" />
+                <label for="finput" class="image_upload"  id="inputLabel">
+                    <span class="pulse-text">Click Here to upload image</span>
+                </label>
+                <input type="file" multiple="false" class="previewImage" accept="image/*" id="finput">
+                <div id="preview-image">
+                    <img class="preview_search_image" id="uploaded-image" src="/assets/jkfenner_image_process/images/upload_image.png" />
+                </div>
+                <canvas id="canv1" style="display: none;"></canvas> 
+        </div>
+        <div class="btn-image-search" style="margin-bottom: 20px;">
+            <button id="matchingImageButton" class="btn btn-primary btn-sm-image primary-action navigate-button" data-label="Pick the matching image">
+                Pick the matching image
+            </button>
+        </div>
+    </div>
+    
+
+    <div class="form-column col order-last">
+        <div class="search-image-section">
+            <label class="image_upload"  id="inputLabelDimensions">
+                <span class="pulse-text"> Structural Dimension</span>
+            </label>
+            <div id="preview-image-dimensions"> 
+                <form class="dimension-form">
+                <div class="frappe-control input-max-width">
+                    <div class="form-group">
+                    <div class="clearfix">
+                        <label class="control-label" style="padding-right: 0px;font-size: 17px;">ID A1</label>
+                        <span class="help"></span>
                     </div>
-                    <canvas id="canv1" style="display: none;"></canvas> 
-            </div>
-            <!-- <div class="row" style="margin-top: 22px;font-size: 19px;">
-                <div class="col-md-4 form-check form-check-inline" style="margin-right: 5rem;"></div>
-                <div class="col-md-2 form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" style="height:17px;min-width: 17px;">
-                    <label class="form-check-label" for="inlineCheckbox1">Branched</label>
+                    <div class="control-input-wrapper">
+                        <div class="control-input">
+                            <input type="text" class="input-with-feedback form-control" maxlength="140" placeholder="Enter ID A1 (mm)" style="padding: 20px;" id="innerDiameter1Input">
+                        </div>
+                    </div>
+                    </div>
                 </div>
-                <div class="col-md-2 form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2" style="height:17px;min-width: 17px;">
-                    <label class="form-check-label" for="inlineCheckbox2">UnBranched</label>
+                <div class="frappe-control input-max-width">
+                    <div class="form-group">
+                    <div class="clearfix">
+                        <label class="control-label" style="padding-right: 0px;font-size: 17px;">ID A2</label>
+                        <span class="help"></span>
+                    </div>
+                    <div class="control-input-wrapper">
+                        <div class="control-input">
+                            <input type="text" class="input-with-feedback form-control" maxlength="140" placeholder="Enter ID A2 (mm)" style="padding: 20px;" id="innerDiameter2Input">
+                        </div>
+                    </div>
+                    </div>
                 </div>
-                <div class="col-md-4 form-check form-check-inline"></div>
-            </div> -->
-        
-            <div class="btn-image-search">
-                    <button id="matchingImageButton" class="btn btn-primary btn-sm-image primary-action navigate-button" data-label="Pick the matching image">
-                        Pick the matching image
-                    </button>
-            </div>
-        </div>    
+                <div class="frappe-control input-max-width">
+                    <div class="form-group">
+                    <div class="clearfix">
+                        <label class="control-label" style="padding-right: 0px;font-size: 17px;">Length</label>
+                        <span class="help"></span>
+                    </div>
+                    <div class="control-input-wrapper">
+                        <div class="control-input">
+                            <input type="text" class="input-with-feedback form-control" maxlength="140" placeholder="Enter Length (mm)" style="padding: 20px;" id="lengthInput">
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="frappe-control input-max-width">
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="bracnchedInput" value="option1">
+                        <label class="form-check-label" for="inlineRadio1">Branched</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="darkBackgroundInput" value="option2">
+                        <label class="form-check-label" for="inlineRadio2">Dark background</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="withConnectorInput" value="option3">
+                        <label class="form-check-label" for="inlineRadio3">With connector</label>
+                      </div>
+                </div>
+            </form>
+            </div> 
+        </div> 
+        <div class="btn-image-search" style="margin-bottom: 15px;">
+            <button type="button" id="matchingImageButton" class="btn btn-primary btn-sm-image primary-action navigate-button" data-label="Pick the matching image">
+                Add Dimensions
+            </button>
+        </div> 
+        </div>
     </div>
 </div>
 
-<br/><br/><br/>
+<br/><br/>
 <div class="row layout-main">
     <div class="col-md-12 layout-main-section-wrapper">
         <div class="layout-main-section">
             <div class="page-form row hide"></div>
-        <div class="preview-section hide">
-            
+            <div class="preview-section hide">
               
             </div>
         </div>    
@@ -50,4 +129,49 @@
 
 <div id="loader" class="loader"></div>
 
- 
+
+<!--DImension input normal form code-->
+<!-- <div class="form-column col-md-6 col-lg-4 col-xl-4" >
+    <form class="dimension-form">
+        <h4> Structural Dimension</h4>
+    <div class="frappe-control input-max-width">
+        <div class="form-group">
+        <div class="clearfix">
+            <label class="control-label" style="padding-right: 0px;font-size: 17px;">ID A1</label>
+            <span class="help"></span>
+        </div>
+        <div class="control-input-wrapper">
+            <div class="control-input">
+                <input type="text" class="input-with-feedback form-control" maxlength="140" placeholder="Enter ID A1 (mm)" style="padding: 20px;" id="innerDiameter1Input">
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="frappe-control input-max-width">
+        <div class="form-group">
+        <div class="clearfix">
+            <label class="control-label" style="padding-right: 0px;font-size: 17px;">ID A2</label>
+            <span class="help"></span>
+        </div>
+        <div class="control-input-wrapper">
+            <div class="control-input">
+                <input type="text" class="input-with-feedback form-control" maxlength="140" placeholder="Enter ID A2 (mm)" style="padding: 20px;" id="innerDiameter2Input">
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="frappe-control input-max-width">
+        <div class="form-group">
+        <div class="clearfix">
+            <label class="control-label" style="padding-right: 0px;font-size: 17px;">Length</label>
+            <span class="help"></span>
+        </div>
+        <div class="control-input-wrapper">
+            <div class="control-input">
+                <input type="text" class="input-with-feedback form-control" maxlength="140" placeholder="Enter Length (mm)" style="padding: 20px;" id="lengthInput">
+            </div>
+        </div>
+        </div>
+    </div>
+</form>
+</div> -->

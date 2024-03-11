@@ -7,6 +7,17 @@
  "field_order": [
   "section_break_devu",
   "upload_image",
+  "column_break_y06c",
+  "id_a1",
+  "column_break_swqq",
+  "id_a2",
+  "column_break_9v9v",
+  "length",
+  "column_break_fomn",
+  "branched",
+  "dark_background",
+  "with_connector",
+  "section_break_xu2z",
   "matching_find_images"
  ],
  "fields": [
@@ -25,11 +36,64 @@
    "fieldtype": "Table",
    "label": "Matching Find Images",
    "options": "JKFenner Image Details Stored"
+  },
+  {
+   "fieldname": "column_break_y06c",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_swqq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_9v9v",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "length",
+   "fieldtype": "Data",
+   "label": "Length"
+  },
+  {
+   "fieldname": "column_break_fomn",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_xu2z",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "id_a1",
+   "fieldtype": "Data",
+   "label": "ID A1"
+  },
+  {
+   "fieldname": "id_a2",
+   "fieldtype": "Data",
+   "label": "ID A2"
+  },
+  {
+   "default": "0",
+   "fieldname": "branched",
+   "fieldtype": "Check",
+   "label": "Branched"
+  },
+  {
+   "default": "0",
+   "fieldname": "dark_background",
+   "fieldtype": "Check",
+   "label": "Dark Background"
+  },
+  {
+   "default": "0",
+   "fieldname": "with_connector",
+   "fieldtype": "Check",
+   "label": "With Connector"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-02-14 14:59:46.723431",
+ "modified": "2024-03-11 15:21:00.007160",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "JKFenner Upload Image Stored",
