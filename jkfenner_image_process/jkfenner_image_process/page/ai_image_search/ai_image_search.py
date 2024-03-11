@@ -40,14 +40,22 @@ def guess_image(images,inner_diameter_1,inner_diameter_2,length,branched,dark_ba
     
     ai_responses = {}
     if not is_branched_hose:
-        config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
+        if inner_diameter_1 and inner_diameter_2 and length:
+            config_file_path = "/home/mazeworks/frappe-bench-lms/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig_with_struct.cfg"
+        else:
+            config_file_path = "/home/mazeworks/frappe-bench-lms/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
     else:
-        config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig_branch.cfg"
+        if inner_diameter_1 and inner_diameter_2 and length:
+            config_file_path = "/home/mazeworks/frappe-bench-lms/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig_branch_with_struct.cfg"
+        else:
+            config_file_path = "/home/mazeworks/frappe-bench-lms/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig_branch.cfg"
+    print(config_file_path)
     imgs = [frappe.get_doc('File', _file) for _file in _files]
     img_paths = [file.get_full_path() for file in imgs]
     predictor = predict(config_file_path)
     similarity_scores = []
-    similarity_images, original_image = predictor.run(img_paths,inner_diameter_1, inner_diameter_2, length)
+    similarity_images = predictor.run(img_paths,inner_diameter_1, inner_diameter_2, length)
+    similarity_images = dict(sorted(similarity_images.items(), key=lambda x: x[1], reverse=True))
     similarity_images = OrderedDict(similarity_images)
     print(similarity_scores, similarity_images)
     similarity_images_with_path = []
