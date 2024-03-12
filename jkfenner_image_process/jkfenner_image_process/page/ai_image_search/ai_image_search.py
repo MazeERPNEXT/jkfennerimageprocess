@@ -10,6 +10,9 @@ def guess_image(images,inner_diameter_1,inner_diameter_2,length,branched,dark_ba
     images = images.split('~')
     _files = frappe.get_list("File", filters = {'name':["in", images]}, fields=["name"], pluck="name")
     is_branched_hose = True if branched == 'true' else False
+    inner_diameter_1 = float(inner_diameter_1) if inner_diameter_1 else 0
+    inner_diameter_2 = float(inner_diameter_2) if inner_diameter_2 else 0
+    length = int(length) if length else 0
     # ai_responses = {
     #     "images": [
     #         "/assets/jkfenner_image_process/images/machine_learning/augment_images/E72068/E72068-16.jpg",
