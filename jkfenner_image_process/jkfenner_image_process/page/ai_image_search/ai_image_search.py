@@ -1,7 +1,7 @@
 import frappe
 import os
-# from jkfennerai.inference import predict
-# from collections import OrderedDict
+from jkfennerai.inference import predict
+from collections import OrderedDict
 
 
 
