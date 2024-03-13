@@ -196,6 +196,8 @@
             this.showLoader();
             let fileInputs = $('.previewImage').prop('files');
             fileInputs = Array.from(fileInputs);
+            // Clear previous search results
+            $('.preview-section').html('');
             const getScore = async (fileResponses) => {
                 const innerDiameter1Input = $('#innerDiameter1Input').val();
                 const innerDiameter2Input = $('#innerDiameter2Input').val();
@@ -204,7 +206,6 @@
                 const darkBackgroundInput = $('#darkBackgroundInput').prop('checked');
                 const withConnectorInput = $('#withConnectorInput').prop('checked');        
                 const thickness = 5;
-  
                 const response = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image', {
                     // images: JSON.stringify([fileResponse.name]), 
                     images : fileResponses.map(fr => fr.name).join('~'),
@@ -216,16 +217,14 @@
                     with_connector: withConnectorInput,
                     thickness: thickness,
                 });
+
                 // Check if scores is undefined
-                if (!fileInputs) {
+                if (fileInputs.length == 0) {
                     // Handle the case where scores is undefined, e.g., show an error message
                     frappe.msgprint('Please Upload SKU Part.');
                     this.hideLoader();
                     return;
                 }
-
-                // let imageName = scores.images[0];
-                    
                     let imageGrid = "";
                     //.slice(0, 3)
                     response.matching_find_images.forEach((image, _index) => {
@@ -236,7 +235,7 @@
                         const roundedPercentageString = `Matching Percentage: ${roundedPercentage}%`;
 
                         // Construct HTML for each image
-                        imageGrid += `
+                            imageGrid += `
                                     <div class="col-lg-4 col-md-6 col-sm-6 mb-3">
                                         <div class="card-image">
                                             <div id="image-details" class="card-body-image">
@@ -258,12 +257,12 @@
                                             </div>
                                         </div>
                                     </div>`;
-                    });
-        
+                                });
+   
                     // Display the constructed HTML
                     $('.preview-section').removeClass('hide');
                     $('.preview-section').html('<div class="row">' + imageGrid + "</div>");
-        
+ 
                     // Attach event listener for details button
                     $('.navigate-details').on('click', (event) => {
                         const imageName = $(event.target).data('image-name');
@@ -274,6 +273,7 @@
                         console.log(childTable) 
                         this.navigateToAiImageDetails(imageName, imagePercentage, imagesPath, childTable, parentTable);
                     });
+            
                     this.hideLoader();                
                 };
                 let fileResponses = []
