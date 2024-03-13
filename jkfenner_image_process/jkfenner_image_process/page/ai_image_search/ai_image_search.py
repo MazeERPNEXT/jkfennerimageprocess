@@ -44,7 +44,7 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, da
 
     
     ai_responses = {}
-    config_file_path = "/home/mazeworks/frappe-bench-lms/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
+    config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
     imgs = [frappe.get_doc('File', _file) for _file in _files]
     img_paths = [file.get_full_path() for file in imgs]
     predictor = predict(config_file_path)
