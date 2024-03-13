@@ -6,13 +6,15 @@ from collections import OrderedDict
 
 
 @frappe.whitelist()
-def guess_image(images,inner_diameter_1,inner_diameter_2,length,branched,dark_background,with_connector):
+def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, dark_background, with_connector):
     images = images.split('~')
     _files = frappe.get_list("File", filters = {'name':["in", images]}, fields=["name"], pluck="name")
     is_branched_hose = True if branched == 'true' else False
-    inner_diameter_1 = float(inner_diameter_1) if inner_diameter_1 else 0
-    inner_diameter_2 = float(inner_diameter_2) if inner_diameter_2 else 0
-    length = int(length) if length else 0
+    inner_diameter_1 = float(inner_diameter_1) if inner_diameter_1 else None
+    inner_diameter_2 = float(inner_diameter_2) if inner_diameter_2 else None
+    length = int(length) if length else None
+    is_with_connector = True if with_connector == 'true' else False
+    is_dark_background = True if dark_background == 'true' else False    
     # ai_responses = {
     #     "images": [
     #         "/assets/jkfenner_image_process/images/machine_learning/augment_images/E72068/E72068-16.jpg",
@@ -42,25 +44,15 @@ def guess_image(images,inner_diameter_1,inner_diameter_2,length,branched,dark_ba
 
     
     ai_responses = {}
-    if not is_branched_hose:
-        if inner_diameter_1 and inner_diameter_2 and length:
-            config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig_with_struct.cfg"
-        else:
-            config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
-    else:
-        if inner_diameter_1 and inner_diameter_2 and length:
-            config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig_branch_with_struct.cfg"
-        else:
-            config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig_branch.cfg"
-    print(config_file_path)
+    config_file_path = "/home/mazeworks/frappe-bench-lms/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
     imgs = [frappe.get_doc('File', _file) for _file in _files]
     img_paths = [file.get_full_path() for file in imgs]
     predictor = predict(config_file_path)
     similarity_scores = []
-    similarity_images = predictor.run(img_paths,inner_diameter_1, inner_diameter_2, length)
+    print(img_paths,'branch' if is_branched_hose else 'single',is_dark_background, is_with_connector, inner_diameter_1, inner_diameter_2, length, 200,sep=" ----- ")
+    similarity_images = predictor.run(img_paths,'branch' if is_branched_hose else 'single',is_dark_background, is_with_connector, inner_diameter_1, inner_diameter_2, length, 200)
     similarity_images = dict(sorted(similarity_images.items(), key=lambda x: x[1], reverse=True))
     similarity_images = OrderedDict(similarity_images)
-    print(similarity_scores, similarity_images)
     similarity_images_with_path = []
     for similarity_image, score in similarity_images.items():
         imagefolder = str(similarity_image).split('-')[0]
@@ -90,13 +82,12 @@ def guess_image(images,inner_diameter_1,inner_diameter_2,length,branched,dark_ba
             'id_a2': inner_diameter_2,
             'length': length,
             'branched': is_branched_hose,
-            'dark_background': True if dark_background == 'true' else False,
-            'with_connector': True if with_connector == 'true' else False,
+            'dark_background': is_dark_background,
+            'with_connector': is_with_connector,
             'current_datetime': frappe.utils.now_datetime()
         })
         
         image_doc.insert(ignore_permissions=True)
-        print(image_doc)
         # Create records in child table for each document in ai_responses
         for index, image_url in enumerate(ai_responses["images"]):
 
@@ -143,8 +134,7 @@ def guess_image(images,inner_diameter_1,inner_diameter_2,length,branched,dark_ba
         # Save the image_doc after inserting all child records
         image_doc.save()
         frappe.db.commit()
-        # print(image_detail)
+    
         return image_doc
     except Exception as e:
-        print(frappe.get_traceback(), "Error storing image")
         return "Failed to store image: {0}".format(str(e))
