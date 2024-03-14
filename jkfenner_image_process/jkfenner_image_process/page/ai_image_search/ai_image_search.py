@@ -50,7 +50,7 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, da
     predictor = predict(config_file_path)
     similarity_scores = []
     print(img_paths,'branch' if is_branched_hose else 'single',is_dark_background, is_with_connector, inner_diameter_1, inner_diameter_2, length, 200,sep=" ----- ")
-    similarity_images = predictor.run(img_paths,'branch' if is_branched_hose else 'single',is_dark_background, is_with_connector, inner_diameter_1, inner_diameter_2, length, 200)
+    similarity_images = predictor.run(img_paths,'branch' if is_branched_hose else 'single', is_with_connector,is_dark_background, inner_diameter_1, inner_diameter_2, length, 200)
     similarity_images = dict(sorted(similarity_images.items(), key=lambda x: x[1], reverse=True))
     similarity_images = OrderedDict(similarity_images)
     similarity_images_with_path = []
