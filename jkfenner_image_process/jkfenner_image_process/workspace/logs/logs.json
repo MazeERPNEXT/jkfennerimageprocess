@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"KX96rcZPEA\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Logs</span>\",\"col\":12}},{\"id\":\"v1GbKoj04g\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Activity Log\",\"col\":3}},{\"id\":\"DrZPuNCtAP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Access Log\",\"col\":3}}]",
+ "content": "[{\"id\":\"KX96rcZPEA\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">Logs</span>\",\"col\":12}},{\"id\":\"v1GbKoj04g\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Activity Log\",\"col\":3}},{\"id\":\"v1GbKoj04g\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Activity Log\",\"col\":3}},{\"id\":\"DrZPuNCtAP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Access Log\",\"col\":3}},{\"id\":\"DrZPuNCtAP\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Access Log\",\"col\":3}}]",
  "creation": "2023-12-30 15:23:19.383779",
  "custom_blocks": [],
  "docstatus": 0,
@@ -12,7 +12,7 @@
  "is_hidden": 0,
  "label": "Logs",
  "links": [],
- "modified": "2024-01-09 17:57:13.712507",
+ "modified": "2024-03-16 14:49:09.128586",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "Logs",

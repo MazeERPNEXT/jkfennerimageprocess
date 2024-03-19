@@ -295,7 +295,8 @@
     display: grid;
     margin: 6px;
     border: 1px solid;
-    max-width: 221px;
+    width: 100%;
+    height: 100%;
 }
 
 /* a {
@@ -493,27 +494,16 @@ canvas {
     font-size: 10px;
   }
 }
-@media (min-width:375px) and (max-width:768px){
-  #inputLabel{
-    /* width: 335px !important; */
-  }
-}
-/* @media (max-width:768px){
-  .image-search-row{
-    display: flex !important;
-  }
-} */
+
+
 .image-container {
   position: relative;
   display: inline-block;
-  width: 192px;
+  width: 230px;
   height: 170px;
   /* overflow: hidden; */
 }
-.preview_search_image_aug {
-  max-width: 100%;
-  max-height: 100%;
-}
+
 
 .remove-icon {
     top: 10px;
