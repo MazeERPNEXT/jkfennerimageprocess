@@ -1,5 +1,4 @@
 from . import __version__ as app_version
-from jkfennerai.inference import predict
 
 app_name = "jkfenner_image_process"
 app_title = "JKfenner Image Process"
@@ -219,5 +218,3 @@ scheduler_events = {
 # auth_hooks = [
 #	"jkfenner_image_process.auth.validate"
 # ]
-ai_model_config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
-jkfenner_ai_model = predict(ai_model_config_file_path)
