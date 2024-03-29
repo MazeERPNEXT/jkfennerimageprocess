@@ -492,6 +492,20 @@
           margin-left: 25px;
         } 
        }
+       .btn.btn-primary{
+        color: #fff !important;
+        font-size: 12px !important;
+        padding: 10px 45px !important;
+        border: 4px solid transparent !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.5px !important;
+        text-transform: uppercase !important;
+        margin-top: 10px !important;
+        cursor: pointer !important;
+        background: linear-gradient(#4cb4a9, #58c4b9) padding-box, linear-gradient( var(--angle), #63d4c89c, #4bb2a8 ) border-box !important;
+        animation: 1s rotate linear infinite !important;
+       }
   
     </style>
   </head>
@@ -508,7 +522,7 @@
      
           <label class="form-label" for="login_email">{{ login_label or _("Email")}}</label>
           <div class="email-field">
-              <input type="text" id="login_email" 
+              <input type="text" id="login_email" class="form-control" 
                   placeholder="{% if login_name_placeholder %}{{ login_name_placeholder  }}{% else %}{{ _('jane@example.com') }}{% endif %}"
                   required autofocus autocomplete="username">
   
@@ -522,7 +536,7 @@
      
           <label class="form-label" for="login_password">{{ _("Password") }}</label>
           <div class="password-field">
-              <input type="password" id="login_password" placeholder="•••••"
+              <input type="password" id="login_password" placeholder="•••••" class="form-control"
                   autocomplete="current-password" required>
   
               <!-- <svg class="field-icon password-icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
@@ -543,7 +557,7 @@
   
   <div class="page-card-actions" style="margin-bottom:18px;">
       {% if not disable_user_pass_login %}
-      <button  type="submit"><span>
+      <button class="btn btn-sm btn-primary btn-login" type="submit"><span>
           {{ _("Sign in") }}</span></button>
       {% endif %}
       {% if ldap_settings and ldap_settings.enabled %}
