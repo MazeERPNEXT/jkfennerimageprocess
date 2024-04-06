@@ -48,7 +48,10 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, da
     
     imgs = [frappe.get_doc('File', _file) for _file in _files]
     img_paths = [file.get_full_path() for file in imgs]
-    predictor = LoadJKFennerModel().predictor
+    predictor = LoadJKFennerModel.predictor
+    if predictor is None:
+        print("Predictor is None")
+        predictor = LoadJKFennerModel().predictor
     similarity_scores = []
     print(img_paths,'branch' if is_branched_hose else 'single',is_dark_background, is_with_connector, inner_diameter_1, inner_diameter_2, length, 200,sep=" ----- ")
     similarity_images = predictor.run(img_paths,'branch' if is_branched_hose else 'single', is_with_connector,is_dark_background, inner_diameter_1, inner_diameter_2, length, 200)
