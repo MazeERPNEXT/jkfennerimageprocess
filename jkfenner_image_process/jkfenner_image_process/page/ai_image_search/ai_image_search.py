@@ -1,7 +1,8 @@
 import frappe
 import os
-from jkfennerai.inference import predict
+# from jkfennerai.inference import predict
 from collections import OrderedDict
+from jkfennerai.app import LoadJKFennerModel
 
 
 
@@ -44,10 +45,11 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, da
 
     
     ai_responses = {}
-    config_file_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
+    
+    config_file_path = "/home/mazeworks/frappe-bench-lms/apps/jkfenner_image_process/jkfenner_image_process/config/aiconfig.cfg"
     imgs = [frappe.get_doc('File', _file) for _file in _files]
     img_paths = [file.get_full_path() for file in imgs]
-    predictor = predict(config_file_path)
+    predictor = LoadJKFennerModel(config_file_path).predictor
     similarity_scores = []
     print(img_paths,'branch' if is_branched_hose else 'single',is_dark_background, is_with_connector, inner_diameter_1, inner_diameter_2, length, 200,sep=" ----- ")
     similarity_images = predictor.run(img_paths,'branch' if is_branched_hose else 'single', is_with_connector,is_dark_background, inner_diameter_1, inner_diameter_2, length, 200)
