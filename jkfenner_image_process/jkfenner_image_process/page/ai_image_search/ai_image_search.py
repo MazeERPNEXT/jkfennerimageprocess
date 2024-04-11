@@ -2,9 +2,7 @@ import frappe
 import os
 # from jkfennerai.inference import predict
 from collections import OrderedDict
-from jkfennerai.app import LoadJKFennerModel
-
-
+from jkfenner_image_process.jkfenner_image_process.ai import LoadJKFennerModel
 
 @frappe.whitelist()
 def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, dark_background, with_connector):
@@ -48,13 +46,12 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, da
     
     imgs = [frappe.get_doc('File', _file) for _file in _files]
     img_paths = [file.get_full_path() for file in imgs]
-    predictor = LoadJKFennerModel.predictor
-    if predictor is None:
-        print("Predictor is None")
-        predictor = LoadJKFennerModel().predictor
+    predictor = LoadJKFennerModel().predictor
     similarity_scores = []
-    print(img_paths,'branch' if is_branched_hose else 'single',is_dark_background, is_with_connector, inner_diameter_1, inner_diameter_2, length, 200,sep=" ----- ")
-    similarity_images = predictor.run(img_paths,'branch' if is_branched_hose else 'single', is_with_connector,is_dark_background, inner_diameter_1, inner_diameter_2, length, 200)
+    print(img_paths,'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 0,sep=" ----- ")
+    dl_segment = True
+    threshold_segment = False
+    similarity_images = predictor.run(img_paths, dl_segment, threshold_segment, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 0)
     similarity_images = dict(sorted(similarity_images.items(), key=lambda x: x[1], reverse=True))
     similarity_images = OrderedDict(similarity_images)
     similarity_images_with_path = []
