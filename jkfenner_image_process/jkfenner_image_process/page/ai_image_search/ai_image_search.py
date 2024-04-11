@@ -57,7 +57,9 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, da
     similarity_images = OrderedDict(similarity_images)
     similarity_images_with_path = []
     for similarity_image, score in similarity_images.items():
-        imagefolder = str(similarity_image).split('-')[0]
+        image_parts = str(similarity_image).split('-')
+        image_parts.pop()
+        imagefolder = "-".join(image_parts)
         similarity_images_with_path.append("/assets/jkfenner_image_process/images/machine_learning/augment_images/{}/{}".format(imagefolder, similarity_image))
         similarity_scores.append(score)
     similarity_scores = [str(similarity_score) for similarity_score in similarity_scores]
