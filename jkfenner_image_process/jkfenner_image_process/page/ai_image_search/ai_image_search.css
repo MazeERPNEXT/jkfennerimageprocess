@@ -268,8 +268,8 @@
 
 
 #preview-image {
-  width: 600px;
-  height: 445px;
+  width: 913px;
+  height: 486px;
   background: #eee;
   border-radius: 0 0 10px 10px;
   display: flex;
@@ -360,7 +360,7 @@ body {
 
 #inputLabel {
   height: 80px;
-  width: 600px;
+  width: 100%;
   background: #57b6ac;
   position: relative;
   display: flex;
@@ -456,9 +456,9 @@ canvas {
   }
 } */
 .preview_search_image{
-  max-height: 400px;
+  max-height: 416px;
   object-fit: initial;
-  width: 56%;
+  width: 63%;
 }
 
 
@@ -542,8 +542,8 @@ canvas {
 }
 
 #preview-image-dimensions{
-  width: 600px;
-    height: 445px;
+  width: 303px;
+    height: 496px;
     background-color: white;
     border-radius: 0 0 10px 10px;
     display: flex;
@@ -575,7 +575,7 @@ canvas {
 
 #inputLabelDimensions {
   height: 80px;
-  width: 600px;
+  width: 303px;
   background: #57b6ac;
   position: relative;
   display: flex;
@@ -609,16 +609,23 @@ canvas {
   /* border: 1px solid #ccc; */
   padding: 10px;
 }
-@media screen and (min-width: 768px) and (max-width: 1024px) {
-  .grid-item {
-      grid-template-columns: repeat(2, 1fr); /* Two columns */
-      display: grid;
-  }
-
-  /* Target search-image-section elements within the media query */
-  .search-image-section {
-      /* Adjust styles for two columns layout */
-      width: 100%; /* Ensure full width */
-      margin-bottom: 10px; /* Adjust margin as needed */
-  }
+#dlsegmentInput{
+  width: 18px !important;
+  height: 18px !important;
+}
+#thresholdInput{
+  width: 18px !important;
+  height: 18px !important;
+}
+.searchImageTitle{
+  text-align: center;
+  color: #ffffff;
+  font-weight: 500;
+  border: 1px solid lightgray;
+  padding: 3px;
+  border-radius: 20px;
+  background-color: #44bcb1cc;
+  margin-bottom: 5px;
+  position: relative;
+  left: 6px;
 }
