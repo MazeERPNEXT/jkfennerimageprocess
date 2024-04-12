@@ -1,7 +1,7 @@
 frappe.pages['ai-image-search'].on_page_load = function (wrapper) {
     new AiImageSearchPage(wrapper);
 };
-
+let imageURL = '/assets/jkfenner_image_process/images/upload_image.png';
 class AiImageSearchPage {
     constructor(wrapper) {
         this.page = frappe.ui.make_app_page({
@@ -42,7 +42,7 @@ class AiImageSearchPage {
                 var parentContainer = $(this).closest('.image-container');
 
                 // Set the src attribute of the image to the path of the default image
-                parentContainer.find('img').attr('src', '/assets/jkfenner_image_process/images/upload_image.png');
+                parentContainer.find('img').attr('src', imageURL);
             });
         });
         // Add loader to the page
@@ -53,7 +53,6 @@ class AiImageSearchPage {
     // Adjust the time as needed
     navigateToAiImageDetails(part_no, Score, Image, childTable, parentTable) {
         const jsonString = JSON.stringify(Score, Image);
-        console.log(childTable);
         const url = `/app/ai-image-details?part_no=${part_no}&matching_percentage=${Score}&image_url=${Image}&child_table=${childTable}&parent_table=${parentTable}`;
         window.open(url, '_blank');
     }
@@ -192,7 +191,6 @@ class AiImageSearchPage {
                 branched: bracnchedInput,
                 dlsegment: dlsegmentInput,
                 threshold: thresholdInput,
-                with_connector: withConnectorInput,
                 thickness: thickness,
             });
 
@@ -210,6 +208,13 @@ class AiImageSearchPage {
             // }
             let imageGrid = "";
             //.slice(0, 3)
+            const foreground_images = response.foreground_image_url.split(',') || [];
+            foreground_images.forEach((fi, index) => {
+                let image = $(".preview_seg_image")[index];
+                if(!!image)
+                    $(image).attr('src', fi);
+            })
+            
             response.matching_find_images.forEach((image, _index) => {
                 // Extract data from the response
                 let part_no = image.part_no && image.part_no ? image.part_no.name : '';
@@ -281,6 +286,11 @@ class AiImageSearchPage {
         var input = event.target;
         var files = input.files;
         var previewImageIds = ['uploaded-image_1', 'uploaded-image_2', 'uploaded-image_3']; // IDs of preview image elements
+        
+
+        $(".preview_seg_image").each(function(i, elem){    
+            $(elem).attr('src', imageURL)
+        });
 
         for (let i = 0; i < files.length; i++) {
             var file = files[i];

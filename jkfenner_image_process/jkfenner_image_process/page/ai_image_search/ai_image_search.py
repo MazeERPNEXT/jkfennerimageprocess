@@ -5,6 +5,8 @@ import sys
 from collections import OrderedDict
 from jkfenner_image_process.jkfenner_image_process.ai import LoadJKFennerModel
 import base64
+import cv2
+from io import BytesIO
 
 @frappe.whitelist()
 def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, dlsegment, threshold):
@@ -55,8 +57,10 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, dl
     similarity_images, foreground_img_list = predictor.run(img_paths, dl_segment, is_threshold, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 0)
     base64_images = []
     for foreground_img in foreground_img_list:
-        im = base64.b64encode(foreground_img)
-        base64_images.append(im)
+        is_success, buffer = cv2.imencode(".jpg", foreground_img)
+        if is_success:
+            im = base64.b64encode(buffer)
+            base64_images.append(im)
     similarity_images = dict(sorted(similarity_images.items(), key=lambda x: x[1], reverse=True))
     similarity_images = OrderedDict(similarity_images)
     similarity_images_with_path = []
@@ -68,8 +72,9 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, dl
         similarity_scores.append(score)
     similarity_scores = [str(similarity_score) for similarity_score in similarity_scores]
 
-    # ai_responses["images"] = similarity_images_with_path
-    # ai_responses["scores"] = similarity_scores
+    ai_responses["images"] = similarity_images_with_path
+    ai_responses["scores"] = similarity_scores
+    ai_responses['foreground_images'] = base64_images
     
     predicted_images = ai_responses['images']
     docsinfo = [image.split('/')[-2] for image in predicted_images]
@@ -96,6 +101,23 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, dl
         })
         
         image_doc.insert(ignore_permissions=True)
+        foreground_img_doc_list = []
+        for index, foreground_img in enumerate(ai_responses['foreground_images']):
+            file = frappe.get_doc(
+			{
+				"doctype": "File",
+				"file_name": image_doc.name+f"_foreground_image_{index}.jpg",
+				"attached_to_doctype": image_doc.doctype,
+				"attached_to_name": image_doc.name,
+				"content": foreground_img,
+				"decode": True,
+			}
+		    )
+            file.save()
+            foreground_img_doc_list.append(file.file_url)
+        if foreground_img_doc_list:
+            image_doc.foreground_image_url = ",".join(foreground_img_doc_list)
+            image_doc.save()
         # Create records in child table for each document in ai_responses
         for index, image_url in enumerate(ai_responses["images"]):
 
