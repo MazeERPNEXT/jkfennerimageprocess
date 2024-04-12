@@ -298,6 +298,14 @@
     width: 100%;
     height: 100%;
 }
+.preview_seg_image{
+  border-radius: 6px;
+    display: grid;
+    margin: 6px;
+    border: 1px solid;
+    width: 100%;
+    height: 100%;
+}
 
 /* a {
   color: black;
@@ -581,15 +589,36 @@ canvas {
   border: 1px solid #57b6ac;
   font-size: 17px;
 }
-@media (min-width:375px) and (max-width:768px){
-  #inputLabelDimensions{
-    /* width: 335px !important; */
-  }
-}
+
 
 .input[type=checkbox]:checked{
   background-color: #44bcb1 !important;
 }
 .input-max-width{
   font-size: 17px;
+}
+
+.grid-container {
+  /* display: grid; */
+  grid-template-columns: repeat(4, 1fr); /* Four columns with equal width */
+  grid-gap: 10px; /* Adjust as needed */
+}
+
+.grid-item {
+  /* Optional styling for grid items */
+  /* border: 1px solid #ccc; */
+  padding: 10px;
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .grid-item {
+      grid-template-columns: repeat(2, 1fr); /* Two columns */
+      display: grid;
+  }
+
+  /* Target search-image-section elements within the media query */
+  .search-image-section {
+      /* Adjust styles for two columns layout */
+      width: 100%; /* Ensure full width */
+      margin-bottom: 10px; /* Adjust margin as needed */
+  }
 }
