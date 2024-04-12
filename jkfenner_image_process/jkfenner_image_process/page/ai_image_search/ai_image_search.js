@@ -183,18 +183,7 @@ class AiImageSearchPage {
             const dlsegmentInput = $('#dlsegmentInput').prop('checked');
             const thresholdInput = $('#thresholdInput').prop('checked');
             const thickness = 5;
-            const response = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image', {
-                // images: JSON.stringify([fileResponse.name]), 
-                images: fileResponses.map(fr => fr.name).join('~'),
-                inner_diameter_1: innerDiameter1Input && action != 'without_struct' ? parseFloat(innerDiameter1Input) : '',
-                inner_diameter_2: innerDiameter2Input && action != 'without_struct' ? parseFloat(innerDiameter2Input) : '',
-                length: lengthInput && action != 'without_struct' ? parseFloat(lengthInput) : '',
-                branched: bracnchedInput,
-                dlsegment: dlsegmentInput,
-                threshold: thresholdInput,
-                thickness: thickness,
-            });
-           
+
             // Check if scores is undefined
             if (fileInputs.length == 0) {
                 // Handle the case where scores is undefined, e.g., show an error message
@@ -208,6 +197,19 @@ class AiImageSearchPage {
                 this.hideLoader();
                 return;
             }
+
+            const response = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image', {
+                // images: JSON.stringify([fileResponse.name]), 
+                images: fileResponses.map(fr => fr.name).join('~'),
+                inner_diameter_1: innerDiameter1Input && action != 'without_struct' ? parseFloat(innerDiameter1Input) : '',
+                inner_diameter_2: innerDiameter2Input && action != 'without_struct' ? parseFloat(innerDiameter2Input) : '',
+                length: lengthInput && action != 'without_struct' ? parseFloat(lengthInput) : '',
+                branched: bracnchedInput,
+                dlsegment: dlsegmentInput,
+                threshold: thresholdInput,
+                thickness: thickness,
+            });
+        
             let imageGrid = "";
             //.slice(0, 3)
             const foreground_images = response.foreground_image_url.split(',') || [];
