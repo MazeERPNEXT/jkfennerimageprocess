@@ -4,6 +4,7 @@ import sys
 # from jkfennerai.inference import predict
 from collections import OrderedDict
 from jkfenner_image_process.jkfenner_image_process.ai import LoadJKFennerModel
+import base64
 
 @frappe.whitelist()
 def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, threshold, with_connector):
@@ -51,7 +52,11 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, th
     similarity_scores = []
     dl_segment = True
     print(img_paths, dl_segment, is_threshold, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 0,sep=" ----- ")
-    similarity_images = predictor.run(img_paths, dl_segment, is_threshold, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 0)
+    similarity_images, foreground_img_list = predictor.run(img_paths, dl_segment, is_threshold, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 0)
+    base64_images = []
+    for foreground_img in foreground_img_list:
+        im = base64.b64encode(foreground_img)
+        base64_images.append(im)
     similarity_images = dict(sorted(similarity_images.items(), key=lambda x: x[1], reverse=True))
     similarity_images = OrderedDict(similarity_images)
     similarity_images_with_path = []
