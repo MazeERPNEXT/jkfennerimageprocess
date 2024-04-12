@@ -180,7 +180,7 @@ class AiImageSearchPage {
             const innerDiameter2Input = $('#innerDiameter2Input').val();
             const lengthInput = $('#lengthInput').val();
             const bracnchedInput = $('#bracnchedInput').prop('checked');
-            const darkBackgroundInput = $('#darkBackgroundInput').prop('checked');
+            const thresholdInput = $('#thresholdInput').prop('checked');
             const withConnectorInput = $('#withConnectorInput').prop('checked');
             const thickness = 5;
             const response = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image', {
@@ -190,7 +190,7 @@ class AiImageSearchPage {
                 inner_diameter_2: innerDiameter2Input && action != 'without_struct' ? parseFloat(innerDiameter2Input) : '',
                 length: lengthInput && action != 'without_struct' ? parseFloat(lengthInput) : '',
                 branched: bracnchedInput,
-                dark_background: darkBackgroundInput,
+                threshold: thresholdInput,
                 with_connector: withConnectorInput,
                 thickness: thickness,
             });
@@ -202,7 +202,7 @@ class AiImageSearchPage {
                 this.hideLoader();
                 return;
             }
-            // if (!darkBackgroundInput){
+            // if (!thresholdInput){
             //     frappe.msgprint('Please Check Dark Background')
             //     this.hideLoader();
             //     return;

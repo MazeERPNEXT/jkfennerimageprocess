@@ -6,7 +6,7 @@ from collections import OrderedDict
 from jkfenner_image_process.jkfenner_image_process.ai import LoadJKFennerModel
 
 @frappe.whitelist()
-def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, dark_background, with_connector):
+def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, threshold, with_connector):
     images = images.split('~')
     _files = frappe.get_list("File", filters = {'name':["in", images]}, fields=["name"], pluck="name")
     is_branched_hose = True if branched == 'true' else False
@@ -14,7 +14,7 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, da
     inner_diameter_2 = float(inner_diameter_2) if inner_diameter_2 else None
     length = int(length) if length else None
     is_with_connector = True if with_connector == 'true' else False
-    is_dark_background = True if dark_background == 'true' else False    
+    is_threshold = True if threshold == 'true' else False    
     # ai_responses = {
     #     "images": [
     #         "/assets/jkfenner_image_process/images/machine_learning/augment_images/E72068/E72068-16.jpg",
@@ -49,10 +49,9 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, da
     img_paths = [file.get_full_path() for file in imgs]
     predictor = LoadJKFennerModel().predictor
     similarity_scores = []
-    print(img_paths,'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 0,sep=" ----- ")
     dl_segment = True
-    threshold_segment = False
-    similarity_images = predictor.run(img_paths, dl_segment, threshold_segment, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 0)
+    print(img_paths, dl_segment, is_threshold, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 0,sep=" ----- ")
+    similarity_images = predictor.run(img_paths, dl_segment, is_threshold, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 0)
     similarity_images = dict(sorted(similarity_images.items(), key=lambda x: x[1], reverse=True))
     similarity_images = OrderedDict(similarity_images)
     similarity_images_with_path = []
@@ -86,7 +85,7 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, da
             'id_a2': inner_diameter_2,
             'length': length,
             'branched': is_branched_hose,
-            'dark_background': is_dark_background,
+            'dark_background': is_threshold,
             'with_connector': is_with_connector,
             'current_datetime': frappe.utils.now_datetime()
         })
