@@ -180,8 +180,8 @@ class AiImageSearchPage {
             const innerDiameter2Input = $('#innerDiameter2Input').val();
             const lengthInput = $('#lengthInput').val();
             const bracnchedInput = $('#bracnchedInput').prop('checked');
+            const dlsegmentInput = $('#dlsegmentInput').prop('checked');
             const thresholdInput = $('#thresholdInput').prop('checked');
-            const withConnectorInput = $('#withConnectorInput').prop('checked');
             const thickness = 5;
             const response = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image', {
                 // images: JSON.stringify([fileResponse.name]), 
@@ -190,6 +190,7 @@ class AiImageSearchPage {
                 inner_diameter_2: innerDiameter2Input && action != 'without_struct' ? parseFloat(innerDiameter2Input) : '',
                 length: lengthInput && action != 'without_struct' ? parseFloat(lengthInput) : '',
                 branched: bracnchedInput,
+                dlsegment: dlsegmentInput,
                 threshold: thresholdInput,
                 with_connector: withConnectorInput,
                 thickness: thickness,

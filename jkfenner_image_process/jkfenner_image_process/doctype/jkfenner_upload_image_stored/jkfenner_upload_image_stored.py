@@ -12,8 +12,8 @@ class JKFennerUploadImageStored(Document):
     @staticmethod
     def clear_old_logs(days=2):
         records_to_delete = frappe.get_list("JKFenner Upload Image Stored",
-                                            filters = {"modified" : ("<", Now() - Interval(days=days))},
-                                            fields=["name","filr_url"])
+                                            filters = {"creation" : ("<", Now() - Interval(days=days))},
+                                            fields=["name","file_url"])
         for record in records_to_delete:
              frappe.delete_doc("JKFenner Upload Image Stored", record["name"])
 

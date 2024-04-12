@@ -7,14 +7,14 @@ from jkfenner_image_process.jkfenner_image_process.ai import LoadJKFennerModel
 import base64
 
 @frappe.whitelist()
-def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, threshold, with_connector):
+def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, dlsegment, threshold):
     images = images.split('~')
     _files = frappe.get_list("File", filters = {'name':["in", images]}, fields=["name"], pluck="name")
-    is_branched_hose = True if branched == 'true' else False
     inner_diameter_1 = float(inner_diameter_1) if inner_diameter_1 else None
     inner_diameter_2 = float(inner_diameter_2) if inner_diameter_2 else None
     length = int(length) if length else None
-    is_with_connector = True if with_connector == 'true' else False
+    is_branched_hose = True if branched == 'true' else False
+    dl_segment = True if dlsegment == 'true' else False
     is_threshold = True if threshold == 'true' else False    
     # ai_responses = {
     #     "images": [
@@ -68,8 +68,8 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, th
         similarity_scores.append(score)
     similarity_scores = [str(similarity_score) for similarity_score in similarity_scores]
 
-    ai_responses["images"] = similarity_images_with_path
-    ai_responses["scores"] = similarity_scores
+    # ai_responses["images"] = similarity_images_with_path
+    # ai_responses["scores"] = similarity_scores
     
     predicted_images = ai_responses['images']
     docsinfo = [image.split('/')[-2] for image in predicted_images]
@@ -90,8 +90,8 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, th
             'id_a2': inner_diameter_2,
             'length': length,
             'branched': is_branched_hose,
-            'dark_background': is_threshold,
-            'with_connector': is_with_connector,
+            'dl_segment': dl_segment,
+            'threshold': is_threshold,
             'current_datetime': frappe.utils.now_datetime()
         })
         

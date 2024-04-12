@@ -1,30 +1,58 @@
 
-<div class="row form-section" >
+<div class="grid-container form-section" >
     <div class="section-body">
         <!-- <div class="form-column col-sm-3"></div> -->
-        <div class="form-column col order-first">
+        <div class="grid-item">
+            <!-- <div class="input_image_"> -->
+                <h3 class="searchImageTitle">Input Images</h3>
+                <div class="search-image-section_aug">
+                    <div>
+                        <span class="image-container">
+                            <img class="preview_search_image_aug" id="uploaded-image_1" src="/assets/jkfenner_image_process/images/upload_image.png"/>
+                            <i class="fa fa-remove remove-icon"></i>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="image-container">
+                            <img class="preview_search_image_aug" id="uploaded-image_2" src="/assets/jkfenner_image_process/images/upload_image.png"/>
+                            <i class="fa fa-remove remove-icon"></i>
+                        </span>
+                    </div>
+                    <div>
+                        <span class="image-container"><img class="preview_search_image_aug" id="uploaded-image_3" src="/assets/jkfenner_image_process/images/upload_image.png"/>
+                            <i class="fa fa-remove remove-icon"></i>
+                        </span>
+                    </div>
+                </div>
+            <!-- </div> -->
+            
+        </div>
+
+        <div class="grid-item">
+            <h3 class="searchImageTitle">Processed Outputs</h3>
             <div class="search-image-section_aug">
                 <div>
                     <span class="image-container">
-                        <img class="preview_search_image_aug" id="uploaded-image_1" src="/assets/jkfenner_image_process/images/upload_image.png"/>
+                        <img class="preview_seg_image" id="uploaded-image_1" src="/assets/jkfenner_image_process/images/upload_image.png"/>
                         <i class="fa fa-remove remove-icon"></i>
                     </span>
                 </div>
                 <div>
                     <span class="image-container">
-                        <img class="preview_search_image_aug" id="uploaded-image_2" src="/assets/jkfenner_image_process/images/upload_image.png"/>
+                        <img class="preview_seg_image" id="uploaded-image_2" src="/assets/jkfenner_image_process/images/upload_image.png"/>
                         <i class="fa fa-remove remove-icon"></i>
                     </span>
                 </div>
                 <div>
-                    <span class="image-container"><img class="preview_search_image_aug" id="uploaded-image_3" src="/assets/jkfenner_image_process/images/upload_image.png"/>
+                    <span class="image-container">
+                        <img class="preview_seg_image" id="uploaded-image_3" src="/assets/jkfenner_image_process/images/upload_image.png"/>
                         <i class="fa fa-remove remove-icon"></i>
                     </span>
                 </div>
+            </div>
         </div>
-    </div>
 
-    <div class="form-column col">
+        <div class="grid-item">
             <div class="search-image-section">
                 <label for="finput" class="image_upload"  id="inputLabel">
                     <span class="pulse-text">Click Here to upload image</span>
@@ -34,85 +62,84 @@
                     <img class="preview_search_image" id="uploaded-image" src="/assets/jkfenner_image_process/images/upload_image.png" />
                 </div>
                 <canvas id="canv1" style="display: none;"></canvas> 
+            </div>
+            <div class="frappe-control input-max-width" style="margin-top: 10px; justify-content: center; display: flex;">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="inlineRadioOptions" title="Branched" id="bracnchedInput" value="option1">
+                    <label class="form-check-label" for="bracnchedInput" style="cursor: pointer;">Branched</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="inlineRadioOptions" title="DL Segment" id="dlsegmentInput" value="option1">
+                    <label class="form-check-label" for="dlsegmentInput" style="cursor: pointer;">DL Segment</label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="thresholdInput" value="option2">
+                    <label class="form-check-label" for="thresholdInput" style="cursor: pointer;">Enable Threshold</label>
+                  </div>
+            </div>
+            <div class="btn-image-search" style="margin-bottom: 20px;">
+                <button id="matchingImageButton" class="btn btn-primary btn-sm-image primary-action navigate-button" data-action="without_struct">
+                    Pick the matching image
+                </button>
+            </div>
         </div>
-        <div class="frappe-control input-max-width" style="margin-top: 10px; justify-content: center; display: flex;">
-            <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" name="inlineRadioOptions" title="Branched" id="bracnchedInput" value="option1">
-                <label class="form-check-label" for="bracnchedInput" style="cursor: pointer;">Branched</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="thresholdInput" value="option2">
-                <label class="form-check-label" for="thresholdInput" style="cursor: pointer;">Enable Threshold</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" name="inlineRadioOptions" id="withConnectorInput" value="option3">
-                <label class="form-check-label" for="withConnectorInput" style="cursor: pointer;">With connector</label>
-              </div>
-        </div>
-        <div class="btn-image-search" style="margin-bottom: 20px;">
-            <button id="matchingImageButton" class="btn btn-primary btn-sm-image primary-action navigate-button" data-action="without_struct">
-                Pick the matching image
-            </button>
-        </div>
-        
-    </div>
     
 
-    <div class="form-column col order-last">
-        <div class="search-image-section">
-            <label class="image_upload"  id="inputLabelDimensions">
-                <span class="pulse-text"> Structural Dimension</span>
-            </label>
-            <div id="preview-image-dimensions"> 
-                <form class="dimension-form">
-                <div class="frappe-control input-max-width">
-                    <div class="form-group">
-                    <div class="clearfix">
-                        <label class="control-label" style="padding-right: 0px;font-size: 17px;">ID A1</label>
-                        <span class="help"></span>
-                    </div>
-                    <div class="control-input-wrapper">
-                        <div class="control-input">
-                            <input type="text" class="input-with-feedback form-control" maxlength="140" placeholder="Enter ID A1 (mm)" style="padding: 20px;" id="innerDiameter1Input">
+        <div class="grid-item">
+            <div class="search-image-section">
+                <label class="image_upload"  id="inputLabelDimensions">
+                    <span class="pulse-text"> Structural Dimension</span>
+                </label>
+                <div id="preview-image-dimensions"> 
+                    <form class="dimension-form">
+                    <div class="frappe-control input-max-width">
+                        <div class="form-group">
+                        <div class="clearfix">
+                            <label class="control-label" style="padding-right: 0px;font-size: 17px;">ID A1</label>
+                            <span class="help"></span>
+                        </div>
+                        <div class="control-input-wrapper">
+                            <div class="control-input">
+                                <input type="text" class="input-with-feedback form-control" maxlength="140" placeholder="Enter ID A1 (mm)" style="padding: 20px;" id="innerDiameter1Input">
+                            </div>
+                        </div>
                         </div>
                     </div>
-                    </div>
-                </div>
-                <div class="frappe-control input-max-width">
-                    <div class="form-group">
-                    <div class="clearfix">
-                        <label class="control-label" style="padding-right: 0px;font-size: 17px;">ID A2</label>
-                        <span class="help"></span>
-                    </div>
-                    <div class="control-input-wrapper">
-                        <div class="control-input">
-                            <input type="text" class="input-with-feedback form-control" maxlength="140" placeholder="Enter ID A2 (mm)" style="padding: 20px;" id="innerDiameter2Input">
+                    <div class="frappe-control input-max-width">
+                        <div class="form-group">
+                        <div class="clearfix">
+                            <label class="control-label" style="padding-right: 0px;font-size: 17px;">ID A2</label>
+                            <span class="help"></span>
+                        </div>
+                        <div class="control-input-wrapper">
+                            <div class="control-input">
+                                <input type="text" class="input-with-feedback form-control" maxlength="140" placeholder="Enter ID A2 (mm)" style="padding: 20px;" id="innerDiameter2Input">
+                            </div>
+                        </div>
                         </div>
                     </div>
-                    </div>
-                </div>
-                <div class="frappe-control input-max-width">
-                    <div class="form-group">
-                    <div class="clearfix">
-                        <label class="control-label" style="padding-right: 0px;font-size: 17px;">Length</label>
-                        <span class="help"></span>
-                    </div>
-                    <div class="control-input-wrapper">
-                        <div class="control-input">
-                            <input type="text" class="input-with-feedback form-control" maxlength="140" placeholder="Enter Length (mm)" style="padding: 20px;" id="lengthInput">
+                    <div class="frappe-control input-max-width">
+                        <div class="form-group">
+                        <div class="clearfix">
+                            <label class="control-label" style="padding-right: 0px;font-size: 17px;">Length</label>
+                            <span class="help"></span>
+                        </div>
+                        <div class="control-input-wrapper">
+                            <div class="control-input">
+                                <input type="text" class="input-with-feedback form-control" maxlength="140" placeholder="Enter Length (mm)" style="padding: 20px;" id="lengthInput">
+                            </div>
+                        </div>
                         </div>
                     </div>
-                    </div>
-                </div>
-                
-            </form>
+                    
+                </form>
+                </div> 
             </div> 
-        </div> 
-        <div class="btn-image-search" style="margin-bottom: 15px;">
-            <button type="button" id="matchingImageButton" class="btn btn-primary btn-sm-image primary-action navigate-button" data-action="with_struct" style="height: 33px;">
-                Search With Structual Dimension
-            </button>
-        </div> 
+            <div class="btn-image-search" style="margin-bottom: 15px;">
+                <button type="button" id="matchingImageButton" class="btn btn-primary btn-sm-image primary-action navigate-button" data-action="with_struct" style="height: 33px;">
+                    Search With Structual Dimension
+                </button>
+            </div> 
         </div>
     </div>
 </div>
