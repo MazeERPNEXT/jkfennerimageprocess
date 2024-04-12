@@ -63,8 +63,8 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, dl
         similarity_scores.append(score)
     similarity_scores = [str(similarity_score) for similarity_score in similarity_scores]
 
-    # ai_responses["images"] = similarity_images_with_path
-    # ai_responses["scores"] = similarity_scores
+    ai_responses["images"] = similarity_images_with_path
+    ai_responses["scores"] = similarity_scores
     
     predicted_images = ai_responses['images']
     docsinfo = [image.split('/')[-2] for image in predicted_images]

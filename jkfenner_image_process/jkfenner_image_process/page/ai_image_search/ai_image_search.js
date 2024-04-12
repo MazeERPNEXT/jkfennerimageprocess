@@ -170,6 +170,7 @@ class AiImageSearchPage {
     }
 
     async pickMatchingImage(action) {
+      
         this.showLoader();
         let fileInputs = $('.previewImage').prop('files');
         fileInputs = Array.from(fileInputs);
@@ -192,10 +193,9 @@ class AiImageSearchPage {
                 branched: bracnchedInput,
                 dlsegment: dlsegmentInput,
                 threshold: thresholdInput,
-                with_connector: withConnectorInput,
                 thickness: thickness,
             });
-
+           
             // Check if scores is undefined
             if (fileInputs.length == 0) {
                 // Handle the case where scores is undefined, e.g., show an error message
@@ -203,11 +203,12 @@ class AiImageSearchPage {
                 this.hideLoader();
                 return;
             }
-            // if (!thresholdInput){
-            //     frappe.msgprint('Please Check Dark Background')
-            //     this.hideLoader();
-            //     return;
-            // }
+            if (!thresholdInput && !dlsegmentInput) {
+                // Show message if neither checkbox is checked
+                frappe.msgprint('Please Check Threshold or DL Segment');
+                this.hideLoader();
+                return;
+            }
             let imageGrid = "";
             //.slice(0, 3)
             response.matching_find_images.forEach((image, _index) => {
@@ -215,7 +216,8 @@ class AiImageSearchPage {
                 let part_no = image.part_no && image.part_no ? image.part_no.name : '';
                 let score = image.matching_percentage;
                 const roundedPercentage = Math.round(image.matching_percentage);
-                const roundedPercentageString = `Matching Percentage: ${roundedPercentage}%`;
+                const roundedPercentageString = `Similarty Percentage: ${roundedPercentage}%`;
+                const roundedSimilartyPercentage = `Image Similarty Score: ${roundedPercentage}%`;
 
                 // Construct HTML for each image
                 imageGrid += `
@@ -228,7 +230,7 @@ class AiImageSearchPage {
                                                 <p  style="text-align:center">${!!image ? image.part_no : "No Image"}</p> 
                                             </div>
                                             <div class="card-content">
-                                                <p>Image Similarty Score: ${image.matching_percentage}</p>
+                                                <p> ${roundedSimilartyPercentage}</p>
                                                 <p>ID A1: ${image.id_a1}, ID A2: ${image.id_a2 || 0}, Length: ${image.length || 0}, Thickness: ${image.thickness || 0}</p>
                                                 <button class="btn btn-primary btn-sm primary-action-image navigate-details" 
                                                     data-image-name="${image.part_no}" 
