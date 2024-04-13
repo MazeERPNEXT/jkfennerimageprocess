@@ -7,6 +7,7 @@
  "field_order": [
   "section_break_devu",
   "upload_image",
+  "foreground_image_url",
   "column_break_y06c",
   "id_a1",
   "column_break_swqq",
@@ -89,11 +90,16 @@
    "fieldname": "dl_segment",
    "fieldtype": "Check",
    "label": "DL Segment"
+  },
+  {
+   "fieldname": "foreground_image_url",
+   "fieldtype": "Text",
+   "label": "Foreground Image URL"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-04-12 19:00:07.353465",
+ "modified": "2024-04-12 20:29:11.134669",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "JKFenner Upload Image Stored",
