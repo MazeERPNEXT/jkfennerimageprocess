@@ -37,12 +37,6 @@ class AiImageSearchPage {
             });
         });
         $(document).ready(function () {
-            $('.preview_seg_image').on('click', function () {
-                var clickedImageSrc = $(this).attr('src');
-                $('#uploaded-image').attr('src', clickedImageSrc);
-            });
-        });
-        $(document).ready(function () {
             $('.remove-icon').on('click', function () {
                 // Find the parent container of the remove icon
                 var parentContainer = $(this).closest('.image-container');

@@ -55,8 +55,9 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, dl
     print(img_paths, dl_segment, is_threshold, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 0,sep=" ----- ")
     similarity_images, foreground_img_list = predictor.run(img_paths, dl_segment, is_threshold, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 0)
     base64_images = []
+    encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 35]
     for foreground_img in foreground_img_list:
-        is_success, buffer = cv2.imencode(".jpg", foreground_img)
+        is_success, buffer = cv2.imencode(".jpg", foreground_img, encode_param)
         if is_success:
             im = base64.b64encode(buffer)
             base64_images.append(im)
