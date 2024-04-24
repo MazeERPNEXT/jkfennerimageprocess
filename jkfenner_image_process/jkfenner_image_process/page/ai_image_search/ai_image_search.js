@@ -1,7 +1,9 @@
 frappe.pages['ai-image-search'].on_page_load = function (wrapper) {
     new AiImageSearchPage(wrapper);
 };
+
 let imageURL = '/assets/jkfenner_image_process/images/upload_image.png';
+
 class AiImageSearchPage {
     constructor(wrapper) {
         this.page = frappe.ui.make_app_page({
@@ -20,29 +22,29 @@ class AiImageSearchPage {
             const imagePercentage = $(event.target).data('image-percentage');
             this.navigateToAiImageDetails(imageName, imagePercentage);
         });
+
         $('.previewImage').on('change', (e) => this.previewImage(e));
 
         $('.navigate-button').on('click', async () => {
             await this.pickMatchingImage($(this).data('action'));
             // await this.getStoredData();
         });
+        $('.struct-button').on('click', async () => {
+            await this.pickMatchingStruct($(this).data('action'));
+            // await this.getStoredData();
+        });
 
-        // $('.stored-dimensions').on('click', async() => {
-        //     await this.getStoredData()
-        // });
-        $(document).ready(function () {
+        $(document).ready(() => {
             $('.preview_search_image_aug').on('click', function () {
                 var clickedImageSrc = $(this).attr('src');
                 $('#uploaded-image').attr('src', clickedImageSrc);
             });
-        });
-        $(document).ready(function () {
+
             $('.preview_seg_image').on('click', function () {
                 var clickedImageSrc = $(this).attr('src');
                 $('#uploaded-image').attr('src', clickedImageSrc);
             });
-        });
-        $(document).ready(function () {
+
             $('.remove-icon').on('click', function () {
                 // Find the parent container of the remove icon
                 var parentContainer = $(this).closest('.image-container');
@@ -51,10 +53,11 @@ class AiImageSearchPage {
                 parentContainer.find('img').attr('src', imageURL);
             });
         });
-        // Add loader to the page
-        this.loader = $('<div id="loader" class="loader"></div>').appendTo(this.page.body);
 
+        // Add loader to the page
+        this.progress2 = $('<div class="container-progress"><div class="progress2 progress-moved"><div class="progress-bar2"><div class="progress-text">0%</div></div></div></div>').appendTo(this.page.body);
     }
+
     // Hide the loader after some time (for example, 3 seconds)
     // Adjust the time as needed
     navigateToAiImageDetails(part_no, Score, Image, childTable, parentTable) {
@@ -63,9 +66,7 @@ class AiImageSearchPage {
         window.open(url, '_blank');
     }
 
-
     upload_file(file) {
-
         return new Promise((resolve, reject) => {
             let xhr = new XMLHttpRequest();
             xhr.upload.addEventListener("loadstart", (e) => {
@@ -151,7 +152,6 @@ class AiImageSearchPage {
             }
             form_data.append("is_private", +file.private);
 
-
             if (file.file_url) {
                 form_data.append("file_url", file.file_url);
             }
@@ -163,7 +163,6 @@ class AiImageSearchPage {
                 form_data.append("library_file_name", file.library_file_name);
             }
 
-
             if (file.optimize) {
                 form_data.append("optimize", true);
             }
@@ -174,134 +173,239 @@ class AiImageSearchPage {
         });
     }
 
-    async pickMatchingImage(action) {
+    showProgress() {
+        $('.progress2').show(); // Show the progress bar
+      }
       
-        this.showLoader();
+      // Function to hide the progress bar
+      hideProgress() {
+        $('.progress2').hide(); // Hide the progress bar
+      }
+        // Function to update the loading percentage
+        // updateProgressPercentage(percentage) {
+        //     $('.progress-bar2').css('width', percentage + '%'); // Update the progress bar width
+        //     $('.progress-text').text(percentage + '%'); // Update the percentage text
+        //     if (percentage >= 100) {
+        //         // Hide the progress bar when the progress reaches 100%
+        //         this.hideProgress();
+        //     }
+        // }
+
+    async pickMatchingImage(action) {
+        this.showProgress();
+        let fileInputs = $('.previewImage').prop('files');
+        fileInputs = Array.from(fileInputs);
+        // Clear previous search results 
+        $('.preview-section').html('');
+      
+        const getScore = async (fileResponses) => {
+          const innerDiameter1Input = $('#innerDiameter1Input').val();
+          const innerDiameter2Input = $('#innerDiameter2Input').val();
+          const lengthInput = $('#lengthInput').val();
+          const bracnchedInput = $('#bracnchedInput').prop('checked');
+          const dlsegmentInput = $('#dlsegmentInput').prop('checked');
+          const thresholdInput = $('#thresholdInput').prop('checked');
+          const thickness = 5;
+      
+          // Check if scores is undefined
+          if (fileInputs.length == 0) {
+            // Handle the case where scores is undefined, e.g., show an error message
+            frappe.msgprint('Please Upload SKU Part.');
+            this.hideProgress();
+            return;
+          }
+          if (!thresholdInput && !dlsegmentInput) {
+            // Show message if neither checkbox is checked
+            frappe.msgprint('Please Check Threshold or DL Segment');
+            this.hideProgress();
+            return;
+          }
+          const totalFiles = fileResponses.length;
+          let processedFiles = 0;
+         // Function to update the loading percentage
+         const updatePercentage = () => {
+            const percentage = Math.round((processedFiles / totalFiles) * 100);
+            this.updateProgressPercentage(percentage);
+        };
+          const response = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image', {
+            images: fileResponses.map(fr => fr.name).join('~'),
+            inner_diameter_1: innerDiameter1Input && action != 'without_struct' ? parseFloat(innerDiameter1Input) : '',
+            inner_diameter_2: innerDiameter2Input && action != 'without_struct' ? parseFloat(innerDiameter2Input) : '',
+            length: lengthInput && action != 'without_struct' ? parseFloat(lengthInput) : '',
+            branched: bracnchedInput,
+            dlsegment: dlsegmentInput,
+            threshold: thresholdInput,
+            thickness: thickness,
+          });
+      
+          let imageGrid = "";
+      
+          response.matching_find_images.forEach((image, _index) => {
+            let part_no = image.part_no && image.part_no ? image.part_no.name : '';
+            let score = image.matching_percentage;
+            const roundedPercentage = Math.round(image.matching_percentage);
+            const roundedPercentageString = `Similarty Percentage: ${roundedPercentage}%`;
+            const roundedSimilartyPercentage = `Image Similarty Score: ${roundedPercentage}%`;
+      
+            // Construct HTML for each image
+            imageGrid += `
+              <div class="col-lg-4 col-md-6 col-sm-6 mb-3">
+                <div class="card-image">
+                  <div id="image-details" class="card-body-image">
+                    <h5 class="card-title-image">${roundedPercentageString}</h5>
+                    <div class="card-image-search"> 
+                      <img style="height: 221px; object-fit: scale-down;" class="matchingimage w-100" id="matchingImage"  src="${image.image_url}" alt="Matching Image">
+                      <p style="text-align:center">${!!image ? image.part_no : "No Image"}</p> 
+                    </div>
+                    <div class="card-content">
+                      <p>${roundedSimilartyPercentage}</p>
+                      <p>ID A1: ${image.id_a1}, ID A2: ${image.id_a2 || 0}, Length: ${image.length || 0}, Thickness: ${image.thickness || 0}</p>
+                      <button class="btn btn-primary btn-sm primary-action-image navigate-details" 
+                        data-image-name="${image.part_no}" 
+                        data-image-path="${image.image_url}" 
+                        data-image-percentage="${roundedPercentage}" 
+                        data-child-name="${image.name}"
+                        data-parent-name="${response.name}">View Details</button>
+                    </div>
+                  </div>
+                </div>
+              </div>`;
+          });
+      
+          $('.preview-section').removeClass('hide');
+          $('.preview-section').html('<div class="row">' + imageGrid + "</div>");
+      
+          $('.navigate-details').on('click', (event) => {
+            const imageName = $(event.target).data('image-name');
+            const imagePercentage = $(event.target).data('image-percentage');
+            const imagesPath = $(event.target).data('image-path');
+            const childTable = $(event.target).data('child-name');
+            const parentTable = $(event.target).data('parent-name');
+            this.navigateToAiImageDetails(imageName, imagePercentage, imagesPath, childTable, parentTable);
+          });
+      
+          this.hideProgress();
+        };
+      
+        let fileResponses = []
+        let filePromises = []
+      
+        fileInputs.forEach(fileInput => {
+          const imageName = fileInput.name.split('.')[0];
+          filePromises.push(this.upload_file({ 'file_obj': fileInput, 'name': "TestImg.png", "file_name": imageName }));
+        });
+      
+        fileResponses = await Promise.all(filePromises);
+        getScore(fileResponses);
+      }
+
+// Structural dimensions
+      async pickMatchingStruct(action) {
+        this.showProgress();
         let fileInputs = $('.previewImage').prop('files');
         fileInputs = Array.from(fileInputs);
         // Clear previous search results
         $('.preview-section').html('');
+      
         const getScore = async (fileResponses) => {
-            const innerDiameter1Input = $('#innerDiameter1Input').val();
-            const innerDiameter2Input = $('#innerDiameter2Input').val();
-            const lengthInput = $('#lengthInput').val();
-            const bracnchedInput = $('#bracnchedInput').prop('checked');
-            const dlsegmentInput = $('#dlsegmentInput').prop('checked');
-            const thresholdInput = $('#thresholdInput').prop('checked');
-            const thickness = 5;
-
-            // Check if scores is undefined
-            if (fileInputs.length == 0) {
-                // Handle the case where scores is undefined, e.g., show an error message
-                frappe.msgprint('Please Upload SKU Part.');
-                this.hideLoader();
-                return;
-            }
-            if (!thresholdInput && !dlsegmentInput) {
-                // Show message if neither checkbox is checked
-                frappe.msgprint('Please Check Threshold or DL Segment');
-                this.hideLoader();
-                return;
-            }
-
-            const response = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image', {
-                // images: JSON.stringify([fileResponse.name]), 
-                images: fileResponses.map(fr => fr.name).join('~'),
-                inner_diameter_1: innerDiameter1Input && action != 'without_struct' ? parseFloat(innerDiameter1Input) : '',
-                inner_diameter_2: innerDiameter2Input && action != 'without_struct' ? parseFloat(innerDiameter2Input) : '',
-                length: lengthInput && action != 'without_struct' ? parseFloat(lengthInput) : '',
-                branched: bracnchedInput,
-                dlsegment: dlsegmentInput,
-                threshold: thresholdInput,
-                thickness: thickness,
-            });
-        
-            let imageGrid = "";
-            //.slice(0, 3)
-            const foreground_images = response.foreground_image_url.split(',') || [];
-            foreground_images.forEach((fi, index) => {
-                let image = $(".preview_seg_image")[index];
-                if(!!image)
-                    $(image).attr('src', fi);
-            })
-            
-            response.matching_find_images.forEach((image, _index) => {
-                // Extract data from the response
-                let part_no = image.part_no && image.part_no ? image.part_no.name : '';
-                let score = image.matching_percentage;
-                const roundedPercentage = Math.round(image.matching_percentage);
-                const roundedPercentageString = `Similarty Percentage: ${roundedPercentage}%`;
-                const roundedSimilartyPercentage = `Image Similarty Score: ${roundedPercentage}%`;
-
-                // Construct HTML for each image
-                imageGrid += `
-                                    <div class="col-lg-4 col-md-6 col-sm-6 mb-3">
-                                        <div class="card-image">
-                                            <div id="image-details" class="card-body-image">
-                                            <h5 class="card-title-image"> ${roundedPercentageString}</h5>
-                                                <div class="card-image-search"> 
-                                                <img style="height: 221px; object-fit: scale-down;" class="matchingimage w-100" id="matchingImage"  src="${image.image_url}" alt="Matching Image">
-                                                <p  style="text-align:center">${!!image ? image.part_no : "No Image"}</p> 
-                                            </div>
-                                            <div class="card-content">
-                                                <p> ${roundedSimilartyPercentage}</p>
-                                                <p>ID A1: ${image.id_a1}, ID A2: ${image.id_a2 || 0}, Length: ${image.length || 0}, Thickness: ${image.thickness || 0}</p>
-                                                <button class="btn btn-primary btn-sm primary-action-image navigate-details" 
-                                                    data-image-name="${image.part_no}" 
-                                                    data-image-path="${image.image_url}" 
-                                                    data-image-percentage="${roundedPercentage}" 
-                                                    data-child-name="${image.name}"
-                                                    data-parent-name="${response.name}">View Details</button>
-                                            </div>
-                                            </div>
-                                        </div>
-                                    </div>`;
-            });
-
-            // Display the constructed HTML
-            $('.preview-section').removeClass('hide');
-            $('.preview-section').html('<div class="row">' + imageGrid + "</div>");
-
-            // Attach event listener for details button
-            $('.navigate-details').on('click', (event) => {
-                const imageName = $(event.target).data('image-name');
-                const imagePercentage = $(event.target).data('image-percentage');
-                const imagesPath = $(event.target).data('image-path');
-                const childTable = $(event.target).data('child-name');
-                const parentTable = $(event.target).data('parent-name');
-                console.log(childTable)
-                this.navigateToAiImageDetails(imageName, imagePercentage, imagesPath, childTable, parentTable);
-            });
-
-            this.hideLoader();
+          const innerDiameter1Input = $('#innerDiameter1Input').val();
+          const innerDiameter2Input = $('#innerDiameter2Input').val();
+          const lengthInput = $('#lengthInput').val();
+          const bracnchedInput = $('#bracnchedInput').prop('checked');
+          const dlsegmentInput = $('#dlsegmentInput').prop('checked');
+          const thresholdInput = $('#thresholdInput').prop('checked');
+          const thickness = 5;
+      
+          const totalFiles = fileResponses.length;
+          let processedFiles = 0;
+         // Function to update the loading percentage
+         const updatePercentage = () => {
+            const percentage = Math.round((processedFiles / totalFiles) * 100);
+            this.updateProgressPercentage(percentage);
         };
+          const response = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image', {
+            images: fileResponses.map(fr => fr.name).join('~'),
+            inner_diameter_1: innerDiameter1Input && action != 'without_struct' ? parseFloat(innerDiameter1Input) : '',
+            inner_diameter_2: innerDiameter2Input && action != 'without_struct' ? parseFloat(innerDiameter2Input) : '',
+            length: lengthInput && action != 'without_struct' ? parseFloat(lengthInput) : '',
+            branched: bracnchedInput,
+            dlsegment: dlsegmentInput,
+            threshold: thresholdInput,
+            thickness: thickness,
+          });
+      
+          let imageGrid = "";
+      
+          response.matching_find_images.forEach((image, _index) => {
+            let part_no = image.part_no && image.part_no ? image.part_no.name : '';
+            let score = image.matching_percentage;
+            const roundedPercentage = Math.round(image.matching_percentage);
+            const roundedPercentageString = `Similarty Percentage: ${roundedPercentage}%`;
+            const roundedSimilartyPercentage = `Image Similarty Score: ${roundedPercentage}%`;
+      
+            // Construct HTML for each image
+            imageGrid += `
+              <div class="col-lg-4 col-md-6 col-sm-6 mb-3">
+                <div class="card-image">
+                  <div id="image-details" class="card-body-image">
+                    <h5 class="card-title-image">${roundedPercentageString}</h5>
+                    <div class="card-image-search"> 
+                      <img style="height: 221px; object-fit: scale-down;" class="matchingimage w-100" id="matchingImage"  src="${image.image_url}" alt="Matching Image">
+                      <p style="text-align:center">${!!image ? image.part_no : "No Image"}</p> 
+                    </div>
+                    <div class="card-content">
+                      <p>${roundedSimilartyPercentage}</p>
+                      <p>ID A1: ${image.id_a1}, ID A2: ${image.id_a2 || 0}, Length: ${image.length || 0}, Thickness: ${image.thickness || 0}</p>
+                      <button class="btn btn-primary btn-sm primary-action-image navigate-details" 
+                        data-image-name="${image.part_no}" 
+                        data-image-path="${image.image_url}" 
+                        data-image-percentage="${roundedPercentage}" 
+                        data-child-name="${image.name}"
+                        data-parent-name="${response.name}">View Details</button>
+                    </div>
+                  </div>
+                </div>
+              </div>`;
+          });
+      
+          $('.preview-section').removeClass('hide');
+          $('.preview-section').html('<div class="row">' + imageGrid + "</div>");
+      
+          $('.navigate-details').on('click', (event) => {
+            const imageName = $(event.target).data('image-name');
+            const imagePercentage = $(event.target).data('image-percentage');
+            const imagesPath = $(event.target).data('image-path');
+            const childTable = $(event.target).data('child-name');
+            const parentTable = $(event.target).data('parent-name');
+            this.navigateToAiImageDetails(imageName, imagePercentage, imagesPath, childTable, parentTable);
+          });
+      
+          this.hideProgress();
+        };
+      
         let fileResponses = []
         let filePromises = []
+      
         fileInputs.forEach(fileInput => {
-            const imageName = fileInput.name.split('.')[0];
-            filePromises.push(this.upload_file({ 'file_obj': fileInput, 'name': "TestImg.png", "file_name": imageName }));
+          const imageName = fileInput.name.split('.')[0];
+          filePromises.push(this.upload_file({ 'file_obj': fileInput, 'name': "TestImg.png", "file_name": imageName }));
         });
+      
         fileResponses = await Promise.all(filePromises);
         getScore(fileResponses);
-    }
+      }
 
-    showLoader() {
-        this.loader.show();
-    }
-    hideLoader() {
-        this.loader.hide();
-    }
+  
 
     previewImage(event) {
-        this.showLoader();
+        this.showProgress();
         var input = event.target;
         var files = input.files;
         var previewImageIds = ['uploaded-image_1', 'uploaded-image_2', 'uploaded-image_3']; // IDs of preview image elements
-        
 
-        $(".preview_seg_image").each(function(i, elem){    
-            $(elem).attr('src', imageURL)
-        });
+        // $(".preview_seg_image").each(function(i, elem){    
+        //     $(elem).attr('src', imageURL)
+        // });
 
         for (let i = 0; i < files.length; i++) {
             var file = files[i];
@@ -323,11 +427,60 @@ class AiImageSearchPage {
             reader.readAsDataURL(file);
         }
 
-        this.hideLoader();
+        this.hideProgress();
     }
 }
+$(document).ready(function() {
+    // Function to clear structural dimensions inputs
+    function clearStructuralInputs() {
+        $('#innerDiameter1Input').val('');
+        $('#innerDiameter2Input').val('');
+        $('#lengthInput').val('');
+    }
+
+    // Event listener for image upload input change
+    $('#finput').change(function() {
+        clearStructuralInputs();
+    });
+});
+
 $(document).ready(function () {
+    // Connect to the Socket.IO server
+    const socket = io('http://localhost:3000');
+
+    // Initialize the progress bar
+    const progressText = $('.progress-text');
+
+    const audio = new Audio('/path/to/notification-sound.mp3'); 
+
+    // Listen for progress events from the server
+    socket.on('progress', (percentage) => {
+        // Update the progress bar on the client side
+        updateProgressPercentage(percentage);
+    });
+
+    // Function to update the loading percentage
+    function updateProgressPercentage(percentage) {
+        // Update the progress text
+        progressText.text(percentage + '%');
+
+       // Update the progress bar width
+        $('.progress-bar2').css('width', percentage + '%');
+
+        // Hide the progress bar when the progress reaches 100%
+        if (percentage >= 100) {
+            audio.play();
+            $('.container-progress').hide();
+        } else {
+            $('.container-progress').show();
+        }                               
+    }
+     // Event listener for the navigate button
+     $('.navigate-button').on('click', async () => {
+        // Emit the 'startProcessing' event to the server
+        socket.emit('startProcessing');
+    });
+
     // Initialize your page
     frappe.pages['ai-image-search'].on_page_load();
 });
-

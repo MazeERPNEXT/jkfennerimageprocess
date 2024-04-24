@@ -297,6 +297,7 @@
     border: 1px solid;
     width: 100%;
     height: 100%;
+    cursor: pointer;
 }
 .preview_seg_image{
   border-radius: 6px;
@@ -305,6 +306,7 @@
     border: 1px solid;
     width: 100%;
     height: 100%;
+    cursor: pointer;
 }
 
 /* a {
@@ -462,9 +464,9 @@ canvas {
 }
 
 
-.loader {
-  border: 8px solid #f3f3f3; /* Light grey */
-  border-top: 8px solid #3498db; /* Blue */
+/* .loader {
+  border: 8px solid #f3f3f3; 
+  border-top: 8px solid #3498db; 
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -472,17 +474,91 @@ canvas {
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-top: -25px; /* Half of the height */
-  margin-left: -25px; /* Half of the width */
-  display: none; /* Initially hide the loader */
-  background-color: rgba(0, 0, 0, 0.5); /* Black background with low opacity */
-  z-index: 9999; /* Ensure loader is on top of other content */
+  margin-top: -25px; 
+  margin-left: -25px; 
+  display: none; 
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 9999; 
 }
 
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+} */
+:root {
+  --background: #ffffff;
+  --progress-background: rgba(0, 0, 0, 0.25);
+  --first: #353535;
+  --second: #3c6e71;
+  --third: #d9d9d9;
+  --fourth: #284b63;
+  --green: #355070;
+  --turquoise: #6d597a;
+  --blue: #b56576;
+  --light-blue: #e56b6f;
+  --purple: #eaac8b;
+  --red: #ff2d55;
 }
+
+/* body {
+  background: var(--background);
+} */
+
+/* .container {
+  margin: 100px auto;
+  width: 600px;
+  text-align: center;
+} */
+
+
+
+/* Progress2 styles */
+.progress2 {
+  padding: 6px;
+  border-radius: 30px;
+  background: rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.25), 0 1px rgba(255, 255, 255, 0.08);
+  position: absolute;
+  top: 62%;
+  left: 40%;
+  width: 28%;
+  height: auto;
+  display: none; 
+}
+
+.progress-bar2 {
+  height: 18px;
+  border-radius: 30px;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.05));
+  transition: width 0.4s linear, background-color 0.4s linear;
+}
+
+.progress-moved .progress-bar2 {
+  width: 100%;
+  background-color: #1c8278;
+  animation: progressAnimation 6s;
+}
+.progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the text */
+  color: #fff; /* Set text color */
+  font-weight: bold; /* Optionally set font weight */
+}
+
+@keyframes progressAnimation {
+  0% {
+    width: 0%;
+    background-color: #f9bcca;
+  }
+  100% {
+    width: 85%;
+    background-color: #ef476f;
+  }
+}
+
+
 
 .btn.btn-primary{
   background-color: #159085 !important;
