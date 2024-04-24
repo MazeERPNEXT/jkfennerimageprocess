@@ -133,7 +133,7 @@
                 </div> 
             </div> 
             <div class="btn-image-search" style="margin-bottom: 15px;">
-                <button type="button" id="matchingImageButton" class="btn btn-primary btn-sm-image primary-action navigate-button" data-action="with_struct" style="height: 33px;">
+                <button type="button" id="matchingImageButton" class="btn btn-primary btn-sm-image primary-action struct-button" data-action="with_struct" style="height: 33px;">
                     Search With Structual Dimension
                 </button>
             </div> 
@@ -153,8 +153,10 @@
     </div>
 </div>
 
-<div id="loader" class="loader"></div>
-
+<div id="progress-bar">
+    <div id="progress"></div>
+</div>
+<script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
 
 <!--DImension input normal form code-->
 <!-- <div class="form-column col-md-6 col-lg-4 col-xl-4" >
