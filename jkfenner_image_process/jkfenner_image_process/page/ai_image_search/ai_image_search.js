@@ -53,9 +53,9 @@ class AiImageSearchPage {
                 parentContainer.find('img').attr('src', imageURL);
             });
         });
-
         // Add loader to the page
-        this.progress2 = $('<div class="container-progress"><div class="progress2 progress-moved"><div class="progress-bar2"><div class="progress-text">0%</div></div></div></div>').appendTo(this.page.body);
+        this.loader = $('<div id="loader" class="loader"></div>').appendTo(this.page.body);
+        // this.progress2 = $('<div class="container-progress"><div class="progress2 progress-moved"><div class="progress-bar2"><div class="progress-text">0%</div></div></div></div>').appendTo(this.page.body);
     }
 
     // Hide the loader after some time (for example, 3 seconds)
@@ -172,15 +172,18 @@ class AiImageSearchPage {
             return res;
         });
     }
-
-    showProgress() {
-        $('.progress2').show(); // Show the progress bar
-      }
-      
-      // Function to hide the progress bar
-      hideProgress() {
-        $('.progress2').hide(); // Hide the progress bar
-      }
+    showLoader() {
+        this.loader.show();
+    }
+    hideLoader() {
+        this.loader.hide();
+    }
+    // showProgress() {
+    //     $('.progress2').show(); // Show the progress bar
+    //   }      
+    //   hideProgress() {
+    //     $('.progress2').hide(); // Hide the progress bar
+    //   }
         // Function to update the loading percentage
         // updateProgressPercentage(percentage) {
         //     $('.progress-bar2').css('width', percentage + '%'); // Update the progress bar width
@@ -192,7 +195,17 @@ class AiImageSearchPage {
         // }
 
     async pickMatchingImage(action) {
-        this.showProgress();
+        
+        this.showLoader();
+        //  var percentage = 0;
+        // var interval = setInterval(function() {
+        //     percentage += 10; // Increment the percentage
+        //     frappe.show_progress(__('Processing...'), percentage); // Update the progress
+        //     if (percentage >= 100) {
+        //         clearInterval(interval);
+        //         frappe.hide_progress(); // Hide the progress bar when done
+        //     }
+        // }, 1000);
         let fileInputs = $('.previewImage').prop('files');
         fileInputs = Array.from(fileInputs);
         // Clear previous search results 
@@ -227,6 +240,8 @@ class AiImageSearchPage {
             const percentage = Math.round((processedFiles / totalFiles) * 100);
             this.updateProgressPercentage(percentage);
         };
+        frappe.show_progress("Image Processing",15,100,"Started Processing (15%)")
+
           const response = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image', {
             images: fileResponses.map(fr => fr.name).join('~'),
             inner_diameter_1: innerDiameter1Input && action != 'without_struct' ? parseFloat(innerDiameter1Input) : '',
@@ -246,7 +261,7 @@ class AiImageSearchPage {
             const roundedPercentage = Math.round(image.matching_percentage);
             const roundedPercentageString = `Similarty Percentage: ${roundedPercentage}%`;
             const roundedSimilartyPercentage = `Image Similarty Score: ${roundedPercentage}%`;
-      
+
             // Construct HTML for each image
             imageGrid += `
               <div class="col-lg-4 col-md-6 col-sm-6 mb-3">
@@ -284,7 +299,7 @@ class AiImageSearchPage {
             this.navigateToAiImageDetails(imageName, imagePercentage, imagesPath, childTable, parentTable);
           });
       
-          this.hideProgress();
+          this.hideLoader();
         };
       
         let fileResponses = []
@@ -294,14 +309,14 @@ class AiImageSearchPage {
           const imageName = fileInput.name.split('.')[0];
           filePromises.push(this.upload_file({ 'file_obj': fileInput, 'name': "TestImg.png", "file_name": imageName }));
         });
-      
+        frappe.show_progress("Image Processing",5,100,"Uploading Images (5%)")
         fileResponses = await Promise.all(filePromises);
         getScore(fileResponses);
       }
 
 // Structural dimensions
       async pickMatchingStruct(action) {
-        this.showProgress();
+        this.showLoader();
         let fileInputs = $('.previewImage').prop('files');
         fileInputs = Array.from(fileInputs);
         // Clear previous search results
@@ -323,6 +338,7 @@ class AiImageSearchPage {
             const percentage = Math.round((processedFiles / totalFiles) * 100);
             this.updateProgressPercentage(percentage);
         };
+          frappe.show_progress("Image Processing",15,100,"Started Processing (15%)")
           const response = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image', {
             images: fileResponses.map(fr => fr.name).join('~'),
             inner_diameter_1: innerDiameter1Input && action != 'without_struct' ? parseFloat(innerDiameter1Input) : '',
@@ -380,7 +396,7 @@ class AiImageSearchPage {
             this.navigateToAiImageDetails(imageName, imagePercentage, imagesPath, childTable, parentTable);
           });
       
-          this.hideProgress();
+          this.hideLoader();
         };
       
         let fileResponses = []
@@ -390,7 +406,9 @@ class AiImageSearchPage {
           const imageName = fileInput.name.split('.')[0];
           filePromises.push(this.upload_file({ 'file_obj': fileInput, 'name': "TestImg.png", "file_name": imageName }));
         });
-      
+
+        frappe.show_progress("Image Processing",5,100,"Uploading Images (5%)")
+        
         fileResponses = await Promise.all(filePromises);
         getScore(fileResponses);
       }
@@ -398,7 +416,7 @@ class AiImageSearchPage {
   
 
     previewImage(event) {
-        this.showProgress();
+        this.showLoader();
         var input = event.target;
         var files = input.files;
         var previewImageIds = ['uploaded-image_1', 'uploaded-image_2', 'uploaded-image_3']; // IDs of preview image elements
@@ -427,7 +445,7 @@ class AiImageSearchPage {
             reader.readAsDataURL(file);
         }
 
-        this.hideProgress();
+        this.hideLoader();
     }
 }
 $(document).ready(function() {
@@ -445,42 +463,16 @@ $(document).ready(function() {
 });
 
 $(document).ready(function () {
-    // Connect to the Socket.IO server
-    const socket = io('http://localhost:3000');
-
-    // Initialize the progress bar
-    const progressText = $('.progress-text');
-
-    const audio = new Audio('/path/to/notification-sound.mp3'); 
-
-    // Listen for progress events from the server
-    socket.on('progress', (percentage) => {
-        // Update the progress bar on the client side
-        updateProgressPercentage(percentage);
-    });
-
-    // Function to update the loading percentage
-    function updateProgressPercentage(percentage) {
-        // Update the progress text
-        progressText.text(percentage + '%');
-
-       // Update the progress bar width
-        $('.progress-bar2').css('width', percentage + '%');
-
-        // Hide the progress bar when the progress reaches 100%
-        if (percentage >= 100) {
-            audio.play();
-            $('.container-progress').hide();
-        } else {
-            $('.container-progress').show();
-        }                               
-    }
-     // Event listener for the navigate button
-     $('.navigate-button').on('click', async () => {
-        // Emit the 'startProcessing' event to the server
-        socket.emit('startProcessing');
-    });
-
     // Initialize your page
     frappe.pages['ai-image-search'].on_page_load();
+    var socket = io();
+});
+frappe.realtime.on('Image Processing', (msg) => {
+    frappe.show_progress("Image Processing",msg.percentage,100, msg.message)
+    if (msg.percentage >= 100) {
+        setTimeout(()=>{
+            frappe.hide_progress("Image Processing")
+        }, 1000)
+    }
+
 });

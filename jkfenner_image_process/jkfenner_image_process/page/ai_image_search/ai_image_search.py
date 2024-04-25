@@ -103,23 +103,23 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, dl
         })
         
         image_doc.insert(ignore_permissions=True)
-        # foreground_img_doc_list = []
-        # for index, foreground_img in enumerate(ai_responses['foreground_images']):
-        #     file = frappe.get_doc(
-		# 	{
-		# 		"doctype": "File",
-		# 		"file_name": image_doc.name+f"_foreground_image_{index}.jpg",
-		# 		"attached_to_doctype": image_doc.doctype,
-		# 		"attached_to_name": image_doc.name,
-		# 		"content": foreground_img,
-		# 		"decode": True,
-		# 	}
-		#     )
-        #     file.save()
-        #     foreground_img_doc_list.append(file.file_url)
-        # if foreground_img_doc_list:
-        #     image_doc.foreground_image_url = ",".join(foreground_img_doc_list)
-            # image_doc.save()
+        foreground_img_doc_list = []
+        for index, foreground_img in enumerate(ai_responses['foreground_images']):
+            file = frappe.get_doc(
+			{
+				"doctype": "File",
+				"file_name": image_doc.name+f"_foreground_image_{index}.jpg",
+				"attached_to_doctype": image_doc.doctype,
+				"attached_to_name": image_doc.name,
+				"content": foreground_img,
+				"decode": True,
+			}
+		    )
+            file.save()
+            foreground_img_doc_list.append(file.file_url)
+        if foreground_img_doc_list:
+            image_doc.foreground_image_url = ",".join(foreground_img_doc_list)
+            image_doc.save()
         # Create records in child table for each document in ai_responses
         for index, image_url in enumerate(ai_responses["images"]):
 
