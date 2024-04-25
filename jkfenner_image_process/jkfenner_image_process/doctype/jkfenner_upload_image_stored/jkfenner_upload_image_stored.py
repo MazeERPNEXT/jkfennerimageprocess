@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 class JKFennerUploadImageStored(Document):
     
     @staticmethod
-    def clear_old_logs(days=2):
+    def clear_old_logs(days=1):
         current_datetime = datetime.now()
         cutoff_date = current_datetime - timedelta(days=days)
         records_to_delete = frappe.get_list("JKFenner Upload Image Stored",
@@ -45,8 +45,14 @@ class JKFennerUploadImageStored(Document):
                     except:
                         pass
 
+        frappe.db.commit()
+
 @frappe.whitelist()
 def clear_error_logs():
     """Flush all Error Logs"""
     frappe.only_for("System Manager")
     frappe.db.truncate("JKFenner Upload Image Stored")
+
+@frappe.whitelist()
+def test_delete_record():
+    JKFennerUploadImageStored.clear_old_logs()

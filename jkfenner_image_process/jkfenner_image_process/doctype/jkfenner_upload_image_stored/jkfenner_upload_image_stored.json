@@ -7,7 +7,6 @@
  "field_order": [
   "section_break_devu",
   "upload_image",
-  "foreground_image_url",
   "column_break_y06c",
   "id_a1",
   "column_break_swqq",
@@ -18,6 +17,8 @@
   "branched",
   "threshold",
   "dl_segment",
+  "section_break_p4kw",
+  "foreground_image_url",
   "section_break_xu2z",
   "matching_find_images"
  ],
@@ -95,11 +96,15 @@
    "fieldname": "foreground_image_url",
    "fieldtype": "Text",
    "label": "Foreground Image URL"
+  },
+  {
+   "fieldname": "section_break_p4kw",
+   "fieldtype": "Section Break"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-04-12 20:29:11.134669",
+ "modified": "2024-04-25 19:21:09.413704",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "JKFenner Upload Image Stored",
