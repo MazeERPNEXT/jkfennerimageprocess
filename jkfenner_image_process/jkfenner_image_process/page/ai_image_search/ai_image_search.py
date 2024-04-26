@@ -11,7 +11,7 @@ from frappe import publish_progress
 from time import sleep
 
 @frappe.whitelist()
-def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, dlsegment, threshold):
+def guess_image(images, branched, dlsegment, threshold,inner_diameter_1=None, inner_diameter_2=None, length=None,):
     images = images.split('~')
     _files = frappe.get_list("File", filters = {'name':["in", images]}, fields=["name"], pluck="name")
     inner_diameter_1 = float(inner_diameter_1) if inner_diameter_1 else None
