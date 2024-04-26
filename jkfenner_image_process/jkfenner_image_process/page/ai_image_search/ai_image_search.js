@@ -421,9 +421,9 @@ class AiImageSearchPage {
         var files = input.files;
         var previewImageIds = ['uploaded-image_1', 'uploaded-image_2', 'uploaded-image_3']; // IDs of preview image elements
 
-        // $(".preview_seg_image").each(function(i, elem){    
-        //     $(elem).attr('src', imageURL)
-        // });
+        $(".preview_seg_image").each(function(i, elem){    
+            $(elem).attr('src', imageURL)
+        });
 
         for (let i = 0; i < files.length; i++) {
             var file = files[i];
