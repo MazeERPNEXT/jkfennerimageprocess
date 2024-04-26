@@ -254,7 +254,12 @@ class AiImageSearchPage {
           });
       
           let imageGrid = "";
-      
+          const foreground_images = response.foreground_image_url.split(',') || [];
+          foreground_images.forEach((fi, index) => {
+              let image = $(".preview_seg_image")[index];
+              if(!!image)
+                  $(image).attr('src', fi);
+          })
           response.matching_find_images.forEach((image, _index) => {
             let part_no = image.part_no && image.part_no ? image.part_no.name : '';
             let score = image.matching_percentage;
