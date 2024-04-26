@@ -178,44 +178,15 @@ class AiImageSearchPage {
     hideLoader() {
         this.loader.hide();
     }
-    // showProgress() {
-    //     $('.progress2').show(); // Show the progress bar
-    //   }      
-    //   hideProgress() {
-    //     $('.progress2').hide(); // Hide the progress bar
-    //   }
-        // Function to update the loading percentage
-        // updateProgressPercentage(percentage) {
-        //     $('.progress-bar2').css('width', percentage + '%'); // Update the progress bar width
-        //     $('.progress-text').text(percentage + '%'); // Update the percentage text
-        //     if (percentage >= 100) {
-        //         // Hide the progress bar when the progress reaches 100%
-        //         this.hideProgress();
-        //     }
-        // }
-
-    async pickMatchingImage(action) {
-        
+    
+// Pick Matching Image
+    async pickMatchingImage(action) { 
         this.showLoader();
-        //  var percentage = 0;
-        // var interval = setInterval(function() {
-        //     percentage += 10; // Increment the percentage
-        //     frappe.show_progress(__('Processing...'), percentage); // Update the progress
-        //     if (percentage >= 100) {
-        //         clearInterval(interval);
-        //         frappe.hide_progress(); // Hide the progress bar when done
-        //     }
-        // }, 1000);
         let fileInputs = $('.previewImage').prop('files');
         fileInputs = Array.from(fileInputs);
         // Clear previous search results 
         $('.preview-section').html('');
-      // Get the similarity score input value
-    //    const similarityScore = $('#similarityScoreInput').val(); // Assuming you have an input field for similarity score
         const getScore = async (fileResponses) => {
-          const innerDiameter1Input = $('#innerDiameter1Input').val();
-          const innerDiameter2Input = $('#innerDiameter2Input').val();
-          const lengthInput = $('#lengthInput').val();
           const bracnchedInput = $('#bracnchedInput').prop('checked');
           const dlsegmentInput = $('#dlsegmentInput').prop('checked');
           const thresholdInput = $('#thresholdInput').prop('checked');
@@ -245,14 +216,10 @@ class AiImageSearchPage {
 
           const response = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image', {
             images: fileResponses.map(fr => fr.name).join('~'),
-            inner_diameter_1: innerDiameter1Input && action != 'without_struct' ? parseFloat(innerDiameter1Input) : '',
-            inner_diameter_2: innerDiameter2Input && action != 'without_struct' ? parseFloat(innerDiameter2Input) : '',
-            length: lengthInput && action != 'without_struct' ? parseFloat(lengthInput) : '',
             branched: bracnchedInput,
             dlsegment: dlsegmentInput,
             threshold: thresholdInput,
             thickness: thickness,
-            // similarity_score: similarityScore,
           });
       
           let imageGrid = "";
@@ -328,8 +295,6 @@ class AiImageSearchPage {
         fileInputs = Array.from(fileInputs);
         // Clear previous search results
         $('.preview-section').html('');
-      // Get the similarity score input value
-        // const similarityScore = $('#similarityScoreInput').val(); // Assuming you have an input field for similarity score
         const getScore = async (fileResponses) => {
           const innerDiameter1Input = $('#innerDiameter1Input').val();
           const innerDiameter2Input = $('#innerDiameter2Input').val();
