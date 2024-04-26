@@ -54,7 +54,7 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, dl
     img_paths = [file.get_full_path() for file in imgs]
     predictor = LoadJKFennerModel().predictor
     similarity_scores = []
-    print(img_paths, dl_segment, is_threshold, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 0,sep=" ----- ")
+    print(img_paths, dl_segment, is_threshold, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 200,sep=" ----- ")
     similarity_images, foreground_img_list = predictor.run(img_paths, dl_segment, is_threshold, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 200)
     base64_images = []
     encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 35]
