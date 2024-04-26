@@ -210,7 +210,8 @@ class AiImageSearchPage {
         fileInputs = Array.from(fileInputs);
         // Clear previous search results 
         $('.preview-section').html('');
-      
+      // Get the similarity score input value
+       const similarityScore = $('#similarityScoreInput').val(); // Assuming you have an input field for similarity score
         const getScore = async (fileResponses) => {
           const innerDiameter1Input = $('#innerDiameter1Input').val();
           const innerDiameter2Input = $('#innerDiameter2Input').val();
@@ -251,6 +252,7 @@ class AiImageSearchPage {
             dlsegment: dlsegmentInput,
             threshold: thresholdInput,
             thickness: thickness,
+            similarity_score: similarityScore,
           });
       
           let imageGrid = "";
