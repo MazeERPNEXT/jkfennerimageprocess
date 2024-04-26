@@ -11,7 +11,7 @@ from frappe import publish_progress
 from time import sleep
 
 @frappe.whitelist()
-def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, dlsegment, threshold, similarity_score):
+def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, dlsegment, threshold):
     images = images.split('~')
     _files = frappe.get_list("File", filters = {'name':["in", images]}, fields=["name"], pluck="name")
     inner_diameter_1 = float(inner_diameter_1) if inner_diameter_1 else None
@@ -74,11 +74,8 @@ def guess_image(images, inner_diameter_1, inner_diameter_2, length, branched, dl
         similarity_scores.append(score)
     similarity_scores = [str(similarity_score) for similarity_score in similarity_scores]
 
-    # Filter data based on similarity score
-    filtered_data = [(image, score) for image, score in zip(similarity_images_with_path, similarity_scores) if float(score) >= float(similarity_score)]
-
-    ai_responses["images"] = [data[0] for data in filtered_data]
-    ai_responses["scores"] = [data[1] for data in filtered_data]
+    ai_responses["images"] = similarity_images_with_path
+    ai_responses["scores"] = similarity_scores
     ai_responses['foreground_images'] = base64_images
     
     predicted_images = ai_responses['images']
