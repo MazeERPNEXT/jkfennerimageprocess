@@ -326,7 +326,8 @@ class AiImageSearchPage {
         fileInputs = Array.from(fileInputs);
         // Clear previous search results
         $('.preview-section').html('');
-      
+      // Get the similarity score input value
+        const similarityScore = $('#similarityScoreInput').val(); // Assuming you have an input field for similarity score
         const getScore = async (fileResponses) => {
           const innerDiameter1Input = $('#innerDiameter1Input').val();
           const innerDiameter2Input = $('#innerDiameter2Input').val();
@@ -335,14 +336,7 @@ class AiImageSearchPage {
           const dlsegmentInput = $('#dlsegmentInput').prop('checked');
           const thresholdInput = $('#thresholdInput').prop('checked');
           const thickness = 5;
-      
-          const totalFiles = fileResponses.length;
-          let processedFiles = 0;
-         // Function to update the loading percentage
-         const updatePercentage = () => {
-            const percentage = Math.round((processedFiles / totalFiles) * 100);
-            this.updateProgressPercentage(percentage);
-        };
+    
           frappe.show_progress("Image Processing",15,100,"Started Processing (15%)")
           const response = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image', {
             images: fileResponses.map(fr => fr.name).join('~'),
@@ -353,6 +347,7 @@ class AiImageSearchPage {
             dlsegment: dlsegmentInput,
             threshold: thresholdInput,
             thickness: thickness,
+            similarity_score: similarityScore,
           });
       
           let imageGrid = "";
