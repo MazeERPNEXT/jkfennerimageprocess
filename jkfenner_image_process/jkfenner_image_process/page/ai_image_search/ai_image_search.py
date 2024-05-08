@@ -3,7 +3,7 @@ import os
 import sys
 # from jkfennerai.inference import predict
 from collections import OrderedDict
-from jkfenner_image_process.jkfenner_image_process.ai import LoadJKFennerModel
+# from jkfenner_image_process.jkfenner_image_process.ai import LoadJKFennerModel
 import base64
 import cv2
 from io import BytesIO
@@ -20,63 +20,73 @@ def guess_image(images, branched, dlsegment, threshold,inner_diameter_1=None, in
     is_branched_hose = True if branched == 'true' else False
     dl_segment = True if dlsegment == 'true' else False
     is_threshold = True if threshold == 'true' else False    
-    # ai_responses = {
-    #     "images": [
-    #         "/assets/jkfenner_image_process/images/machine_learning/augment_images/E72068/E72068-16.jpg",
-    #         "/assets/jkfenner_image_process/images/machine_learning/augment_images/C70368/C70368-41.jpg",
-    #         "/assets/jkfenner_image_process/images/machine_learning/augment_images/E71617/E71617-28.jpg",
-    #         "/assets/jkfenner_image_process/images/machine_learning/augment_images/C70592/C70592-90.jpg",
-    #         "/assets/jkfenner_image_process/images/machine_learning/augment_images/C70477/C70477-49.jpg",
-    #         "/assets/jkfenner_image_process/images/machine_learning/augment_images/E71617/E71617-74.jpg",
-    #         "/assets/jkfenner_image_process/images/machine_learning/augment_images/E72068/E72068-61.jpg",
-    #         "/assets/jkfenner_image_process/images/machine_learning/augment_images/C70592/C70592-34.jpg",
-    #         "/assets/jkfenner_image_process/images/machine_learning/augment_images/C70680/C70680-9.jpg",
-    #         "/assets/jkfenner_image_process/images/machine_learning/augment_images/A70896/A70896-59.jpg"
-    #     ],
-    #     "scores": [
-    #         "0.8233142",
-    #         "0.7654208",
-    #         "0.7642282",
-    #         "0.7544414",
-    #         "0.74282396",
-    #         "0.742217",
-    #         "0.73571",
-    #         "0.7337779",
-    #         "0.7235214",
-    #         "0.7229657"
-    #     ]
-    # }
-
-    
-    ai_responses = {}
+    ai_responses = {
+        "images": [
+            "/assets/jkfenner_image_process/images/machine_learning/augment_images/E72068/E72068-16.jpg",
+            "/assets/jkfenner_image_process/images/machine_learning/augment_images/C70368/C70368-41.jpg",
+            "/assets/jkfenner_image_process/images/machine_learning/augment_images/E71617/E71617-28.jpg",
+            "/assets/jkfenner_image_process/images/machine_learning/augment_images/C70592/C70592-90.jpg",
+            "/assets/jkfenner_image_process/images/machine_learning/augment_images/C70477/C70477-49.jpg",
+            "/assets/jkfenner_image_process/images/machine_learning/augment_images/E71617/E71617-74.jpg",
+            "/assets/jkfenner_image_process/images/machine_learning/augment_images/E72068/E72068-61.jpg",
+            "/assets/jkfenner_image_process/images/machine_learning/augment_images/C70592/C70592-34.jpg",
+            "/assets/jkfenner_image_process/images/machine_learning/augment_images/C70680/C70680-9.jpg",
+            "/assets/jkfenner_image_process/images/machine_learning/augment_images/A70896/A70896-59.jpg"
+        ],
+        "scores": [
+            "0.8233142",
+            "0.7654208",
+            "0.7642282",
+            "0.7544414",
+            "0.74282396",
+            "0.742217",
+            "0.73571",
+            "0.7337779",
+            "0.7235214",
+            "0.7229657"
+        ]
+    }
+   
+    sleep(2)
+    frappe.publish_realtime(event = "Image Processing", message = { 'percentage': 10, 'message': "Image Preprocessing Started...(10%)" },room='room_channel1')
+    sleep(5)
+    frappe.publish_realtime(event = "Image Processing", message = { 'percentage': 20, 'message': "Image Preprocessing Completed...(20%)" },room='room_channel1')
+    sleep(5)
+    frappe.publish_realtime(event = "Image Processing", message = { 'percentage': 60, 'message': "Similar Images Returned From DB...(60%)" },room='room_channel1')
+    sleep(5)
+    frappe.publish_realtime(event = "Image Processing", message = { 'percentage': 80, 'message': "Returning Images...(80%)" },room='room_channel1')
+    sleep(10)
+    frappe.publish_realtime(event = "Image Processing", message = { 'percentage': 100, 'message': "Image Process Completed...(100%)" },room='room_channel1')
+    return {}
+    # ai_responses = {}
 
     imgs = [frappe.get_doc('File', _file) for _file in _files]
-    img_paths = [file.get_full_path() for file in imgs]
-    predictor = LoadJKFennerModel().predictor
-    similarity_scores = []
-    print(img_paths, dl_segment, is_threshold, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 200,sep=" ----- ")
-    similarity_images, foreground_img_list = predictor.run(img_paths, dl_segment, is_threshold, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 200)
-    base64_images = []
-    encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 35]
-    for foreground_img in foreground_img_list:
-        is_success, buffer = cv2.imencode(".jpg", foreground_img, encode_param)
-        if is_success:
-            im = base64.b64encode(buffer)
-            base64_images.append(im)
-    similarity_images = dict(sorted(similarity_images.items(), key=lambda x: x[1], reverse=True))
-    similarity_images = OrderedDict(similarity_images)
-    similarity_images_with_path = []
-    for similarity_image, score in similarity_images.items():
-        image_parts = str(similarity_image).split('-')
-        image_parts.pop()
-        imagefolder = "-".join(image_parts)
-        similarity_images_with_path.append("/assets/jkfenner_image_process/images/machine_learning/augment_images/{}/{}".format(imagefolder, similarity_image))
-        similarity_scores.append(score)
-    similarity_scores = [str(similarity_score) for similarity_score in similarity_scores]
+    # img_paths = [file.get_full_path() for file in imgs]
+    # predictor = LoadJKFennerModel().predictor
+    # similarity_scores = []
+    # print(img_paths, dl_segment, is_threshold, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 200,sep=" ----- ")
+    # similarity_images, foreground_img_list = predictor.run(img_paths, dl_segment, is_threshold, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 200)
+    # base64_images = []
+    # encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 35]
+    # for foreground_img in foreground_img_list:
+    #     is_success, buffer = cv2.imencode(".jpg", foreground_img, encode_param)
+    #     if is_success:
+    #         im = base64.b64encode(buffer)
+    #         base64_images.append(im)
+    # similarity_images = dict(sorted(similarity_images.items(), key=lambda x: x[1], reverse=True))
+    # similarity_images = OrderedDict(similarity_images)
+    # similarity_images_with_path = []
+    # for similarity_image, score in similarity_images.items():
+    #     image_parts = str(similarity_image).split('-')
+    #     image_parts.pop()
+    #     imagefolder = "-".join(image_parts)
+    #     similarity_images_with_path.append("/assets/jkfenner_image_process/images/machine_learning/augment_images/{}/{}".format(imagefolder, similarity_image))
+    #     similarity_scores.append(score)
+    # similarity_scores = [str(similarity_score) for similarity_score in similarity_scores]
 
-    ai_responses["images"] = similarity_images_with_path
-    ai_responses["scores"] = similarity_scores
-    ai_responses['foreground_images'] = base64_images
+    # ai_responses["images"] = similarity_images_with_path
+    # ai_responses["scores"] = similarity_scores
+    # ai_responses['foreground_images'] = base64_images
     
     predicted_images = ai_responses['images']
     docsinfo = [image.split('/')[-2] for image in predicted_images]
@@ -162,11 +172,11 @@ def guess_image(images, branched, dlsegment, threshold,inner_diameter_1=None, in
                 'inner_diameter_2': inner_diameter_2,
                 # Add other fields as needed
             })
-
+        
         # Save the image_doc after inserting all child records
         image_doc.save()
         frappe.db.commit()
-    
+
         return image_doc
     except Exception as e:
         return "Failed to store image: {0}".format(str(e))

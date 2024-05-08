@@ -435,6 +435,7 @@ $(document).ready(function () {
     var socket = io();
 });
 frappe.realtime.on('Image Processing', (msg) => {
+    console.log('Received message from room_channel1', msg)
     frappe.show_progress("Image Processing",msg.percentage,100, msg.message)
     if (msg.percentage >= 100) {
         setTimeout(()=>{
