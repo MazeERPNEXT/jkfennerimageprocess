@@ -3,6 +3,7 @@ frappe.pages['ai-image-search'].on_page_load = function (wrapper) {
 };
 
 let imageURL = '/assets/jkfenner_image_process/images/upload_image.png';
+let taskID = Math.random().toString(36).substring(2);
 
 class AiImageSearchPage {
     constructor(wrapper) {
@@ -56,6 +57,8 @@ class AiImageSearchPage {
         // Add loader to the page
         this.loader = $('<div id="loader" class="loader"></div>').appendTo(this.page.body);
         // this.progress2 = $('<div class="container-progress"><div class="progress2 progress-moved"><div class="progress-bar2"><div class="progress-text">0%</div></div></div></div>').appendTo(this.page.body);
+
+        frappe.socketio.task_subscribe(taskID);
     }
 
     // Hide the loader after some time (for example, 3 seconds)
@@ -220,6 +223,7 @@ class AiImageSearchPage {
             dlsegment: dlsegmentInput,
             threshold: thresholdInput,
             thickness: thickness,
+            task_id : taskID
           });
       
           let imageGrid = "";
@@ -315,6 +319,7 @@ class AiImageSearchPage {
             threshold: thresholdInput,
             thickness: thickness,
             // similarity_score: similarityScore,
+            task_id: taskID
           });
       
           let imageGrid = "";
@@ -432,10 +437,8 @@ $(document).ready(function() {
 $(document).ready(function () {
     // Initialize your page
     frappe.pages['ai-image-search'].on_page_load();
-    var socket = io();
 });
 frappe.realtime.on('Image Processing', (msg) => {
-    console.log('Received message from room_channel1', msg)
     frappe.show_progress("Image Processing",msg.percentage,100, msg.message)
     if (msg.percentage >= 100) {
         setTimeout(()=>{
