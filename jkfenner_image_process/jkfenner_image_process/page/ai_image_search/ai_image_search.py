@@ -11,7 +11,7 @@ from frappe import publish_progress
 from time import sleep
 
 @frappe.whitelist()
-def guess_image(images, branched, dlsegment, threshold, inner_diameter_1 = None, inner_diameter_2 = None, length = None, task_id = None):
+def guess_image(images, branched, dlsegment, threshold, inner_diameter_1 = None, inner_diameter_1_max = None, inner_diameter_2 = None, inner_diameter_2_max = None, length = None, length_max = None, task_id = None):
     images = images.split('~')
     _files = frappe.get_list("File", filters = {'name':["in", images]}, fields=["name"], pluck="name")
     inner_diameter_1 = float(inner_diameter_1) if inner_diameter_1 else None
@@ -57,7 +57,7 @@ def guess_image(images, branched, dlsegment, threshold, inner_diameter_1 = None,
     predictor = LoadJKFennerModel().predictor
     similarity_scores = []
     print(img_paths, dl_segment, is_threshold, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 200,sep=" ----- ")
-    similarity_images, foreground_img_list = predictor.run(img_paths, dl_segment, is_threshold, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_2, length, 200)
+    similarity_images, foreground_img_list = predictor.run(img_paths, dl_segment, is_threshold, 'branch' if is_branched_hose else 'single', inner_diameter_1, inner_diameter_1_max, inner_diameter_2, inner_diameter_2_max, length, length_max)
     base64_images = []
     encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 35]
     for foreground_img in foreground_img_list:

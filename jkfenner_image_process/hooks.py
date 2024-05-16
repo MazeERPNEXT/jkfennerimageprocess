@@ -147,7 +147,10 @@ scheduler_events = {
 #	],
     "daily": [
         "jkfenner_image_process.scheduler.delete_expired_data"
-    ]
+    ],
+	"0 0 0 1 1 ? 1970": [
+		"jkfenner_image_process.mgmt_commands.run_mass_ai_prediction"
+	]
 }
 
 # Testing
