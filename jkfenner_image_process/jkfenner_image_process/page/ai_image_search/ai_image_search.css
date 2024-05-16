@@ -570,6 +570,7 @@ canvas {
 @media (min-width:1200px){
   .form-group{
     width: 95%;
+    height: 109px;
   }
 }
 
@@ -704,4 +705,48 @@ canvas {
   margin-bottom: 5px;
   position: relative;
   left: 6px;
+}
+
+
+.tollerance{
+  display: flex;
+  justify-content: space-between;
+}
+.qty-container{
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  position: relative;
+  top: -9px;
+}
+.qty-container .input-qty{
+  text-align: center;
+  padding: 0px 0px;
+  border: 1px solid #d4d4d4;
+  max-width: 67px;
+}
+.qty-container .qty-btn-minus,
+.qty-container .qty-btn-plus{
+  border: 1px solid #d4d4d4;
+  padding: 4px 8px;
+  font-size: 10px;
+  height: 28px;
+  width: 29px;
+  transition: 0.3s;
+}
+.qty-container .qty-btn-plus{
+  margin-left: -1px;
+}
+.qty-container .qty-btn-minus{
+  margin-right: -1px;
+}
+
+button:focus,
+input:focus{
+  outline: none;
+  box-shadow: none;
+}
+a,
+a:hover{
+  text-decoration: none;
 }

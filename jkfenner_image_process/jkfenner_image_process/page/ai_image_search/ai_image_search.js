@@ -53,13 +53,41 @@ class AiImageSearchPage {
                 // Set the src attribute of the image to the path of the default image
                 parentContainer.find('img').attr('src', imageURL);
             });
+            
+            this.incrementQty = this.incrementQty.bind(this);
+            this.decrementQty = this.decrementQty.bind(this);
+             // Attach event listeners
+                 this.attachTolleranceEventListeners();
         });
         // Add loader to the page
         this.loader = $('<div id="loader" class="loader"></div>').appendTo(this.page.body);
         // this.progress2 = $('<div class="container-progress"><div class="progress2 progress-moved"><div class="progress-bar2"><div class="progress-text">0%</div></div></div></div>').appendTo(this.page.body);
-
         frappe.socketio.task_subscribe(taskID);
+
+       
     }
+
+    attachTolleranceEventListeners() {
+        // Attach event listeners to the buttons
+        $('.qty-btn-plus').on('click', this.incrementQty);
+        $('.qty-btn-minus').on('click', this.decrementQty);
+    }
+    
+    incrementQty(event) {
+        // Find the input field relative to the clicked button
+        const $inputQty = $(event.target).closest('.qty-container').find('.input-qty');
+        let currentValue = parseFloat($inputQty.val());
+        $inputQty.val(currentValue + 1);
+    }
+    
+    decrementQty(event) {
+        // Find the input field relative to the clicked button
+        const $inputQty = $(event.target).closest('.qty-container').find('.input-qty');
+        let currentValue = parseFloat($inputQty.val());
+        if (currentValue > 0) {
+            $inputQty.val(currentValue - 1);
+        }
+    }   
 
     // Hide the loader after some time (for example, 3 seconds)
     // Adjust the time as needed
@@ -300,9 +328,12 @@ class AiImageSearchPage {
         // Clear previous search results
         $('.preview-section').html('');
         const getScore = async (fileResponses) => {
-          const innerDiameter1Input = $('#innerDiameter1Input').val();
-          const innerDiameter2Input = $('#innerDiameter2Input').val();
-          const lengthInput = $('#lengthInput').val();
+          const innerDiameter1MaxInput = $('#innerDiameter1MaxInput').val();
+          const innerDiameter1MinInput = $('#innerDiameter1MinInput').val();
+          const innerDiameter2MinInput = $('#innerDiameter2MinInput').val();
+          const innerDiameter2MaxInput = $('#innerDiameter2MaxInput').val();
+          const lengthInputMin = $('#lengthInputMin').val();
+          const lengthInputMax = $('#lengthInputMax').val();
           const bracnchedInput = $('#bracnchedInput').prop('checked');
           const dlsegmentInput = $('#dlsegmentInput').prop('checked');
           const thresholdInput = $('#thresholdInput').prop('checked');
@@ -311,9 +342,12 @@ class AiImageSearchPage {
           frappe.show_progress("Image Processing",15,100,"Started Processing (15%)")
           const response = await frappe.xcall('jkfenner_image_process.jkfenner_image_process.page.ai_image_search.ai_image_search.guess_image', {
             images: fileResponses.map(fr => fr.name).join('~'),
-            inner_diameter_1: innerDiameter1Input && action != 'without_struct' ? parseFloat(innerDiameter1Input) : '',
-            inner_diameter_2: innerDiameter2Input && action != 'without_struct' ? parseFloat(innerDiameter2Input) : '',
-            length: lengthInput && action != 'without_struct' ? parseFloat(lengthInput) : '',
+            inner_diameter_1: innerDiameter1MinInput && action != 'without_struct' ? parseFloat(innerDiameter1MinInput) : '',
+            inner_diameter_1_max: innerDiameter1MaxInput && action != 'without_struct' ? parseFloat(innerDiameter1MaxInput) : '',
+            inner_diameter_2: innerDiameter2MinInput && action != 'without_struct' ? parseFloat(innerDiameter2MinInput) : '',
+            inner_diameter_2_max: innerDiameter2MaxInput && action != 'without_struct' ? parseFloat(innerDiameter2MaxInput) : '',
+            length: lengthInputMin && action != 'without_struct' ? parseFloat(lengthInputMin) : '',
+            length_max: lengthInputMax && action != 'without_struct' ? parseFloat(lengthInputMax) : '',
             branched: bracnchedInput,
             dlsegment: dlsegmentInput,
             threshold: thresholdInput,
@@ -423,9 +457,12 @@ class AiImageSearchPage {
 $(document).ready(function() {
     // Function to clear structural dimensions inputs
     function clearStructuralInputs() {
-        $('#innerDiameter1Input').val('');
-        $('#innerDiameter2Input').val('');
-        $('#lengthInput').val('');
+        $('#innerDiameter1MinInput').val('');
+        $('#innerDiameter2MinInput').val('');
+        $('#lengthInputMin').val('');
+        $('#innerDiameter1MaxInput').val('');
+        $('#innerDiameter2MaxInput').val('');
+        $('#lengthInputMax').val('');
     }
 
     // Event listener for image upload input change
@@ -446,4 +483,23 @@ frappe.realtime.on('Image Processing', (msg) => {
         }, 1000)
     }
 
+});
+var buttonPlus  = $(".qty-btn-plus");
+var buttonMinus = $(".qty-btn-minus");
+
+var incrementPlus = buttonPlus.click(function() {
+  var $n = $(this)
+  .parent(".qty-container")
+  .find(".input-qty");
+  $n.val(Number($n.val())+1 );
+});
+
+var incrementMinus = buttonMinus.click(function() {
+  var $n = $(this)
+  .parent(".qty-container")
+  .find(".input-qty");
+  var amount = Number($n.val());
+  if (amount > 0) {
+    $n.val(amount-1);
+  }
 });
