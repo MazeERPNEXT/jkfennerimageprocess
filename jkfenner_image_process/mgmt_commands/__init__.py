@@ -67,8 +67,8 @@ def run_mass_ai_prediction_job():
 			file_content = image_file.get_content()
 			binary_file = open(os.path.join(test_images, image_file.file_name), "wb")
 			binary_file.write(file_content)
-	single_augment_images_path = predictor.config['DEFAULT']["HOSE_SINGLE_AUGMENT_FOLDER_PATH"]
-	branched_augment_images_path = predictor.config['DEFAULT']["HOSE_BRANCH_AUGMENT_FOLDER_PATH"]
+	single_augment_images_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/public/images/machine_learning/augment_images"
+	branched_augment_images_path = "/home/frappe/frappe-bench/apps/jkfenner_image_process/jkfenner_image_process/public/images/machine_learning/augment_images"
 
 	output_folder_path = os.path.join(temp_folder, "output_path")
 	if (not os.path.exists(output_folder_path)):
