@@ -149,7 +149,7 @@ scheduler_events = {
         "jkfenner_image_process.scheduler.delete_expired_data"
     ],
 	"cron": {
-		"0 0 32 * *": ["jkfenner_image_process.mgmt_commands.run_mass_ai_prediction"]
+		"0 0 31 * *": ["jkfenner_image_process.mgmt_commands.run_mass_ai_prediction"]
 	}
 }
 
