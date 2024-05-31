@@ -74,8 +74,8 @@ def run_mass_ai_prediction_job():
 	if (not os.path.exists(output_folder_path)):
 		os.mkdir(output_folder_path)
 		os.chmod(output_folder_path, 0o777)
-	num_columns = 5
-	num_rows = 6
+	num_columns = 4
+	num_rows = 5
 	dl_segment = True
 	threshold_segment = False
 	hose_type = "single"
