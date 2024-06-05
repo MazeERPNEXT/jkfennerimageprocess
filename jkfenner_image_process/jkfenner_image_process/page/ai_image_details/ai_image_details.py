@@ -169,6 +169,10 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
     matching_find_images = []
     site_url = get_url()
     upload_image_doc = frappe.get_doc('JKFenner Image Details Stored', child_ref)
+    app_settings = frappe.get_doc("Application Settings", "Application Settings")
+    last_data_set_date_str = app_settings.get("last_data_set_date")
+    last_data_set_date = datetime.strptime(last_data_set_date_str.split()[0], "%Y-%m-%d")
+    formatted_last_data_set_date = last_data_set_date.strftime("%d-%m-%Y")
         
     getAllValues = frappe.get_doc('JKFenner Image AI', upload_image_doc.part_no)
     
@@ -366,14 +370,14 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
 
                              
                             <div class="disclimar">
-                                <p><b>AI-Generated Content: </b> The responses you receive are produced by an AI system based on the information available up to [Knowledge Cutoff Date: Month, Year]. This system is designed to provide reasonably accurate and relevant information, but it may not always reflect the most accurate match and specific nuances of your situation.</p>
+                                <p><b>AI-Generated Content: </b> The responses you receive are produced by an AI system based on the information available up to <span id="knowledge_tv">Knowledge Cutoff Date: {{ formatted_last_data_set_date }}</span>. This system is designed to provide reasonably accurate and relevant information, but it may not always reflect the most accurate match and specific nuances of your situation.</p>
                                 <p><b>Verification Recommended: </b> We recommend verifying any critical information, design or advice provided by the AI with additional reliable sources. Please consult with a human expert if you have any specific concerns or require professional guidance.</p>
                                 <p><b>Continuous Improvement: </b>AI systems are continually improving, and we welcome your feedback to enhance the quality and accuracy of the responses. If you encounter any issues or inaccuracies, please let us know.</p>
                             </div> 
                 '''
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(html_content_internal)
-    rendered_content = template.render(getAllValues=getAllValues, site_url=site_url,upload_image_doc = upload_image_doc,)
+    rendered_content = template.render(getAllValues=getAllValues, site_url=site_url,upload_image_doc = upload_image_doc, formatted_last_data_set_date=formatted_last_data_set_date)
 
     # file = open("/tmp/jkfenner.html", "w")
     # file.write(rendered_content)
