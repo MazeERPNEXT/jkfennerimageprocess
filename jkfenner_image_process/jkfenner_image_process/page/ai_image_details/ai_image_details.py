@@ -21,7 +21,7 @@ def get_image_ai_details(parent_ref=None, child_ref=None):
     app_settings = frappe.get_doc("Application Settings", "Application Settings")
     last_data_set_date_str = app_settings.get("last_data_set_date")
     last_data_set_date = datetime.strptime(last_data_set_date_str.split()[0], "%Y-%m-%d")
-    formatted_last_data_set_date = last_data_set_date.strftime("%d-%b-%Y")
+    formatted_last_data_set_date = last_data_set_date.strftime("%d-%m-%Y")
     try:
         previous_image_doc = frappe.get_last_doc('JKFenner Image Details Stored',filters=[['idx','=',upload_image_doc.idx-1], ["parent","=",parent_ref], ['idx','<',4]], order_by="idx asc")
     except frappe.DoesNotExistError:
@@ -159,7 +159,7 @@ def get_image_ai_details(parent_ref=None, child_ref=None):
                  """
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(image_html_content)
-    rendered_content = template.render(getAllValues=getAllValues, previous_image_doc=previous_image_doc, next_image_doc = next_image_doc, upload_image_doc = upload_image_doc, site_url=site_url)
+    rendered_content = template.render(getAllValues=getAllValues, previous_image_doc=previous_image_doc, next_image_doc = next_image_doc, upload_image_doc = upload_image_doc, site_url=site_url, formatted_last_data_set_date=formatted_last_data_set_date)
     print(image_paths,matching_find_images)
     return rendered_content
 
