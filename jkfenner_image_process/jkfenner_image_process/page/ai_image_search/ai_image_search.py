@@ -14,7 +14,7 @@ from time import sleep
 def guess_image(images, branched, dlsegment, threshold, inner_diameter_1 = None, inner_diameter_1_max = None, inner_diameter_2 = None, inner_diameter_2_max = None, length = None, length_max = None, task_id = None):
     images = images.split('~')
     _files = frappe.get_list("File", filters = {'name':["in", images]}, fields=["name"], pluck="name")
-    inner_diameter_1 = float(inner_diameter_1_max) if inner_diameter_1_max else None
+    inner_diameter_1 = float(inner_diameter_1) if inner_diameter_1 else None
     inner_diameter_1_max = float(inner_diameter_1_max) if inner_diameter_1_max else None
     inner_diameter_2 = float(inner_diameter_2) if inner_diameter_2 else None
     inner_diameter_2_max = float(inner_diameter_2_max) if inner_diameter_2_max else None
