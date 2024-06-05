@@ -633,3 +633,6 @@ top: 45px;
   padding: 11px;
   background-color: #d3d3d329;
 }
+.disclimar p b {
+  color: blue;
+}
