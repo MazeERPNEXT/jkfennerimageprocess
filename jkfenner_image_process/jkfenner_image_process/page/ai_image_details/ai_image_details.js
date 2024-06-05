@@ -70,6 +70,31 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 
 	//////////////////////////////////////////////////////////////////////////////////////////
 
+	// knowledge_date.js
+function updateKnowledgeDate() {
+    frappe.call({
+        method: 'frappe.client.get',
+        args: {
+            doctype: 'Application Settings',
+            name: 'Application Settings' // Assuming you are using the name "Application Settings"
+        },
+        callback: function(r) {
+            if(r.message) {
+                let lastDataSetDate = r.message.last_data_set_date;
+                if(lastDataSetDate) {
+                    let dateObj = new Date(lastDataSetDate);
+                    let day = String(dateObj.getDate()).padStart(2, '0');
+                    let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                    let month = monthNames[dateObj.getMonth()];
+                    let year = dateObj.getFullYear();
+                    let formattedDate = `${day}-${month}-${year}`;
+                    document.getElementById('knowledge_tv').innerText = `Knowledge Cutoff Date: ${formattedDate}`;
+                }
+            }
+        }
+    });
+}
+
 	page.add_action_item('Export PDF For Internal', () => {
 		window.open(`/api/method/jkfenner_image_process.jkfenner_image_process.page.ai_image_details.ai_image_details.generate_internal_pdf?child_ref=${child_ref}&parent_ref=${parent_ref}`, '_blank');
 	});
@@ -129,6 +154,7 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 	
 		}
 	});	
+	updateKnowledgeDate();
 
 	// $(document).ready(function() {
 	// 	var $sliderValue = $('#slider-value');
