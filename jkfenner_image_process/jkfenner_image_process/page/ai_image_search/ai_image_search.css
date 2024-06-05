@@ -750,3 +750,9 @@ a,
 a:hover{
   text-decoration: none;
 }
+.disclimar{
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 11px;
+    background-color: #d3d3d329;
+}
