@@ -145,6 +145,11 @@ def get_image_ai_details(parent_ref=None, child_ref=None):
                                 </tbody>
                             </table>
                         </div>
+                        <div class="disclimar" style="border: 1px solid lightgray;border-radius: 5px;padding: 11px;background-color: #d3d3d329;">
+                            <p><b>AI-Generated Content: </b> The responses you receive are produced by an AI system based on the information available up to [Knowledge Cutoff Date: Month, Year]. This system is designed to provide reasonably accurate and relevant information, but it may not always reflect the most accurate match and specific nuances of your situation.</p>
+                            <p><b>Verification Recommended: </b> We recommend verifying any critical information, design or advice provided by the AI with additional reliable sources. Please consult with a human expert if you have any specific concerns or require professional guidance.</p>
+                            <p><b>Continuous Improvement: </b>AI systems are continually improving, and we welcome your feedback to enhance the quality and accuracy of the responses. If you encounter any issues or inaccuracies, please let us know.</p>
+                        </div>
                     </div>
                  """
     env = Environment(loader=FileSystemLoader("."))
@@ -210,67 +215,67 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
                                 </div>
                                <div class="grid-container">
                                <div class="grid-item">
-                                <table class="table table-bordered">
-                                <caption class="captions-image"
-                                style="
-                                    color: #ffffff !important;
-                                    text-align: left !important;
-                                    /* text-align: center; */
-                                    background: #008174 !important;
-                                    padding: 10px !important;
-                                    font-weight: 700 !important;
-                                    font-size: 20px !important;
-                                    border-top-left-radius: 10px !important;
-                                    border-top-right-radius: 10px !important;
-                                    caption-side: top !important;
-                                    border-collapse: collapse;" 
-                                >
-                                    Generic Details
-                                </caption>
-                                <tbody>
-                                    <tr>
-                                        <td>Part No.</td>
-                                        <td>{{getAllValues.part_no}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Customer</td>
-                                        <td>{{getAllValues.customer}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Cross Ref.Part No 1</td>
-                                        <td>{{getAllValues.cross_ref_part_no_1}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td >Cross Ref.Part No 2</td>
-                                        <td>{{getAllValues.cross_ref_part_no_2}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Hose Type</td>
-                                        <td>{{getAllValues.hose_type}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Development status</td>
-                                        <td>{{getAllValues.development_status}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Export / Domestic AAM</td>
-                                        <td>{{getAllValues.export__domestic_aam}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Product SAP Code</td>
-                                        <td>{{getAllValues.product_sap_code}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>EAN</td>
-                                        <td>{{getAllValues.ean_no}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>UPC</td>
-                                        <td>{{getAllValues.upc_no}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                               </div>
+                                    <table class="table table-bordered">
+                                            <caption class="captions-image"
+                                                style="
+                                                color: #ffffff !important;
+                                                text-align: left !important;
+                                                /* text-align: center; */
+                                                background: #008174 !important;
+                                                padding: 10px !important;
+                                                font-weight: 700 !important;
+                                                font-size: 20px !important;
+                                                border-top-left-radius: 10px !important;
+                                                border-top-right-radius: 10px !important;
+                                                caption-side: top !important;
+                                                border-collapse: collapse;" 
+                                            >
+                                                Generic Details
+                                            </caption>
+                                        <tbody>
+                                            <tr>
+                                                <td>Part No.</td>
+                                                <td>{{getAllValues.part_no}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Customer</td>
+                                                <td>{{getAllValues.customer}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cross Ref.Part No 1</td>
+                                                <td>{{getAllValues.cross_ref_part_no_1}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td >Cross Ref.Part No 2</td>
+                                                <td>{{getAllValues.cross_ref_part_no_2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Hose Type</td>
+                                                <td>{{getAllValues.hose_type}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Development status</td>
+                                                <td>{{getAllValues.development_status}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Export / Domestic AAM</td>
+                                                <td>{{getAllValues.export__domestic_aam}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Product SAP Code</td>
+                                                <td>{{getAllValues.product_sap_code}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>EAN</td>
+                                                <td>{{getAllValues.ean_no}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>UPC</td>
+                                                <td>{{getAllValues.upc_no}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                                <div class="grid-item">
                                <table class="table table-bordered grid-item" style="width:50% !importent">
                                         <caption class="captions-image"
@@ -311,10 +316,8 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
                                             </tr>
                                         </tbody>
                                     </table>
-                                 </div>
-                                </div>  
-
-                             <table class="table table-bordered">
+                                    </br>
+                                    <table class="table table-bordered">
                                 <caption class="captions-image"
                                 style="
                                     color: #ffffff !important;
@@ -350,6 +353,10 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
                                     </tr>
                                 </tbody>
                             </table> 
+                                 </div>
+                                </div>  
+
+                             
                             <div class="disclimar">
                                 <p><b>AI-Generated Content: </b> The responses you receive are produced by an AI system based on the information available up to [Knowledge Cutoff Date: Month, Year]. This system is designed to provide reasonably accurate and relevant information, but it may not always reflect the most accurate match and specific nuances of your situation.</p>
                                 <p><b>Verification Recommended: </b> We recommend verifying any critical information, design or advice provided by the AI with additional reliable sources. Please consult with a human expert if you have any specific concerns or require professional guidance.</p>
