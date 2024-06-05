@@ -20,7 +20,7 @@ def get_image_ai_details(parent_ref=None, child_ref=None):
     previous_image_doc = None
     app_settings = frappe.get_doc("Application Settings", "Application Settings")
     last_data_set_date_str = app_settings.get("last_data_set_date")
-    last_data_set_date = datetime.strptime(last_data_set_date_str, "%Y-%m-%d")
+    last_data_set_date = datetime.strptime(last_data_set_date_str.split()[0], "%Y-%m-%d")
     formatted_last_data_set_date = last_data_set_date.strftime("%d-%b-%Y")
     try:
         previous_image_doc = frappe.get_last_doc('JKFenner Image Details Stored',filters=[['idx','=',upload_image_doc.idx-1], ["parent","=",parent_ref], ['idx','<',4]], order_by="idx asc")
