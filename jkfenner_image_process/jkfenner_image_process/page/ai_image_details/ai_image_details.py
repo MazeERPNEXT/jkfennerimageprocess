@@ -8,6 +8,7 @@ from jinja2 import Environment, FileSystemLoader
 from ..ai_image_search.ai_image_search import guess_image
 from urllib.parse import urljoin
 from frappe.utils import get_url
+from datetime import datetime
 
 @frappe.whitelist(allow_guest=True)
 def get_image_ai_details(parent_ref=None, child_ref=None):
@@ -17,6 +18,8 @@ def get_image_ai_details(parent_ref=None, child_ref=None):
     upload_image_doc = frappe.get_doc('JKFenner Image Details Stored', child_ref)
     next_image_doc = None
     previous_image_doc = None
+    application_settings = frappe.get_doc("Application Settings")
+    last_data_set_date = application_settings.last_data_set_date.strftime("%d-%b-%Y")
     try:
         previous_image_doc = frappe.get_last_doc('JKFenner Image Details Stored',filters=[['idx','=',upload_image_doc.idx-1], ["parent","=",parent_ref], ['idx','<',4]], order_by="idx asc")
     except frappe.DoesNotExistError:
@@ -146,7 +149,7 @@ def get_image_ai_details(parent_ref=None, child_ref=None):
                             </table>
                         </div>
                         <div class="disclimar" style="border: 1px solid lightgray;border-radius: 5px;padding: 11px;background-color: #d3d3d329;">
-                            <p><b style="color:blue">AI-Generated Content: </b> The responses you receive are produced by an AI system based on the information available up to [Knowledge Cutoff Date: Month, Year]. This system is designed to provide reasonably accurate and relevant information, but it may not always reflect the most accurate match and specific nuances of your situation.</p>
+                            <p><b style="color:blue">AI-Generated Content: </b> The responses you receive are produced by an AI system based on the information available up to <span id="knowledge_tv">Knowledge Cutoff Date: {{ last_data_set_date }}</span>. This system is designed to provide reasonably accurate and relevant information, but it may not always reflect the most accurate match and specific nuances of your situation.</p>
                             <p><b style="color:blue">Verification Recommended: </b> We recommend verifying any critical information, design or advice provided by the AI with additional reliable sources. Please consult with a human expert if you have any specific concerns or require professional guidance.</p>
                             <p><b style="color:blue">Continuous Improvement: </b>AI systems are continually improving, and we welcome your feedback to enhance the quality and accuracy of the responses. If you encounter any issues or inaccuracies, please let us know.</p>
                         </div>
