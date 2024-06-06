@@ -152,7 +152,7 @@ def get_image_ai_details(parent_ref=None, child_ref=None):
                         </div>
                        <div class="disclimar">
                             <h5 class="disclimar-title" style="font-weight: bold;font-size: 16px;">Note:</h5>
-                            <p><b>AI-Generated Content: </b> The responses you receive are produced by an AI system based on the information available up to Knowledge Cutoff Date:<span id="knowledge_tv" style="font-weight: bold;font-size: 12px;"></span>. This system is designed to provide reasonably accurate and relevant information, but it may not always reflect the most accurate match and specific nuances of your situation.</p>
+                            <p><b>AI-Generated Content: </b> The responses you receive are produced by an AI system based on the information available up to Knowledge Cutoff Date:<span id="knowledge_tv" style="font-weight: bold;font-size: 12px;">{{ formatted_last_data_set_date }}</span>. This system is designed to provide reasonably accurate and relevant information, but it may not always reflect the most accurate match and specific nuances of your situation.</p>
                             <p><b>Verification Recommended: </b> We recommend verifying any critical information, design or advice provided by the AI with additional reliable sources. Please consult with a human expert if you have any specific concerns or require professional guidance.</p>
                             <p><b>Continuous Improvement: </b>AI systems are continually improving, and we welcome your feedback to enhance the quality and accuracy of the responses. If you encounter any issues or inaccuracies, please let us know.</p>
                         </div>
@@ -234,7 +234,7 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
                                 <div>
                                     <img id="slider-image" style="width:41%;margin-left:200px;z-index:200; margin-top:0px;margin-bottom:20px;position:relative; bottom:20px height:240px" src="{{ upload_image_doc.image_url }}" alt="Image 1">
                                 </div>
-                               <div class="grid-container">
+                            <div class="grid-container" style="position:relative; top:-13px">
                                <div class="grid-item">
                                     <table class="table table-bordered">
                                             <caption class="captions-image"
@@ -298,7 +298,7 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
                                     </table>
                                 </div>
                                <div class="grid-item">
-                               <table class="table table-bordered grid-item" style="width:50% !importent">
+                                    <table class="table table-bordered grid-item" style="width:50% !importent">
                                         <caption class="captions-image"
                                         style="
                                             color: #ffffff !important;
@@ -339,51 +339,49 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
                                     </table>
                                     </br>
                                     <table class="table table-bordered">
-                                <caption class="captions-image"
-                                style="
-                                    color: #ffffff !important;
-                                    text-align: left !important;
-                                    /* text-align: center; */
-                                    background: #008174 !important;
-                                    padding: 10px !important;
-                                    font-weight: 700 !important;
-                                    font-size: 20px !important;
-                                    border-top-left-radius: 10px !important;
-                                    border-top-right-radius: 10px !important;
-                                    caption-side: top !important;
-                                    border-collapse: collapse;" 
-                                >
-                                Product Dimensions
-                                </caption>
-                                <tbody>
-                                    <tr>
-                                        <td scope="row">ID A1 (mm)</td>
-                                        <td>{{ upload_image_doc.id_a1 }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td scope="row">ID A2 (mm)</td>
-                                        <td>{{ upload_image_doc.id_a2 }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td scope="row">Thickness </td>
-                                        <td>{{ upload_image_doc.thickness }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td scope="row">Length (mm)</td>
-                                        <td>{{ upload_image_doc.length }}</td>
-                                    </tr>
-                                </tbody>
-                            </table> 
-                                 </div>
-                                </div>  
-
-                             
-                           <div class="disclimar" style="position:relative;top:-12px">
+                                        <caption class="captions-image"
+                                            style="
+                                                color: #ffffff !important;
+                                                text-align: left !important;
+                                                /* text-align: center; */
+                                                background: #008174 !important;
+                                                padding: 10px !important;
+                                                font-weight: 700 !important;
+                                                font-size: 20px !important;
+                                                border-top-left-radius: 10px !important;
+                                                border-top-right-radius: 10px !important;
+                                                caption-side: top !important;
+                                                border-collapse: collapse;" 
+                                            >
+                                            Product Dimensions
+                                        </caption>
+                                        <tbody>
+                                            <tr>
+                                                <td scope="row">ID A1 (mm)</td>
+                                                <td>{{ upload_image_doc.id_a1 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">ID A2 (mm)</td>
+                                                <td>{{ upload_image_doc.id_a2 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">Thickness </td>
+                                                <td>{{ upload_image_doc.thickness }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">Length (mm)</td>
+                                                <td>{{ upload_image_doc.length }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table> 
+                                </div>
+                            </div>  
+                             <div class="disclimar" style="position:relative;top:-14px">
                                 <h5 class="disclimar-title" style="font-weight: bold;font-size: 16px;">Note:</h5>
-                                <p><b>AI-Generated Content: </b> The responses you receive are produced by an AI system based on the information available up to Knowledge Cutoff Date:<span id="knowledge_tv" style="font-weight: bold;font-size: 12px;"></span>. This system is designed to provide reasonably accurate and relevant information, but it may not always reflect the most accurate match and specific nuances of your situation.</p>
+                                <p><b>AI-Generated Content: </b> The responses you receive are produced by an AI system based on the information available up to Knowledge Cutoff Date:<span id="knowledge_tv" style="font-weight: bold;font-size: 12px;">{{ formatted_last_data_set_date }}</span>. This system is designed to provide reasonably accurate and relevant information, but it may not always reflect the most accurate match and specific nuances of your situation.</p>
                                 <p><b>Verification Recommended: </b> We recommend verifying any critical information, design or advice provided by the AI with additional reliable sources. Please consult with a human expert if you have any specific concerns or require professional guidance.</p>
                                 <p><b>Continuous Improvement: </b>AI systems are continually improving, and we welcome your feedback to enhance the quality and accuracy of the responses. If you encounter any issues or inaccuracies, please let us know.</p>
-                            </div>
+                             </div>
                 '''
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(html_content_internal)
