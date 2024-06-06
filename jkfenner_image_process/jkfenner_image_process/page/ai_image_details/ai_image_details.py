@@ -151,8 +151,8 @@ def get_image_ai_details(parent_ref=None, child_ref=None):
                             </table>
                         </div>
                        <div class="disclimar">
-                            <h5 class="disclimar-title">Note:</h5>
-                            <p><b>AI-Generated Content: </b> The responses you receive are produced by an AI system based on the information available up to Knowledge Cutoff Date:<span id="knowledge_tv"></span>. This system is designed to provide reasonably accurate and relevant information, but it may not always reflect the most accurate match and specific nuances of your situation.</p>
+                            <h5 class="disclimar-title" style="font-weight: bold;font-size: 16px;">Note:</h5>
+                            <p><b>AI-Generated Content: </b> The responses you receive are produced by an AI system based on the information available up to Knowledge Cutoff Date:<span id="knowledge_tv" style="font-weight: bold;font-size: 12px;"></span>. This system is designed to provide reasonably accurate and relevant information, but it may not always reflect the most accurate match and specific nuances of your situation.</p>
                             <p><b>Verification Recommended: </b> We recommend verifying any critical information, design or advice provided by the AI with additional reliable sources. Please consult with a human expert if you have any specific concerns or require professional guidance.</p>
                             <p><b>Continuous Improvement: </b>AI systems are continually improving, and we welcome your feedback to enhance the quality and accuracy of the responses. If you encounter any issues or inaccuracies, please let us know.</p>
                         </div>
@@ -378,9 +378,9 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
                                 </div>  
 
                              
-                           <div class="disclimar">
-                                <h5 class="disclimar-title">Note:</h5>
-                                <p><b>AI-Generated Content: </b> The responses you receive are produced by an AI system based on the information available up to Knowledge Cutoff Date:<span id="knowledge_tv"></span>. This system is designed to provide reasonably accurate and relevant information, but it may not always reflect the most accurate match and specific nuances of your situation.</p>
+                           <div class="disclimar" style="position:relative;top:-12px">
+                                <h5 class="disclimar-title" style="font-weight: bold;font-size: 16px;">Note:</h5>
+                                <p><b>AI-Generated Content: </b> The responses you receive are produced by an AI system based on the information available up to Knowledge Cutoff Date:<span id="knowledge_tv" style="font-weight: bold;font-size: 12px;"></span>. This system is designed to provide reasonably accurate and relevant information, but it may not always reflect the most accurate match and specific nuances of your situation.</p>
                                 <p><b>Verification Recommended: </b> We recommend verifying any critical information, design or advice provided by the AI with additional reliable sources. Please consult with a human expert if you have any specific concerns or require professional guidance.</p>
                                 <p><b>Continuous Improvement: </b>AI systems are continually improving, and we welcome your feedback to enhance the quality and accuracy of the responses. If you encounter any issues or inaccuracies, please let us know.</p>
                             </div>

@@ -85,7 +85,7 @@ frappe.pages['ai-image-details'].on_page_load = function(wrapper) {
 						let month = monthNames[dateObj.getMonth()];
 						let year = dateObj.getFullYear();
 						let formattedDate = `${day}-${month}-${year}`;
-						document.getElementById('knowledge_tv').innerText = `Knowledge Cutoff Date: ${formattedDate}`;
+						document.getElementById('knowledge_tv').innerText = `${formattedDate}`;
 					}
 				}
 			}

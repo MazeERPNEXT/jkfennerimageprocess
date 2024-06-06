@@ -636,3 +636,11 @@ top: 45px;
 .disclimar p b {
   color: blue;
 }
+.disclimar p span {
+  font-weight: bold;
+  font-size: 12px;
+}
+.disclimar-title{
+  font-weight: bold;
+  font-size: 16px;
+}
