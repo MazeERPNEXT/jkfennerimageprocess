@@ -214,6 +214,7 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
                                     border-radius: 5px;
                                     padding: 11px;
                                     background-color: #d3d3d329;
+                                    font-size: 12px;
                                 }
                                 .disclimar p b {
                                     color: blue;
