@@ -85,7 +85,7 @@ class AiImageSearchPage {
                         // let time = lastDataSetDate.split(' ')[1];
                         let formattedDate = `${day}-${month}-${year}`;
                         // let finalFormattedDate = `${formattedDate} / ${time}`;
-                        document.getElementById('knowledge_tv').innerText = `Knowledge Cutoff Date: ${formattedDate}`;
+                        document.getElementById('knowledge_tv').innerText = `${formattedDate}`;
                     }
                 }
             }
