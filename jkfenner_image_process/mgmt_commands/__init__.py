@@ -91,8 +91,8 @@ def test_file():
 	save_output_to_frappe('/tmp/ai_images/output_path')
 
 
-def save_output_to_frappe(output_folder_path):
-	output_folder_path_frappe_parent = frappe.get_doc("File", "Home/Output CSV - AI Images Patch Processing")
+def save_output_to_frappe(output_folder_path, frappe_folder_path="Home/Output CSV - AI Images Patch Processing"):
+	output_folder_path_frappe_parent = frappe.get_doc("File", frappe_folder_path)
 	output_folder_path_frappe = frappe.new_doc("File")
 	current_time = datetime.now()
 	output_folder_path_frappe.update({

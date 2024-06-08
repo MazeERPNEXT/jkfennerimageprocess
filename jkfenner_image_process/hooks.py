@@ -12,7 +12,7 @@ app_license = "MIT"
 
 # include js, css files in header of desk.html
 app_include_css = "jkfenner_image.bundle.css"
-app_include_js = "jkfenner.bundle.js"
+app_include_js = ["jkfenner_image_process.bundle.js"]
 
 # include js, css files in header of web template
 # web_include_css = "/assets/jkfenner_image_process/css/jkfenner_image_process.css"

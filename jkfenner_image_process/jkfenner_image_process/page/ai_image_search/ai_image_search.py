@@ -9,6 +9,7 @@ import cv2
 from io import BytesIO
 from frappe import publish_progress
 from time import sleep
+import json
 
 @frappe.whitelist()
 def guess_image(images, branched, dlsegment, threshold, inner_diameter_1 = None, inner_diameter_1_max = None, inner_diameter_2 = None, inner_diameter_2_max = None, length = None, length_max = None, task_id = None):
@@ -175,3 +176,22 @@ def guess_image(images, branched, dlsegment, threshold, inner_diameter_1 = None,
         return image_doc
     except Exception as e:
         return "Failed to store image: {0}".format(str(e))
+
+@frappe.whitelist()
+def delete_folders(folder_ids):
+    folder_ids = json.loads(folder_ids)
+    folders = frappe.get_all("File", filters=[["name", "in", folder_ids], ['is_folder', "=", 1]], pluck='name')
+    for folder in folders:
+        delete_folder_file_recursively(folder)
+    frappe.db.commit()
+    return True
+
+
+def delete_folder_file_recursively(folder_name):
+    files = frappe.get_all("File", filters=[["folder", "=", folder_name]], pluck='name')
+    for file in files:
+        file_doc = frappe.get_doc('File', file)
+        if file_doc.is_folder:
+            delete_folder_file_recursively(file)
+        file_doc.delete()
+    frappe.get_doc('File', folder_name).delete()
