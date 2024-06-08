@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"72X2PKHUmj\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">JK Fenner Image Process</span>\",\"col\":12}},{\"id\":\"VDzsFfmcf-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New SKU Upload\",\"col\":3}},{\"id\":\"iXC0WCLsJh\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Image Search\",\"col\":3}},{\"id\":\"nL_nyksxhT\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Settings\",\"col\":3}},{\"id\":\"ARpkcDozS-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Logs\",\"col\":3}}]",
+ "content": "[{\"id\":\"72X2PKHUmj\",\"type\":\"header\",\"data\":{\"text\":\"<span class=\\\"h4\\\">JK Fenner Image Process</span>\",\"col\":12}},{\"id\":\"VDzsFfmcf-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"New SKU Upload\",\"col\":3}},{\"id\":\"iXC0WCLsJh\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Image Search\",\"col\":3}},{\"id\":\"nL_nyksxhT\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Settings\",\"col\":3}},{\"id\":\"ARpkcDozS-\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Logs\",\"col\":3}},{\"id\":\"Cb4pCYFQHW\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Excute Batch File\",\"col\":3}},{\"id\":\"4RAvE6Cqic\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Batch File Status\",\"col\":3}},{\"id\":\"B6GIUG-ei3\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Output File List\",\"col\":3}},{\"id\":\"gFBgnlPDvR\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Input File List\",\"col\":3}}]",
  "creation": "2023-12-23 12:50:04.573754",
  "custom_blocks": [],
  "docstatus": 0,
@@ -12,7 +12,7 @@
  "is_hidden": 0,
  "label": "Image Upload",
  "links": [],
- "modified": "2024-02-21 05:18:31.778049",
+ "modified": "2024-06-07 18:32:45.823838",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "Image Upload",
@@ -32,6 +32,20 @@
    "url": "http://jkfennerimageprocess.localhost.com:8000/app/logs"
   },
   {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Output File List",
+   "type": "URL",
+   "url": "/app/file/view/home/Output%20CSV%20-%20AI%20Images%20Patch%20Processing"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Input File List",
+   "type": "URL",
+   "url": "/app/file/view/home/Input%20Images%20-%20AI%20Images%20Batch%20Processing?folder=Home"
+  },
+  {
    "color": "Green",
    "doc_view": "List",
    "label": "New SKU Upload",
@@ -49,9 +63,25 @@
   {
    "color": "Grey",
    "doc_view": "List",
+   "label": "Excute Batch File",
+   "link_to": "Scheduled Job Type",
+   "stats_filter": "[]",
+   "type": "DocType"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
    "label": "Image Search",
    "link_to": "ai-image-search",
    "type": "Page"
+  },
+  {
+   "color": "Grey",
+   "doc_view": "List",
+   "label": "Batch File Status",
+   "link_to": "RQ Job",
+   "stats_filter": "[]",
+   "type": "DocType"
   }
  ],
  "title": "Image Upload"
