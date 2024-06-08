@@ -8,6 +8,7 @@ from jinja2 import Environment, FileSystemLoader
 from ..ai_image_search.ai_image_search import guess_image
 from urllib.parse import urljoin
 from frappe.utils import get_url
+from datetime import datetime
 
 @frappe.whitelist(allow_guest=True)
 def get_image_ai_details(parent_ref=None, child_ref=None):
@@ -17,6 +18,10 @@ def get_image_ai_details(parent_ref=None, child_ref=None):
     upload_image_doc = frappe.get_doc('JKFenner Image Details Stored', child_ref)
     next_image_doc = None
     previous_image_doc = None
+    app_settings = frappe.get_doc("Application Settings", "Application Settings")
+    last_data_set_date_str = app_settings.get("last_data_set_date")
+    last_data_set_date = datetime.strptime(last_data_set_date_str.split()[0], "%Y-%m-%d")
+    formatted_last_data_set_date = last_data_set_date.strftime("%d-%m-%Y")
     try:
         previous_image_doc = frappe.get_last_doc('JKFenner Image Details Stored',filters=[['idx','=',upload_image_doc.idx-1], ["parent","=",parent_ref], ['idx','<',4]], order_by="idx asc")
     except frappe.DoesNotExistError:
@@ -145,11 +150,17 @@ def get_image_ai_details(parent_ref=None, child_ref=None):
                                 </tbody>
                             </table>
                         </div>
+                       <div class="disclimar">
+                            <h5 class="disclimar-title" style="font-weight: bold;font-size: 16px;">Note:</h5>
+                            <p><b>AI-Generated Content: </b> The responses you receive are produced by an AI system based on the information available up to Knowledge Cutoff Date:<span id="knowledge_tv" style="font-weight: bold;font-size: 12px;">{{ formatted_last_data_set_date }}</span>. This system is designed to provide reasonably accurate and relevant information, but it may not always reflect the most accurate match and specific nuances of your situation.</p>
+                            <p><b>Verification Recommended: </b> We recommend verifying any critical information, design or advice provided by the AI with additional reliable sources. Please consult with a human expert if you have any specific concerns or require professional guidance.</p>
+                            <p><b>Continuous Improvement: </b>AI systems are continually improving, and we welcome your feedback to enhance the quality and accuracy of the responses. If you encounter any issues or inaccuracies, please let us know.</p>
+                        </div>
                     </div>
                  """
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(image_html_content)
-    rendered_content = template.render(getAllValues=getAllValues, previous_image_doc=previous_image_doc, next_image_doc = next_image_doc, upload_image_doc = upload_image_doc, site_url=site_url)
+    rendered_content = template.render(getAllValues=getAllValues, previous_image_doc=previous_image_doc, next_image_doc = next_image_doc, upload_image_doc = upload_image_doc, site_url=site_url, formatted_last_data_set_date=formatted_last_data_set_date)
     print(image_paths,matching_find_images)
     return rendered_content
 
@@ -159,6 +170,10 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
     matching_find_images = []
     site_url = get_url()
     upload_image_doc = frappe.get_doc('JKFenner Image Details Stored', child_ref)
+    app_settings = frappe.get_doc("Application Settings", "Application Settings")
+    last_data_set_date_str = app_settings.get("last_data_set_date")
+    last_data_set_date = datetime.strptime(last_data_set_date_str.split()[0], "%Y-%m-%d")
+    formatted_last_data_set_date = last_data_set_date.strftime("%d-%m-%Y")
         
     getAllValues = frappe.get_doc('JKFenner Image AI', upload_image_doc.part_no)
     
@@ -194,6 +209,24 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
                                     padding: 10px;
                                     width:100%;
                                 }
+                                .disclimar{
+                                    border: 1px solid lightgray;
+                                    border-radius: 5px;
+                                    padding: 11px;
+                                    background-color: #d3d3d329;
+                                    font-size: 12px;
+                                }
+                                .disclimar p b {
+                                    color: blue;
+                                }
+                                .disclimar p span {
+                                    font-weight: bold;
+                                    font-size: 12px;
+                                }
+                                .disclimar-title{
+                                    font-weight: bold;
+                                    font-size: 16px;
+                                }
                             </style>   
                             <div class="header" style="position: relative;width:100%;height: 4cm;background: #eee;display:flex; margin-top:-10px;bottom:10px;margin-bottom:10px">
                                 <img style="width: 33%; height:150px;justify-content:center;" src="{{ site_url }}/assets/jkfenner_image_process/images/JK-finner.png">
@@ -202,71 +235,71 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
                                 <div>
                                     <img id="slider-image" style="width:41%;margin-left:200px;z-index:200; margin-top:0px;margin-bottom:20px;position:relative; bottom:20px height:240px" src="{{ upload_image_doc.image_url }}" alt="Image 1">
                                 </div>
-                               <div class="grid-container">
+                            <div class="grid-container" style="position:relative; top:-13px">
                                <div class="grid-item">
-                                <table class="table table-bordered">
-                                <caption class="captions-image"
-                                style="
-                                    color: #ffffff !important;
-                                    text-align: left !important;
-                                    /* text-align: center; */
-                                    background: #008174 !important;
-                                    padding: 10px !important;
-                                    font-weight: 700 !important;
-                                    font-size: 20px !important;
-                                    border-top-left-radius: 10px !important;
-                                    border-top-right-radius: 10px !important;
-                                    caption-side: top !important;
-                                    border-collapse: collapse;" 
-                                >
-                                    Generic Details
-                                </caption>
-                                <tbody>
-                                    <tr>
-                                        <td>Part No.</td>
-                                        <td>{{getAllValues.part_no}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Customer</td>
-                                        <td>{{getAllValues.customer}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Cross Ref.Part No 1</td>
-                                        <td>{{getAllValues.cross_ref_part_no_1}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td >Cross Ref.Part No 2</td>
-                                        <td>{{getAllValues.cross_ref_part_no_2}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Hose Type</td>
-                                        <td>{{getAllValues.hose_type}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Development status</td>
-                                        <td>{{getAllValues.development_status}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Export / Domestic AAM</td>
-                                        <td>{{getAllValues.export__domestic_aam}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Product SAP Code</td>
-                                        <td>{{getAllValues.product_sap_code}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>EAN</td>
-                                        <td>{{getAllValues.ean_no}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td>UPC</td>
-                                        <td>{{getAllValues.upc_no}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                               </div>
+                                    <table class="table table-bordered">
+                                            <caption class="captions-image"
+                                                style="
+                                                color: #ffffff !important;
+                                                text-align: left !important;
+                                                /* text-align: center; */
+                                                background: #008174 !important;
+                                                padding: 10px !important;
+                                                font-weight: 700 !important;
+                                                font-size: 20px !important;
+                                                border-top-left-radius: 10px !important;
+                                                border-top-right-radius: 10px !important;
+                                                caption-side: top !important;
+                                                border-collapse: collapse;" 
+                                            >
+                                                Generic Details
+                                            </caption>
+                                        <tbody>
+                                            <tr>
+                                                <td>Part No.</td>
+                                                <td>{{getAllValues.part_no}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Customer</td>
+                                                <td>{{getAllValues.customer}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cross Ref.Part No 1</td>
+                                                <td>{{getAllValues.cross_ref_part_no_1}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td >Cross Ref.Part No 2</td>
+                                                <td>{{getAllValues.cross_ref_part_no_2}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Hose Type</td>
+                                                <td>{{getAllValues.hose_type}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Development status</td>
+                                                <td>{{getAllValues.development_status}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Export / Domestic AAM</td>
+                                                <td>{{getAllValues.export__domestic_aam}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Product SAP Code</td>
+                                                <td>{{getAllValues.product_sap_code}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>EAN</td>
+                                                <td>{{getAllValues.ean_no}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>UPC</td>
+                                                <td>{{getAllValues.upc_no}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                                <div class="grid-item">
-                               <table class="table table-bordered grid-item" style="width:50% !importent">
+                                    <table class="table table-bordered grid-item" style="width:50% !importent">
                                         <caption class="captions-image"
                                         style="
                                             color: #ffffff !important;
@@ -305,49 +338,55 @@ def generate_internal_pdf(parent_ref=None, child_ref=None):
                                             </tr>
                                         </tbody>
                                     </table>
-                                 </div>
-                                </div>  
-
-                             <table class="table table-bordered">
-                                <caption class="captions-image"
-                                style="
-                                    color: #ffffff !important;
-                                    text-align: left !important;
-                                    /* text-align: center; */
-                                    background: #008174 !important;
-                                    padding: 10px !important;
-                                    font-weight: 700 !important;
-                                    font-size: 20px !important;
-                                    border-top-left-radius: 10px !important;
-                                    border-top-right-radius: 10px !important;
-                                    caption-side: top !important;
-                                    border-collapse: collapse;" 
-                                >
-                                Product Dimensions
-                                </caption>
-                                <tbody>
-                                    <tr>
-                                        <td scope="row">ID A1 (mm)</td>
-                                        <td>{{ upload_image_doc.id_a1 }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td scope="row">ID A2 (mm)</td>
-                                        <td>{{ upload_image_doc.id_a2 }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td scope="row">Thickness </td>
-                                        <td>{{ upload_image_doc.thickness }}</td>
-                                    </tr>
-                                    <tr>
-                                        <td scope="row">Length (mm)</td>
-                                        <td>{{ upload_image_doc.length }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>  
+                                    </br>
+                                    <table class="table table-bordered">
+                                        <caption class="captions-image"
+                                            style="
+                                                color: #ffffff !important;
+                                                text-align: left !important;
+                                                /* text-align: center; */
+                                                background: #008174 !important;
+                                                padding: 10px !important;
+                                                font-weight: 700 !important;
+                                                font-size: 20px !important;
+                                                border-top-left-radius: 10px !important;
+                                                border-top-right-radius: 10px !important;
+                                                caption-side: top !important;
+                                                border-collapse: collapse;" 
+                                            >
+                                            Product Dimensions
+                                        </caption>
+                                        <tbody>
+                                            <tr>
+                                                <td scope="row">ID A1 (mm)</td>
+                                                <td>{{ upload_image_doc.id_a1 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">ID A2 (mm)</td>
+                                                <td>{{ upload_image_doc.id_a2 }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">Thickness </td>
+                                                <td>{{ upload_image_doc.thickness }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row">Length (mm)</td>
+                                                <td>{{ upload_image_doc.length }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table> 
+                                </div>
+                            </div>  
+                             <div class="disclimar" style="position:relative;top:-14px">
+                                <h5 class="disclimar-title" style="font-weight: bold;font-size: 16px;">Note:</h5>
+                                <p><b>AI-Generated Content: </b> The responses you receive are produced by an AI system based on the information available up to Knowledge Cutoff Date:<span id="knowledge_tv" style="font-weight: bold;font-size: 12px;">{{ formatted_last_data_set_date }}</span>. This system is designed to provide reasonably accurate and relevant information, but it may not always reflect the most accurate match and specific nuances of your situation.</p>
+                                <p><b>Verification Recommended: </b> We recommend verifying any critical information, design or advice provided by the AI with additional reliable sources. Please consult with a human expert if you have any specific concerns or require professional guidance.</p>
+                                <p><b>Continuous Improvement: </b>AI systems are continually improving, and we welcome your feedback to enhance the quality and accuracy of the responses. If you encounter any issues or inaccuracies, please let us know.</p>
+                             </div>
                 '''
     env = Environment(loader=FileSystemLoader("."))
     template = env.from_string(html_content_internal)
-    rendered_content = template.render(getAllValues=getAllValues, site_url=site_url,upload_image_doc = upload_image_doc,)
+    rendered_content = template.render(getAllValues=getAllValues, site_url=site_url,upload_image_doc = upload_image_doc, formatted_last_data_set_date=formatted_last_data_set_date)
 
     # file = open("/tmp/jkfenner.html", "w")
     # file.write(rendered_content)

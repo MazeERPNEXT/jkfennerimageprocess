@@ -1,0 +1,46 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-06-05 13:48:52.333696",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "machine_learning_section_section",
+  "last_data_set_date"
+ ],
+ "fields": [
+  {
+   "fieldname": "machine_learning_section_section",
+   "fieldtype": "Section Break",
+   "label": "Machine Learning Section"
+  },
+  {
+   "fieldname": "last_data_set_date",
+   "fieldtype": "Datetime",
+   "label": "Last Data Set Date"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2024-06-05 13:52:49.839630",
+ "modified_by": "Administrator",
+ "module": "JKfenner Image Process",
+ "name": "Application Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

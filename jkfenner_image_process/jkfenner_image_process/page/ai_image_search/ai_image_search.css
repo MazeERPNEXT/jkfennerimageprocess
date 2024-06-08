@@ -750,3 +750,21 @@ a,
 a:hover{
   text-decoration: none;
 }
+.disclimar{
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 11px;
+    background-color: #d3d3d329;
+    font-size: 12px;
+}
+.disclimar p b {
+  color: blue;
+}
+.disclimar p span {
+  font-weight: bold;
+  font-size: 12px;
+}
+.disclimar-title{
+  font-weight: bold;
+  font-size: 16px;
+}

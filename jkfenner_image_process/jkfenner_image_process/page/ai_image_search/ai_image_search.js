@@ -14,7 +14,7 @@ class AiImageSearchPage {
         });
 
         this.page.set_title('Image Search');
-
+        this.updateKnowledgeDate();
         // Render the template and append it to the page body
         $(frappe.render_template("ai_image_search", {})).appendTo(this.page.body);
 
@@ -65,6 +65,31 @@ class AiImageSearchPage {
         frappe.socketio.task_subscribe(taskID);
 
        
+    }
+    updateKnowledgeDate() {
+        frappe.call({
+            method: 'frappe.client.get',
+            args: {
+                doctype: 'Application Settings',
+                name: 'Application Settings' // Assuming you are using the name "Application Settings"
+            },
+            callback: function(r) {
+                if(r.message) {
+                    let lastDataSetDate = r.message.last_data_set_date;
+                    if(lastDataSetDate) {
+                        let dateObj = new Date(lastDataSetDate);
+                        let day = String(dateObj.getDate()).padStart(2, '0');
+                        let monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+                        let month = monthNames[dateObj.getMonth()];
+                        let year = dateObj.getFullYear();
+                        // let time = lastDataSetDate.split(' ')[1];
+                        let formattedDate = `${day}-${month}-${year}`;
+                        // let finalFormattedDate = `${formattedDate} / ${time}`;
+                        document.getElementById('knowledge_tv').innerText = `${formattedDate}`;
+                    }
+                }
+            }
+        });
     }
 
     attachTolleranceEventListeners() {
