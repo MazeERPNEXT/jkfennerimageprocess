@@ -10,6 +10,15 @@ from io import BytesIO
 from frappe import publish_progress
 from time import sleep
 import json
+import zipfile
+from frappe import _
+from frappe.utils.file_manager import get_file
+from frappe.utils.background_jobs import enqueue
+from jkfenner_image_process.jkfenner_image_process.helpers import save_output_to_frappe
+import shutil
+from frappe.utils.file_manager import save_file
+
+
 
 @frappe.whitelist()
 def guess_image(images, branched, dlsegment, threshold, inner_diameter_1 = None, inner_diameter_1_max = None, inner_diameter_2 = None, inner_diameter_2_max = None, length = None, length_max = None, task_id = None):
@@ -112,15 +121,15 @@ def guess_image(images, branched, dlsegment, threshold, inner_diameter_1 = None,
         foreground_img_doc_list = []
         for index, foreground_img in enumerate(ai_responses['foreground_images']):
             file = frappe.get_doc(
-			{
-				"doctype": "File",
-				"file_name": image_doc.name+f"_foreground_image_{index}.jpg",
-				"attached_to_doctype": image_doc.doctype,
-				"attached_to_name": image_doc.name,
-				"content": foreground_img,
-				"decode": True,
-			}
-		    )
+            {
+                "doctype": "File",
+                "file_name": image_doc.name+f"_foreground_image_{index}.jpg",
+                "attached_to_doctype": image_doc.doctype,
+                "attached_to_name": image_doc.name,
+                "content": foreground_img,
+                "decode": True,
+            }
+            )
             file.save()
             foreground_img_doc_list.append(file.file_url)
         if foreground_img_doc_list:
@@ -195,3 +204,6 @@ def delete_folder_file_recursively(folder_name):
             delete_folder_file_recursively(file)
         file_doc.delete()
     frappe.get_doc('File', folder_name).delete()
+
+
+        
