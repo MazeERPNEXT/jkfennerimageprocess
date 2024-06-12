@@ -73,15 +73,18 @@ def unzip_task(file_ids, task_id):
     for file_id in file_ids:
         file_doc = frappe.get_doc("File", file_id)
         if not file_doc.is_folder and file_doc.file_url.endswith('.zip'):
-            file_path = frappe.get_site_path("public", "files", file_doc.file_name)
+            file_path = file_doc.get_full_path()
             
             with zipfile.ZipFile(file_path, 'r') as zip_ref:
                 for member in zip_ref.infolist():
+                    # if member.startswith("__MACOSX/"):
+					# # skip directories and macos hidden directory
+                    #     continue
                     extracted_path = zip_ref.extract(member, input_temp_folder_location)
                     # Adjust the permission of the extracted file/directory
                     if os.path.isfile(extracted_path) or os.path.isdir(extracted_path):
                         os.chmod(extracted_path, 0o777)   
-            file_doc.delete()
+            file_doc.delete(ignore_permissions=True)
             
     save_input_to_frappe(input_temp_folder_location, "Home/Input Images - AI Images Batch Processing")
     return True
