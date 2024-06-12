@@ -181,7 +181,7 @@ def guess_image(images, branched, dlsegment, threshold, inner_diameter_1 = None,
         # Save the image_doc after inserting all child records
         image_doc.save()
         frappe.db.commit()
-    
+        frappe.publish_realtime(event = "Image Processing", message = { 'percentage': 100, 'message': "Completed ...(100%)" })
         return image_doc
     except Exception as e:
         return "Failed to store image: {0}".format(str(e))
