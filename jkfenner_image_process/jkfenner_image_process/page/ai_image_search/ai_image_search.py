@@ -202,8 +202,8 @@ def delete_folder_file_recursively(folder_name):
         file_doc = frappe.get_doc('File', file)
         if file_doc.is_folder:
             delete_folder_file_recursively(file)
-        file_doc.delete()
-    frappe.get_doc('File', folder_name).delete()
+        file_doc.delete(ignore_permissions=True)
+    frappe.get_doc('File', folder_name).delete(ignore_permissions=True)
 
 
         
