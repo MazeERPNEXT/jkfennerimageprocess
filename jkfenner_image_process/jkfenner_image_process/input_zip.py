@@ -129,8 +129,8 @@ def save_input_to_frappe(output_folder_path, frappe_folder_path="Home/Output CSV
 def unzip(file_ids):
     file_ids = json.loads(file_ids)
     task_id = frappe.generate_hash(length=10)
-    # enqueue("jkfenner_image_process.jkfenner_image_process.input_zip.unzip_task", file_ids=file_ids, task_id=task_id)
-    unzip_task(file_ids, task_id)
+    enqueue("jkfenner_image_process.jkfenner_image_process.input_zip.unzip_task", file_ids=file_ids, task_id=task_id)
+    # unzip_task(file_ids, task_id)
     return task_id
 
 def unzip_task(file_ids, task_id):
