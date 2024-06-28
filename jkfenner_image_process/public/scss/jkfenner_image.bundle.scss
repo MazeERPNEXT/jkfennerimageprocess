@@ -246,6 +246,13 @@ body{
 //     display: none !important;
 // }
 #page-List\/JKFenner\ Image\ AI\/List .icon-btn {
+    // display: none !important;
+}
+
+#page-List\/JKFenner\ Image\ AI\/List input[data-fieldname="name"] {
+    display: none;
+}
+#page-List\/JKFenner\ Image\ AI\/List div[data-fieldname="name"] {
     display: none !important;
 }
 

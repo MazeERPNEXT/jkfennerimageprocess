@@ -121,6 +121,7 @@
    "fieldname": "development_status",
    "fieldtype": "Select",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Development status",
    "options": "\nDeveloped\nNot developed",
    "reqd": 1
@@ -140,6 +141,7 @@
   {
    "fieldname": "ean_no",
    "fieldtype": "Data",
+   "in_standard_filter": 1,
    "label": "EAN No"
   },
   {
@@ -207,6 +209,7 @@
   {
    "fieldname": "product_dimensions",
    "fieldtype": "Table",
+   "in_standard_filter": 1,
    "options": "Product Dimensions"
   },
   {
@@ -255,19 +258,19 @@
    "fieldtype": "Column Break"
   },
   {
-    "default": " Grams",
+   "default": " Grams",
    "fieldname": "yarn_weight",
    "fieldtype": "Data",
    "label": "Yarn weight (Grams)"
   },
   {
-    "default": " Bar",
+   "default": " Bar",
    "fieldname": "hose_burst_pressure",
    "fieldtype": "Data",
    "label": "Hose Burst pressure (Bar)"
   },
   {
-    "default": " N/Min",
+   "default": " N/Min",
    "fieldname": "adhesion",
    "fieldtype": "Data",
    "label": "Adhesion (N/Min)"
@@ -335,7 +338,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-02-23 19:57:47.498369",
+ "modified": "2024-06-28 12:04:45.489501",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "JKFenner Image AI",

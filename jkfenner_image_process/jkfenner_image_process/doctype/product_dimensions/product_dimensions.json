@@ -16,12 +16,12 @@
  ],
  "fields": [
   {
+   "default": " mm",
    "fieldname": "inner_diameter_1_mm",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "ID 1 (mm)",
-   "reqd": 1,
-   "default": " mm"
+   "reqd": 1
   },
   {
    "fieldname": "hoses",
@@ -31,40 +31,39 @@
    "options": "HOSE A\nHOSE B\nHOSE C\nHOSE D\nHOSE E"
   },
   {
+   "default": " mm",
    "fieldname": "inner_diameter_2_mm",
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "ID 2 (mm)",
-   "reqd": 1,
-   "default": " mm"
+   "reqd": 1
   },
   {
+   "default": " mm",
    "fieldname": "length",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "label": "Length (m)",
-   "reqd": 1,
-   "default": " mm"
+   "reqd": 1
   },
   {
+   "default": " mm",
    "fieldname": "thickness",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Thickness (mm)",
-   "default": " mm"
+   "label": "Thickness (mm)"
   },
   {
+   "default": " Grams",
    "fieldname": "overall_product_weight_without_childpart",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Overall product weight without childpart (grams)",
-   "default": " Grams"
+   "label": "Overall product weight without childpart (grams)"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-02-12 18:48:31.849527",
+ "modified": "2024-06-26 20:32:51.481082",
  "modified_by": "Administrator",
  "module": "JKfenner Image Process",
  "name": "Product Dimensions",
